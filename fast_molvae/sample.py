@@ -32,6 +32,8 @@ def main_sample(vocab, output_file, model_path, nsample, hidden_size=450, latent
     torch.manual_seed(0)
     with open(output_file, 'w') as out_file:
         for i in range(nsample):
+            if i % 10 == 0:
+                print(i)
             out_file.write(str(model.sample_prior())+'\n')
 
 if __name__ == '__main__':

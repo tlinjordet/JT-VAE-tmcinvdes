@@ -186,8 +186,11 @@ class JTNNVAE(nn.Module):
             scores = torch.Tensor([1.0])
 
         if prob_decode:
-            probs = F.softmax(scores.view(1,-1), dim=1).squeeze() + 1e-7 #prevent prob = 0
-            cand_idx = torch.multinomial(probs, probs.numel())
+            try:
+                probs = F.softmax(scores.view(1,-1), dim=1).squeeze() + 1e-7 #prevent prob = 0
+                cand_idx = torch.multinomial(probs, probs.numel())
+            except:
+                _, cand_idx = torch.sort(scores, descending=True)
         else:
             _,cand_idx = torch.sort(scores, descending=True)
 
