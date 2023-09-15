@@ -82,6 +82,10 @@ class JTMPN(nn.Module):
             ctr_bid = ctr_node.idx
 
             for atom in mol.GetAtoms():
+
+                ## MODIFICATION ##
+
+
                 fatoms.append( atom_features(atom) )
                 in_bonds.append([]) 
         
