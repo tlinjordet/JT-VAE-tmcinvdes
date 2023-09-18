@@ -14,8 +14,8 @@ import pickle
 from fast_jtnn import *
 import rdkit
 
-def tensorize(smiles,tree_attributes,assm=True):
-    mol_tree = MolTree(smiles, tree_attributes)
+def tensorize(smiles, assm=True):
+    mol_tree = MolTree(smiles)
     mol_tree.recover()
     if assm:
         mol_tree.assemble()
@@ -36,15 +36,13 @@ def convert(train_path, pool, num_splits, output_path):
     out_path = os.path.join(output_path, './')
     if os.path.isdir(out_path) is False:
         os.makedirs(out_path)
-
-    tree_attributes = {}
+    
     with open(train_path) as f:
         data = [line.strip("\r\n ").split()[0] for line in f]
-
     print('Input File read')
     
     print('Tensorizing .....')
-    all_data = pool.map(tensorize, data, tree_attributes)
+    all_data = pool.map(tensorize, data)
     all_data_split = np.array_split(all_data, num_splits)
     print('Tensorizing Complete')
     
