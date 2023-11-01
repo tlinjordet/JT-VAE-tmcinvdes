@@ -1,10 +1,11 @@
-import sys
 import gzip
 import pickle
+import sys
+
 import rdkit.Chem as Chem
-from rdkit.Chem import Draw
-from rdkit.Chem import Descriptors
 import sascorer
+from rdkit.Chem import Descriptors, Draw
+
 
 def save_object(obj, filename):
     result = pickle.dumps(obj)

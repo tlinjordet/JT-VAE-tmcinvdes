@@ -1,19 +1,19 @@
-import torch
-import torch.nn as nn
-from torch.autograd import Variable
-
-import math, random, sys
-from optparse import OptionParser
+import math
+import random
+import sys
 from collections import deque
+from optparse import OptionParser
 
 import rdkit
 import rdkit.Chem as Chem
-from rdkit.Chem import Descriptors
 import sascorer
-
+import torch
+import torch.nn as nn
 from jtnn import *
+from rdkit.Chem import Descriptors
+from torch.autograd import Variable
 
-lg = rdkit.RDLogger.logger() 
+lg = rdkit.RDLogger.logger()
 lg.setLevel(rdkit.RDLogger.CRITICAL)
 
 parser = OptionParser()
@@ -25,8 +25,8 @@ parser.add_option("-l", "--latent", dest="latent_size", default=56)
 parser.add_option("-d", "--depth", dest="depth", default=3)
 parser.add_option("-s", "--sim", dest="cutoff", default=0.0)
 opts,args = parser.parse_args()
-   
-vocab = [x.strip("\r\n ") for x in open(opts.vocab_path)] 
+
+vocab = [x.strip("\r\n ") for x in open(opts.vocab_path)]
 vocab = Vocab(vocab)
 
 hidden_size = int(opts.hidden_size)

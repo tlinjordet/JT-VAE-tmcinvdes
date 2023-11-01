@@ -4,25 +4,24 @@
 
 from __future__ import print_function
 
-import theano
-import theano.tensor as T
-
-from sparse_gp_theano_internal import *
-
-import scipy.stats    as sps
-import scipy.optimize as spo
-import numpy as np
 import sys
 import time
+
+import numpy as np
+import scipy.optimize as spo
+import scipy.stats as sps
+import theano
+import theano.tensor as T
+from sparse_gp_theano_internal import *
+
 
 def casting(x):
     return np.array(x).astype(theano.config.floatX)
 
 def global_optimization(grid, lower, upper, function_grid, function_scalar, function_scalar_gradient):
-
     grid_values = function_grid(grid)
     best = grid_values.argmin()
-    
+
     # We solve the optimization problem
 
     X_initial = grid[ best : (best + 1), : ]
@@ -69,7 +68,6 @@ class SparseGP:
     # classification are 1 or -1 and in the case of multiclass classification are 0, 1, 2,.. n_class - 1
 
     def __init__(self, input_means, input_vars, training_targets, n_inducing_points):
-
         self.input_means = theano.shared(value = input_means.astype(theano.config.floatX), borrow = True, name = 'X')
         self.input_vars = theano.shared(value = input_vars.astype(theano.config.floatX), borrow = True, name = 'X')
         self.original_training_targets = theano.shared(value = training_targets.astype(theano.config.floatX), borrow = True, name = 'y')
@@ -103,7 +101,6 @@ class SparseGP:
         return self.sparse_gp.getContributionToEnergy()[ 0, 0 ]
 
     def predict(self, means_test, vars_test):
-
         self.setForPrediction()
 
         means_test = means_test.astype(theano.config.floatX)
@@ -128,7 +125,6 @@ class SparseGP:
     # This trains the network via LBFGS as implemented in scipy (slow but good for small datasets)
 
     def train_via_LBFGS(self, input_means, input_vars, training_targets, max_iterations = 500):
-
         # We initialize the network and get the initial parameters
 
         input_means = input_means.astype(theano.config.floatX)
@@ -172,7 +168,6 @@ class SparseGP:
             return np.concatenate([ s.flatten() for s in params ])
 
         def objective(params):
-                
             params = de_vectorize_params(params)
             self.set_params(params)
             energy_value = energy(input_means, input_vars, training_targets)
@@ -249,7 +244,7 @@ class SparseGP:
 
             print('Test error: {} Test ll: {}'.format(test_error, test_ll))
             sys.stdout.flush()
-        
+
             pred = np.zeros((0, 1))
             uncert = np.zeros((0, uncert.shape[ 1 ]))
             for i in range(n_batches):
@@ -261,12 +256,11 @@ class SparseGP:
 
             training_error = np.sqrt(np.mean((pred - training_targets)**2))
             training_ll = np.mean(sps.norm.logpdf(pred - training_targets, scale = np.sqrt(uncert)))
-     
+
             print('Train error: {} Train ll: {}'.format(training_error, training_ll))
             sys.stdout.flush()
 
     def get_incumbent(self, grid, lower, upper):
-        
         self.sparse_gp.compute_output()
         m, v = self.sparse_gp.getPredictedValues()
 
@@ -279,7 +273,6 @@ class SparseGP:
         return global_optimization(grid, lower, upper, function_grid, function_scalar, function_scalar_gradient)[ 1 ]
 
     def optimize_ei(self, grid, lower, upper, incumbent):
-
         X = T.matrix('X', dtype = theano.config.floatX)
         log_ei = self.sparse_gp.compute_log_ei(X, incumbent)
 
@@ -290,7 +283,6 @@ class SparseGP:
         return global_optimization(grid, lower, upper, function_grid, function_scalar, function_scalar_gradient)[ 0 ]
 
     def batched_greedy_ei(self, q, lower, upper, n_samples = 1):
-
         self.setForPrediction()
 
         grid_size = 10000
@@ -321,7 +313,7 @@ class SparseGP:
             print(i, X_numpy)
 
         m, v = self.predict(X_numpy, 0 * X_numpy)
-    
+
         print("Predictive mean at selected points:\n", m)
 
         return X_numpy
