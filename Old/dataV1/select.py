@@ -1,12 +1,11 @@
-import rdkit
-from rdkit.Chem import Descriptors
-from rdkit.Chem import MolFromSmiles, MolToSmiles
-from rdkit.Chem import rdmolops
-import sascorer
-import numpy as np  
 import sys
 
-lg = rdkit.RDLogger.logger() 
+import numpy as np
+import rdkit
+import sascorer
+from rdkit.Chem import Descriptors, MolFromSmiles, MolToSmiles, rdmolops
+
+lg = rdkit.RDLogger.logger()
 lg.setLevel(rdkit.RDLogger.CRITICAL)
 
 smiles = []

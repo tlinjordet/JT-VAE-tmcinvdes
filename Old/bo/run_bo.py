@@ -1,21 +1,18 @@
-import pickle
 import gzip
-from sparse_gp import SparseGP
-import scipy.stats as sps
-import numpy as np
 import os.path
-
-import rdkit
-from rdkit.Chem import MolFromSmiles, MolToSmiles
-from rdkit.Chem import Descriptors
-
-import torch
-import torch.nn as nn
-from jtnn import create_var, JTNNVAE, Vocab
-
+import pickle
 from optparse import OptionParser
 
-lg = rdkit.RDLogger.logger() 
+import numpy as np
+import rdkit
+import scipy.stats as sps
+import torch
+import torch.nn as nn
+from jtnn import JTNNVAE, Vocab, create_var
+from rdkit.Chem import Descriptors, MolFromSmiles, MolToSmiles
+from sparse_gp import SparseGP
+
+lg = rdkit.RDLogger.logger()
 lg.setLevel(rdkit.RDLogger.CRITICAL)
 
 # We define the functions used to load and save objects
@@ -40,7 +37,7 @@ parser.add_option("-d", "--depth", dest="depth", default=3)
 parser.add_option("-r", "--seed", dest="random_seed", default=None)
 opts,args = parser.parse_args()
 
-vocab = [x.strip("\r\n ") for x in open(opts.vocab_path)] 
+vocab = [x.strip("\r\n ") for x in open(opts.vocab_path)]
 vocab = Vocab(vocab)
 
 hidden_size = int(opts.hidden_size)
@@ -108,18 +105,18 @@ while iteration < 5:
         tree_vec = create_var(torch.from_numpy(tree_vec).float())
         mol_vec = create_var(torch.from_numpy(mol_vec).float())
         s = model.decode(tree_vec, mol_vec, prob_decode=False)
-        if s is not None: 
+        if s is not None:
             valid_smiles.append(s)
             new_features.append(all_vec)
-    
+
     print len(valid_smiles), "molecules are found"
     valid_smiles = valid_smiles[:50]
     new_features = next_inputs[:50]
     new_features = np.vstack(new_features)
     save_object(valid_smiles, opts.save_dir + "/valid_smiles{}.dat".format(iteration))
 
-    import sascorer
     import networkx as nx
+    import sascorer
     from rdkit.Chem import rdmolops
 
     scores = []
@@ -137,7 +134,7 @@ while iteration < 5:
             cycle_length = cycle_length - 6
 
         current_cycle_score = -cycle_length
-     
+
         current_SA_score_normalized = (current_SA_score - np.mean(SA_scores)) / np.std(SA_scores)
         current_log_P_value_normalized = (current_log_P_value - np.mean(logP_values)) / np.std(logP_values)
         current_cycle_score_normalized = (current_cycle_score - np.mean(cycle_scores)) / np.std(cycle_scores)
@@ -146,7 +143,7 @@ while iteration < 5:
         scores.append(-score) #target is always minused
 
     print valid_smiles
-    print scores 
+    print scores
 
     save_object(scores, opts.save_dir + "/scores{}.dat".format(iteration))
 

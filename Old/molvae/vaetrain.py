@@ -1,18 +1,19 @@
+import math
+import random
+import sys
+from collections import deque
+from optparse import OptionParser
+
+import rdkit
 import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.optim.lr_scheduler as lr_scheduler
-from torch.utils.data import DataLoader
-from torch.autograd import Variable
-
-import math, random, sys
-from optparse import OptionParser
-from collections import deque
-
 from jtnn import *
-import rdkit
+from torch.autograd import Variable
+from torch.utils.data import DataLoader
 
-lg = rdkit.RDLogger.logger() 
+lg = rdkit.RDLogger.logger()
 lg.setLevel(rdkit.RDLogger.CRITICAL)
 
 parser = OptionParser()
@@ -27,8 +28,8 @@ parser.add_option("-d", "--depth", dest="depth", default=3)
 parser.add_option("-z", "--beta", dest="beta", default=1.0)
 parser.add_option("-q", "--lr", dest="lr", default=1e-3)
 opts,args = parser.parse_args()
-   
-vocab = [x.strip("\r\n ") for x in open(opts.vocab_path)] 
+
+vocab = [x.strip("\r\n ") for x in open(opts.vocab_path)]
 vocab = Vocab(vocab)
 
 batch_size = int(opts.batch_size)
@@ -102,4 +103,3 @@ for epoch in xrange(MAX_EPOCH):
     scheduler.step()
     print "learning rate: %.6f" % scheduler.get_lr()[0]
     torch.save(model.state_dict(), opts.save_path + "/model.iter-" + str(epoch))
-

@@ -1,18 +1,18 @@
-import torch
-import torch.nn as nn
-from torch.autograd import Variable
-
-import math, random, sys
+import math
+import random
+import sys
 from optparse import OptionParser
 
+import numpy as np
 import rdkit
 import rdkit.Chem as Chem
-from rdkit.Chem import Draw
-
-import numpy as np
+import torch
+import torch.nn as nn
 from jtnn import *
+from rdkit.Chem import Draw
+from torch.autograd import Variable
 
-lg = rdkit.RDLogger.logger() 
+lg = rdkit.RDLogger.logger()
 lg.setLevel(rdkit.RDLogger.CRITICAL)
 
 parser = OptionParser()
@@ -22,8 +22,8 @@ parser.add_option("-w", "--hidden", dest="hidden_size", default=200)
 parser.add_option("-l", "--latent", dest="latent_size", default=56)
 parser.add_option("-d", "--depth", dest="depth", default=3)
 opts,args = parser.parse_args()
-   
-vocab = [x.strip("\r\n ") for x in open(opts.vocab_path)] 
+
+vocab = [x.strip("\r\n ") for x in open(opts.vocab_path)]
 vocab = Vocab(vocab)
 
 hidden_size = int(opts.hidden_size)
@@ -59,4 +59,3 @@ for dx in range(-6,7):
 nei_mols = [Chem.MolFromSmiles(s) for s in nei_mols]
 img = Draw.MolsToGridImage(nei_mols, molsPerRow=13, subImgSize=(200,200), useSVG=True)
 print img
-

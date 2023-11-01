@@ -43,4 +43,3 @@ For molecule reconstruction, run
 python reconstruct.py --test ../dataV1/test.txt --vocab ../dataV1/vocab.txt --hidden 450 --depth 3 --latent 56 --model MPNVAE-h450-L56-d3-beta0.005/model.iter-4
 ```
 Replace `test.txt` with `valid.txt` to test the validation accuracy (for hyperparameter tuning).
-
