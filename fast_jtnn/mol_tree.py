@@ -2,8 +2,8 @@ import argparse
 import sys
 
 import rdkit
-import rdkit.Chem as Chem
-from chemutils import (
+
+from .chemutils import (
     enum_assemble,
     get_clique_mol,
     get_mol,
@@ -11,7 +11,7 @@ from chemutils import (
     set_atommap,
     tree_decomp,
 )
-from vocab import *
+from .vocab import *
 
 
 class MolTreeNode(object):

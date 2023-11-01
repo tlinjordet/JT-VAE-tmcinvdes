@@ -6,11 +6,14 @@ import pickle
 import sys
 from multiprocessing import Pool
 from optparse import OptionParser
+from pathlib import Path
 
 import numpy as np
 import rdkit
 from tqdm import tqdm
 
+source = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, str(source))
 from fast_jtnn import *
 
 
