@@ -17,7 +17,7 @@ def load_model(vocab, model_path, hidden_size=450, latent_size=56, depthT=20, de
     model.load_state_dict(dict_buffer)
     model = model.cuda()
 
-    torch.manual_seed(0)
+    torch.manual_seed(1)
     return model
 
 def main_sample(vocab, output_file, model_path, nsample, hidden_size=450, latent_size=56, depthT=20, depthG=3):
@@ -29,12 +29,12 @@ def main_sample(vocab, output_file, model_path, nsample, hidden_size=450, latent
     model.load_state_dict(dict_buffer)
     model = model.cuda()
 
-    torch.manual_seed(0)
+    torch.manual_seed(1)
     with open(output_file, 'w') as out_file:
         for i in range(nsample):
             if i % 10 == 0:
                 print(i)
-            out_file.write(str(model.sample_prior())+'\n')
+            out_file.write(str(model.sample_prior(prob_decode=True))+'\n')
 
 if __name__ == '__main__':
     lg = rdkit.RDLogger.logger() 
