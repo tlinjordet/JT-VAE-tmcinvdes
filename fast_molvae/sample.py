@@ -41,21 +41,12 @@ def main_sample(
     model.load_state_dict(dict_buffer)
     model = model.cuda()
 
-<<<<<<< HEAD
-    torch.manual_seed(1)
-    with open(output_file, 'w') as out_file:
-        for i in range(nsample):
-            if i % 10 == 0:
-                print(i)
-            out_file.write(str(model.sample_prior(prob_decode=True))+'\n')
-=======
     torch.manual_seed(0)
     with open(output_file, "w") as out_file:
         for i in range(nsample):
             if i % 10 == 0:
                 print(i)
             out_file.write(str(model.sample_prior(prob_decode=True)) + "\n")
->>>>>>> 0df09ded9847c0b9cae3d9fd23d032b53fe2483f
 
 
 if __name__ == "__main__":

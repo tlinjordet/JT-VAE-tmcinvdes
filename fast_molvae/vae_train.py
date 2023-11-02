@@ -9,7 +9,6 @@ import sys
 from pathlib import Path
 
 import numpy as np
-import rdkit
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -141,9 +140,6 @@ def main_vae_train(
 
 
 if __name__ == "__main__":
-    lg = rdkit.RDLogger.logger()
-    lg.setLevel(rdkit.RDLogger.CRITICAL)
-
     parser = argparse.ArgumentParser()
     parser.add_argument("--train", required=True)
     parser.add_argument("--vocab", required=True)

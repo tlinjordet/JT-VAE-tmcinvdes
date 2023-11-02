@@ -9,7 +9,6 @@ from optparse import OptionParser
 from pathlib import Path
 
 import numpy as np
-import rdkit
 from tqdm import tqdm
 
 source = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -34,9 +33,6 @@ def tensorize(smiles, assm=True):
 
 
 def convert(train_path, pool, num_splits, output_path):
-    lg = rdkit.RDLogger.logger()
-    lg.setLevel(rdkit.RDLogger.CRITICAL)
-
     out_path = os.path.join(output_path, "./")
     if os.path.isdir(out_path) is False:
         os.makedirs(out_path)
@@ -64,9 +60,6 @@ def main_preprocess(train_path, output_path, num_splits=10, njobs=os.cpu_count()
 
 
 if __name__ == "__main__":
-    lg = rdkit.RDLogger.logger()
-    lg.setLevel(rdkit.RDLogger.CRITICAL)
-
     parser = OptionParser()
     parser.add_option("-t", "--train", dest="train_path")
     parser.add_option("-n", "--split", dest="nsplits", default=10)

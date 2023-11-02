@@ -1,12 +1,15 @@
 import argparse
+import os
+import sys
+from pathlib import Path
+
+import rdkit.Chem as Chem
+
+source = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, str(source))
 import sys
 
-import rdkit
-import rdkit.Chem as Chem
-from fast_jtnn.vocab import *
-import sys
-import argparse
-from .chemutils import (
+from fast_jtnn.chemutils import (
     enum_assemble,
     get_clique_mol,
     get_mol,
@@ -14,7 +17,8 @@ from .chemutils import (
     set_atommap,
     tree_decomp,
 )
-from .vocab import *
+from fast_jtnn.vocab import *
+
 
 class MolTreeNode(object):
     def __init__(self, smiles, clique=[]):
@@ -149,8 +153,8 @@ def main_mol_tree(oinput, ovocab, MAX_TREE_WIDTH=50):
 
 
 if __name__ == "__main__":
-    lg = rdkit.RDLogger.logger()
-    lg.setLevel(rdkit.RDLogger.CRITICAL)
+    # lg = rdkit.RDLogger.logger()
+    # lg.setLevel(rdkit.RDLogger.CRITICAL)
     sys.stderr.write("Running tree decomposition on the dataset")
 
     parser = argparse.ArgumentParser()
