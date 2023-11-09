@@ -118,14 +118,14 @@ def main_bo(
         pred, uncert = sgp.predict(X_test, 0 * X_test)
         error = np.sqrt(np.mean((pred - y_test) ** 2))
         testll = np.mean(sps.norm.logpdf(pred - y_test, scale=np.sqrt(uncert)))
-        print("Test RMSE: ", error)
-        print("Test ll: ", testll)
+        print(("Test RMSE: ", error))
+        print(("Test ll: ", testll))
 
         pred, uncert = sgp.predict(X_train, 0 * X_train)
         error = np.sqrt(np.mean((pred - y_train) ** 2))
         trainll = np.mean(sps.norm.logpdf(pred - y_train, scale=np.sqrt(uncert)))
-        print("Train RMSE: ", error)
-        print("Train ll: ", trainll)
+        print(("Train RMSE: ", error))
+        print(("Train ll: ", trainll))
 
         # We pick the next 60 inputs
         next_inputs = sgp.batched_greedy_ei(
@@ -135,7 +135,7 @@ def main_bo(
         # next_inputs = joblib.load('./next_inputs.pkl')
         valid_smiles = []
         new_features = []
-        for i in tqdm(range(sampling)):
+        for i in tqdm(list(range(sampling))):
             all_vec = next_inputs[i].reshape((1, -1))
             tree_vec, mol_vec = np.hsplit(all_vec, 2)
             tree_vec = create_var(torch.from_numpy(tree_vec).float())
@@ -147,7 +147,7 @@ def main_bo(
                 valid_smiles.append(s)
                 new_features.append(all_vec)
 
-        print(len(valid_smiles), "molecules are found")
+        print((len(valid_smiles), "molecules are found"))
         valid_smiles = valid_smiles
         new_features = next_inputs
         new_features = np.vstack(new_features)

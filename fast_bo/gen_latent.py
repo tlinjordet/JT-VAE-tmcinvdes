@@ -88,7 +88,7 @@ def main_gen_latent(
     model.eval()
     with torch.no_grad():
         latent_points = []
-        for i in tqdm(range(0, len(smiles), batch_size)):
+        for i in tqdm(list(range(0, len(smiles), batch_size))):
             batch = smiles[i : i + batch_size]
             mol_vec = model.encode_from_smiles(batch)
             latent_points.append(mol_vec.data.cpu().numpy())

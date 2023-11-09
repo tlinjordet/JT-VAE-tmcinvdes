@@ -25,7 +25,7 @@ parser.add_option("-b", "--batch", dest="batch_size", default=40)
 parser.add_option("-w", "--hidden", dest="hidden_size", default=200)
 parser.add_option("-l", "--latent", dest="latent_size", default=56)
 parser.add_option("-d", "--depth", dest="depth", default=3)
-opts,args = parser.parse_args()
+opts, args = parser.parse_args()
 
 vocab = [x.strip("\r\n ") for x in open(opts.vocab_path)]
 vocab = Vocab(vocab)
@@ -44,23 +44,27 @@ for param in model.parameters():
         nn.init.xavier_normal(param)
 
 model = model.cpu()
-print ("Model #Params: %dK" % (sum([x.nelement() for x in model.parameters()]) / 1000,))
+print(
+    ("Model #Params: %dK" % (sum([x.nelement() for x in model.parameters()]) / 1000,))
+)
 
 optimizer = optim.Adam(model.parameters(), lr=1e-3)
 scheduler = lr_scheduler.ExponentialLR(optimizer, 0.9)
 scheduler.step()
 
 dataset = PropDataset(opts.train_path, opts.prop_path)
-dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=4, collate_fn=lambda x:x)
+dataloader = DataLoader(
+    dataset, batch_size=batch_size, shuffle=True, num_workers=4, collate_fn=lambda x: x
+)
 
 MAX_EPOCH = 3
 PRINT_ITER = 20
 
-for epoch in xrange(MAX_EPOCH):
-    word_acc,topo_acc,assm_acc,steo_acc,prop_acc = 0,0,0,0,0
+for epoch in range(MAX_EPOCH):
+    word_acc, topo_acc, assm_acc, steo_acc, prop_acc = 0, 0, 0, 0, 0
 
     for it, batch in enumerate(dataloader):
-        for mol_tree,_ in batch:
+        for mol_tree, _ in batch:
             for node in mol_tree.nodes:
                 if node.label not in node.cands:
                     node.cands.append(node.label)
@@ -84,10 +88,13 @@ for epoch in xrange(MAX_EPOCH):
             steo_acc = steo_acc / PRINT_ITER * 100
             prop_acc = prop_acc / PRINT_ITER
 
-            print "KL: %.1f, Word: %.2f, Topo: %.2f, Assm: %.2f, Steo: %.2f, Prop: %.4f" % (kl_div, word_acc, topo_acc, assm_acc, steo_acc, prop_acc)
-            word_acc,topo_acc,assm_acc,steo_acc,prop_acc = 0,0,0,0,0
+            print(
+                "KL: %.1f, Word: %.2f, Topo: %.2f, Assm: %.2f, Steo: %.2f, Prop: %.4f"
+                % (kl_div, word_acc, topo_acc, assm_acc, steo_acc, prop_acc)
+            )
+            word_acc, topo_acc, assm_acc, steo_acc, prop_acc = 0, 0, 0, 0, 0
             sys.stdout.flush()
 
     scheduler.step()
-    print "learning rate: %.6f" % scheduler.get_lr()[0]
+    print("learning rate: %.6f" % scheduler.get_lr()[0])
     torch.save(model.state_dict(), opts.save_path + "/model.iter-" + str(epoch))

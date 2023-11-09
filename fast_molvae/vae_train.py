@@ -64,7 +64,10 @@ def main_vae_train(
         model.load_state_dict(torch.load(save_dir + "/model.epoch-" + str(load_epoch)))
 
     print(
-        "Model #Params: %dK" % (sum([x.nelement() for x in model.parameters()]) / 1000,)
+        (
+            "Model #Params: %dK"
+            % (sum([x.nelement() for x in model.parameters()]) / 1000,)
+        )
     )
 
     optimizer = optim.Adam(model.parameters(), lr=lr)
@@ -89,7 +92,7 @@ def main_vae_train(
     beta = beta
     meters = np.zeros(4)
 
-    for epoch in tqdm(range(epoch)):
+    for epoch in tqdm(list(range(epoch))):
         loader = MolTreeFolder(train, vocab, batch_size)  # , num_workers=4)
         for batch in loader:
             total_step += 1
@@ -108,16 +111,18 @@ def main_vae_train(
             if total_step % print_iter == 0:
                 meters /= print_iter
                 print(
-                    "[%d] Beta: %.3f, KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f, PNorm: %.2f, GNorm: %.2f"
-                    % (
-                        total_step,
-                        beta,
-                        meters[0],
-                        meters[1],
-                        meters[2],
-                        meters[3],
-                        param_norm(model),
-                        grad_norm(model),
+                    (
+                        "[%d] Beta: %.3f, KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f, PNorm: %.2f, GNorm: %.2f"
+                        % (
+                            total_step,
+                            beta,
+                            meters[0],
+                            meters[1],
+                            meters[2],
+                            meters[3],
+                            param_norm(model),
+                            grad_norm(model),
+                        )
                     )
                 )
                 sys.stdout.flush()
@@ -130,7 +135,7 @@ def main_vae_train(
 
             if total_step % anneal_iter == 0:
                 scheduler.step()
-                print("learning rate: %.6f" % scheduler.get_lr()[0])
+                print(("learning rate: %.6f" % scheduler.get_lr()[0]))
 
             if total_step % kl_anneal_iter == 0 and total_step >= warmup:
                 beta = min(max_beta, beta + step_beta)

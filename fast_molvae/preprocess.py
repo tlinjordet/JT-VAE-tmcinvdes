@@ -46,7 +46,7 @@ def convert(train_path, pool, num_splits, output_path):
     all_data_split = np.array_split(all_data, num_splits)
     print("Tensorizing Complete")
 
-    for split_id in tqdm(range(num_splits)):
+    for split_id in tqdm(list(range(num_splits))):
         with open(os.path.join(output_path, "tensors-%d.pkl" % split_id), "wb") as f:
             pickle.dump(all_data_split[split_id], f)
 

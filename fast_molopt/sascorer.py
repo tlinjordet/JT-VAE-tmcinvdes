@@ -15,7 +15,7 @@
 #
 # peter ertl & greg landrum, september 2013
 #
-from __future__ import print_function
+
 
 import math
 import os.path as op
