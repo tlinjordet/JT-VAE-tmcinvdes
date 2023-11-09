@@ -9,6 +9,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.optim.lr_scheduler as lr_scheduler
+
+sys.path.append("../molvae")
 from jtnn import *
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
@@ -50,6 +52,7 @@ else:
             nn.init.constant(param, 0)
         else:
             nn.init.xavier_normal(param)
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
 model = model.cuda()
 print(
@@ -73,16 +76,20 @@ dataloader = DataLoader(
 MAX_EPOCH = 6
 PRINT_ITER = 20
 
-for epoch in range(MAX_EPOCH):
-    word_acc, topo_acc, assm_acc, steo_acc, prop_acc = 0, 0, 0, 0, 0
 
+for epoch in range(MAX_EPOCH):
+    print(f"epoch: {epoch}")
+    word_acc, topo_acc, assm_acc, steo_acc, prop_acc = 0, 0, 0, 0, 0
+    i = 0
     for it, batch in enumerate(dataloader):
+        i += 1
+        print(f"batch {i} / {len(dataloader)}")
         for mol_tree, _ in batch:
             for node in mol_tree.nodes:
                 if node.label not in node.cands:
                     node.cands.append(node.label)
                     node.cand_mols.append(node.label_mol)
-
+        batch = torch.Tensor(batch)
         model.zero_grad()
         loss, kl_div, wacc, tacc, sacc, dacc, pacc = model(batch, beta)
         loss.sum().backward()
