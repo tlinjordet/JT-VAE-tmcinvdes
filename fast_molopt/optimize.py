@@ -9,9 +9,10 @@ import rdkit.Chem as Chem
 import sascorer
 import torch
 import torch.nn as nn
-from jtnn import *
 from rdkit.Chem import Descriptors
 from torch.autograd import Variable
+
+from fast_jtnn import *
 
 lg = rdkit.RDLogger.logger()
 lg.setLevel(rdkit.RDLogger.CRITICAL)
@@ -20,9 +21,10 @@ parser = OptionParser()
 parser.add_option("-t", "--test", dest="test_path")
 parser.add_option("-v", "--vocab", dest="vocab_path")
 parser.add_option("-m", "--model", dest="model_path")
-parser.add_option("-w", "--hidden", dest="hidden_size", default=200)
-parser.add_option("-l", "--latent", dest="latent_size", default=56)
-parser.add_option("-d", "--depth", dest="depth", default=3)
+parser.add_option("-w", "--hidden", dest="hidden_size", default=50)
+parser.add_option("-l", "--latent", dest="latent_size", default=24)
+parser.add_option("-d", "--depthT", dest="depthT", default=7)
+parser.add_option("-g", "--depthG", dest="depthG", default=2)
 parser.add_option("-s", "--sim", dest="cutoff", default=0.0)
 opts, args = parser.parse_args()
 
@@ -31,10 +33,12 @@ vocab = Vocab(vocab)
 
 hidden_size = int(opts.hidden_size)
 latent_size = int(opts.latent_size)
-depth = int(opts.depth)
 sim_cutoff = float(opts.cutoff)
 
-model = JTPropVAE(vocab, hidden_size, latent_size, depth)
+model = JTpropVAE(
+    vocab, int(hidden_size), int(latent_size), int(opts.depthT), int(opts.depthG)
+).cuda()
+print(model)
 model.load_state_dict(torch.load(opts.model_path))
 model = model.cuda()
 

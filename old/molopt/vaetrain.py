@@ -54,7 +54,7 @@ else:
             nn.init.xavier_normal(param)
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-model = model.cuda()
+model = model.cpu()
 print(
     ("Model #Params: %dK" % (sum([x.nelement() for x in model.parameters()]) / 1000,))
 )
@@ -89,7 +89,6 @@ for epoch in range(MAX_EPOCH):
                 if node.label not in node.cands:
                     node.cands.append(node.label)
                     node.cand_mols.append(node.label_mol)
-        batch = torch.Tensor(batch)
         model.zero_grad()
         loss, kl_div, wacc, tacc, sacc, dacc, pacc = model(batch, beta)
         loss.sum().backward()

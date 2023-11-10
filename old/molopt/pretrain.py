@@ -58,6 +58,7 @@ dataset = PropDataset(opts.train_path, opts.prop_path)
 dataloader = DataLoader(
     dataset, batch_size=batch_size, shuffle=True, num_workers=4, collate_fn=lambda x: x
 )
+dataloader.data.to(torch.device("cuda:0"))
 
 MAX_EPOCH = 3
 PRINT_ITER = 20
