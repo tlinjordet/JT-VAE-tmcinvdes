@@ -53,7 +53,7 @@ def convert(train_path, prop_path, pool, num_splits, output_path):
         )
 
     print("Tensorizing .....")
-    all_data = pool.map(tensorize_prop, data)
+    all_data = pool.map(tensorize, data)
     all_data_split = np.array_split(all_data, num_splits)
     prop_data_split = np.array_split(prop_data, num_splits)
     print("Tensorizing Complete")

@@ -91,21 +91,19 @@ class JTpropVAE(nn.Module):
         z_mol = torch.randn(1, self.latent_size).cuda()
         return self.decode(z_tree, z_mol, prob_decode)
 
-    def optimize(self, smiles, sim_cutoff, lr=2.0, num_iter=20):
-        mol_tree = MolTree(smiles)
-        mol_tree.recover()
+    def optimize(self, x_batch, sim_cutoff, lr=2.0, num_iter=20):
+        x_batch, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
+        x_tree_vecs, x_tree_mess, x_mol_vecs = self.encode(x_jtenc_holder, x_mpn_holder)
 
-        _, tree_vec, mol_vec = self.encode([mol_tree])
-
-        mol = Chem.MolFromSmiles(smiles)
+        mol = Chem.MolFromSmiles(x_batch[0].smiles)
         fp1 = AllChem.GetMorganFingerprint(mol, 2)
 
-        tree_mean = self.T_mean(tree_vec)
-        tree_log_var = -torch.abs(self.T_var(tree_vec))  # Following Mueller et al.
-        mol_mean = self.G_mean(mol_vec)
-        mol_log_var = -torch.abs(self.G_var(mol_vec))  # Following Mueller et al.
-        mean = torch.cat([tree_mean, mol_mean], dim=1)
-        torch.cat([tree_log_var, mol_log_var], dim=1)
+        z_tree_mean = self.T_mean(x_tree_vecs)
+        -torch.abs(self.T_var(x_tree_vecs))  # Following Mueller et al.
+        z_mol_mean = self.G_mean(x_mol_vecs)
+        -torch.abs(self.G_var(x_mol_vecs))  # Following Mueller et al.
+
+        mean = torch.cat([z_tree_mean, z_mol_mean], dim=1)
         cur_vec = create_var(mean.data, True)
 
         visited = []
@@ -118,7 +116,7 @@ class JTpropVAE(nn.Module):
 
         li, r = 0, num_iter - 1
         while li < r - 1:
-            mid = (li + r) / 2
+            mid = (li + r) // 2
             new_vec = visited[mid]
             tree_vec, mol_vec = torch.chunk(new_vec, 2, dim=1)
             new_smiles = self.decode(tree_vec, mol_vec, prob_decode=False)
@@ -149,14 +147,14 @@ class JTpropVAE(nn.Module):
         # tree_vec,mol_vec = torch.chunk(best_vec, 2, dim=1)
         new_smiles = self.decode(tree_vec, mol_vec, prob_decode=False)
         if new_smiles is None:
-            return smiles, 1.0
+            return x_batch[0].smiles, 1.0
         new_mol = Chem.MolFromSmiles(new_smiles)
         fp2 = AllChem.GetMorganFingerprint(new_mol, 2)
         sim = DataStructs.TanimotoSimilarity(fp1, fp2)
         if sim >= sim_cutoff:
             return new_smiles, sim
         else:
-            return smiles, 1.0
+            return x_batch[0].smiles, 1.0
 
     def forward(self, x_batch, beta):
         x_batch, x_prop, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
