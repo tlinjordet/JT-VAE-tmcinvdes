@@ -168,7 +168,8 @@ def tensorize_prop(tree_batch, prop_batch, vocab, assm=True):
             cands.extend([(cand, mol_tree.nodes, node) for cand in node.cands])
             batch_idx.extend([i] * len(node.cands))
 
-    jtmpn_holder = JTMPN.tensorize(cands, mess_dict)
+    # jtmpn_holder = JTMPN.tensorize(cands, mess_dict)
+    jtmpn_holder = None
     batch_idx = torch.LongTensor(batch_idx)
 
     return (

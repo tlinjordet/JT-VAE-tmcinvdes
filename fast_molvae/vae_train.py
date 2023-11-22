@@ -92,6 +92,7 @@ def main_vae_train(
     beta = beta
     meters = np.zeros(4)
 
+    print('Before epoch')
     for epoch in tqdm(list(range(epoch))):
         loader = MolTreeFolder(train, vocab, batch_size)  # , num_workers=4)
         for batch in loader:
@@ -103,6 +104,7 @@ def main_vae_train(
                 nn.utils.clip_grad_norm_(model.parameters(), clip_norm)
                 optimizer.step()
             except Exception as e:
+                print(f'Batch {total_step} failed')
                 print(e)
                 continue
 

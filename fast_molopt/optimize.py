@@ -29,7 +29,7 @@ parser.add_argument("--vocab_path", required=True)
 parser.add_argument("--model_path", required=True)
 parser.add_argument("--output_path", default="optimize-processed")
 parser.add_argument("--prop_path", default=True)
-parser.add_argument("--nsplits", type=int, default=10)
+parser.add_argument("--nsplits", type=int, default=2)
 
 parser.add_argument("--hidden_size", type=int, default=450)
 parser.add_argument("--batch_size", type=int, default=32)
