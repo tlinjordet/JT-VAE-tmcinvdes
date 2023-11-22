@@ -96,7 +96,7 @@ def main_vae_train(
     beta = beta
     meters = np.zeros(4)
 
-    for epoch in tqdm(list(range(epoch))):
+    for epoch in tqdm(list(range(epoch)), position=0, leave=True):
         loader = MolTreeFolder_prop(
             train, vocab, batch_size, shuffle=False
         )  # , num_workers=4)

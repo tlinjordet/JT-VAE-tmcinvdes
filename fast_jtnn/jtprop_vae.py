@@ -92,7 +92,7 @@ class JTpropVAE(nn.Module):
         return self.decode(z_tree, z_mol, prob_decode)
 
     def optimize(self, x_batch, sim_cutoff, lr=2.0, num_iter=20):
-        x_batch, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
+        x_batch, x_prop, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
         x_tree_vecs, x_tree_mess, x_mol_vecs = self.encode(x_jtenc_holder, x_mpn_holder)
 
         mol = Chem.MolFromSmiles(x_batch[0].smiles)

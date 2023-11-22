@@ -60,16 +60,18 @@ def convert(train_path, prop_path, pool, num_splits, output_path):
 
     print("Adding prop to data")
 
-    for split_id in tqdm(list(range(num_splits))):
+    for split_id in tqdm(list(range(num_splits)), position=0, leave=True):
         with open(os.path.join(output_path, "tensors-%d.pkl" % split_id), "wb") as f:
             pickle.dump((all_data_split[split_id], prop_data_split[split_id]), f)
 
     return True
 
 
-def main_preprocess(train_path, output_path, num_splits=10, njobs=os.cpu_count()):
+def main_preprocess(
+    train_path, prop_path, output_path, num_splits=10, njobs=os.cpu_count()
+):
     pool = Pool(njobs)
-    convert(train_path, pool, num_splits, output_path)
+    convert(train_path, prop_path, pool, num_splits, output_path)
     return True
 
 

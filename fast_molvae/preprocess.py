@@ -7,9 +7,9 @@ import sys
 from multiprocessing import Pool
 from optparse import OptionParser
 from pathlib import Path
-import rdkit
 
 import numpy as np
+import rdkit
 from tqdm import tqdm
 
 source = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -18,7 +18,6 @@ from fast_jtnn import *
 
 lg = rdkit.RDLogger.logger()
 lg.setLevel(rdkit.RDLogger.CRITICAL)
-
 
 
 def tensorize(smiles, assm=True):
@@ -51,7 +50,7 @@ def convert(train_path, pool, num_splits, output_path):
     all_data_split = np.array_split(all_data, num_splits)
     print("Tensorizing Complete")
 
-    for split_id in tqdm(list(range(num_splits))):
+    for split_id in tqdm(list(range(num_splits)), position=0, leave=True):
         with open(os.path.join(output_path, "tensors-%d.pkl" % split_id), "wb") as f:
             pickle.dump(all_data_split[split_id], f)
 
