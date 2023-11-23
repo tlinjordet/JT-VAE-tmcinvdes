@@ -46,7 +46,7 @@ def main_sample(
         for i in range(nsample):
             if i % 10 == 0:
                 print(i)
-            out_file.write(str(model.sample_prior(prob_decode=True)) + "\n")
+            out_file.write(str(model.sample_prior(prob_decode=False)) + "\n")
 
 
 if __name__ == "__main__":

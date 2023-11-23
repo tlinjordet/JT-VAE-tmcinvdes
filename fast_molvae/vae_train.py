@@ -35,13 +35,13 @@ def main_vae_train(
     beta=0.0,
     step_beta=0.002,
     max_beta=1.0,
-    warmup=40000,
-    epoch=20,
+    warmup=1000,
+    epoch=100,
     anneal_rate=0.9,
-    anneal_iter=40000,
-    kl_anneal_iter=2000,
+    anneal_iter=1000,
+    kl_anneal_iter=500,
     print_iter=50,
-    save_iter=5000,
+    save_iter=1000,
 ):
     vocab = [x.strip("\r\n ") for x in open(vocab)]
     vocab = Vocab(vocab)
@@ -72,7 +72,6 @@ def main_vae_train(
 
     optimizer = optim.Adam(model.parameters(), lr=lr)
     scheduler = lr_scheduler.ExponentialLR(optimizer, anneal_rate)
-    scheduler.step()
 
     def param_norm(m):
         return math.sqrt(sum([(p.norm().item() ** 2) for p in m.parameters()]))
@@ -89,11 +88,11 @@ def main_vae_train(
         )
 
     total_step = load_epoch
-    beta = beta
     meters = np.zeros(4)
 
     print('Before epoch')
     for epoch in tqdm(list(range(epoch))):
+        print(f'Epoch: {epoch}')
         loader = MolTreeFolder(train, vocab, batch_size)  # , num_workers=4)
         for batch in loader:
             total_step += 1
@@ -114,9 +113,10 @@ def main_vae_train(
                 meters /= print_iter
                 print(
                     (
-                        "[%d] Beta: %.3f, KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f, PNorm: %.2f, GNorm: %.2f"
+                        "[%d] Loss: %.3f,Beta: %.3f,KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f, PNorm: %.2f, GNorm: %.2f"
                         % (
                             total_step,
+                            loss.item(),
                             beta,
                             meters[0],
                             meters[1],
@@ -142,7 +142,9 @@ def main_vae_train(
             if total_step % kl_anneal_iter == 0 and total_step >= warmup:
                 beta = min(max_beta, beta + step_beta)
     #         torch.save(model.state_dict(), save_dir + "/model.epoch-" + str(epoch))
-    torch.save(model.state_dict(), save_dir + "/model.epoch-" + str(epoch))
+    torch.save(
+        model.state_dict(), save_dir + "/model.epoch-" + str(total_step)
+    )
     return model
 
 
@@ -164,14 +166,14 @@ if __name__ == "__main__":
     parser.add_argument("--beta", type=float, default=0.0)
     parser.add_argument("--step_beta", type=float, default=0.002)
     parser.add_argument("--max_beta", type=float, default=1.0)
-    parser.add_argument("--warmup", type=int, default=40000)
+    parser.add_argument("--warmup", type=int, default=500)
 
-    parser.add_argument("--epoch", type=int, default=20)
+    parser.add_argument("--epoch", type=int, default=100)
     parser.add_argument("--anneal_rate", type=float, default=0.9)
-    parser.add_argument("--anneal_iter", type=int, default=40000)
-    parser.add_argument("--kl_anneal_iter", type=int, default=2000)
+    parser.add_argument("--anneal_iter", type=int, default=1000)
+    parser.add_argument("--kl_anneal_iter", type=int, default=300)
     parser.add_argument("--print_iter", type=int, default=50)
-    parser.add_argument("--save_iter", type=int, default=5000)
+    parser.add_argument("--save_iter", type=int, default=1000)
 
     args = parser.parse_args()
     print(args)
