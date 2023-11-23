@@ -33,7 +33,7 @@ ELEM_LIST = [
 ]
 
 ATOM_FDIM = len(ELEM_LIST) + 6 + 5 + 1
-BOND_FDIM = 5
+BOND_FDIM = 6
 MAX_NB = 10
 
 

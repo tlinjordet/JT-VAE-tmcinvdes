@@ -33,7 +33,7 @@ ELEM_LIST = [
 ]
 
 ATOM_FDIM = len(ELEM_LIST) + 6 + 5 + 4 + 1
-BOND_FDIM = 5 + 6
+BOND_FDIM = 6 + 6
 MAX_NB = 6
 
 
@@ -61,6 +61,7 @@ def bond_features(bond):
         bt == Chem.rdchem.BondType.DOUBLE,
         bt == Chem.rdchem.BondType.TRIPLE,
         bt == Chem.rdchem.BondType.AROMATIC,
+        bt == Chem.rdchem.BondType.DATIVE,
         bond.IsInRing(),
     ]
     fstereo = onek_encoding_unk(stereo, [0, 1, 2, 3, 4, 5])

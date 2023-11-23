@@ -90,9 +90,9 @@ def main_vae_train(
     total_step = load_epoch
     meters = np.zeros(4)
 
-    print('Before epoch')
+    print("Before epoch")
     for epoch in tqdm(list(range(epoch))):
-        print(f'Epoch: {epoch}')
+        print(f"Epoch: {epoch}")
         loader = MolTreeFolder(train, vocab, batch_size)  # , num_workers=4)
         for batch in loader:
             total_step += 1
@@ -103,7 +103,7 @@ def main_vae_train(
                 nn.utils.clip_grad_norm_(model.parameters(), clip_norm)
                 optimizer.step()
             except Exception as e:
-                print(f'Batch {total_step} failed')
+                print(f"Batch {total_step} failed")
                 print(e)
                 continue
 
@@ -127,6 +127,7 @@ def main_vae_train(
                         )
                     )
                 )
+                print(f"Loss: {loss.item()}")
                 sys.stdout.flush()
                 meters *= 0
 
@@ -142,9 +143,7 @@ def main_vae_train(
             if total_step % kl_anneal_iter == 0 and total_step >= warmup:
                 beta = min(max_beta, beta + step_beta)
     #         torch.save(model.state_dict(), save_dir + "/model.epoch-" + str(epoch))
-    torch.save(
-        model.state_dict(), save_dir + "/model.epoch-" + str(total_step)
-    )
+    torch.save(model.state_dict(), save_dir + "/model.epoch-" + str(total_step))
     return model
 
 

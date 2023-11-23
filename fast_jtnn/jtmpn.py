@@ -28,11 +28,14 @@ ELEM_LIST = [
     "H",
     "Cu",
     "Mn",
+    "Ir",
+    "Be",
+    "Li",
     "unknown",
 ]
 
 ATOM_FDIM = len(ELEM_LIST) + 6 + 5 + 1
-BOND_FDIM = 5
+BOND_FDIM = 6
 MAX_NB = 15
 
 
@@ -59,6 +62,7 @@ def bond_features(bond):
             bt == Chem.rdchem.BondType.DOUBLE,
             bt == Chem.rdchem.BondType.TRIPLE,
             bt == Chem.rdchem.BondType.AROMATIC,
+            bt == Chem.rdchem.BondType.DATIVE,
             bond.IsInRing(),
         ]
     )
