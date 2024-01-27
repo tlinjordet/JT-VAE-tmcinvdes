@@ -47,7 +47,7 @@ class JTpropVAE(nn.Module):
         self.propNN = nn.Sequential(
             nn.Linear(self.latent_size * 2, self.hidden_size),
             nn.Tanh(),
-            nn.Linear(self.hidden_size, 1),
+            nn.Linear(self.hidden_size, 2),
         )
         self.prop_loss = nn.MSELoss()
 
