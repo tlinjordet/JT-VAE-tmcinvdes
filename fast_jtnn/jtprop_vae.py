@@ -107,10 +107,29 @@ class JTpropVAE(nn.Module):
         cur_vec = create_var(mean.data, True)
 
         visited = []
+        cuda0 = torch.device("cuda:0")
         for step in range(num_iter):
-            prop_val = self.propNN(cur_vec).squeeze()
-            grad = torch.autograd.grad(prop_val, cur_vec)[0]
-            cur_vec = cur_vec.data + lr * grad.data
+            prop_val = self.propNN(cur_vec)
+            # grad = torch.autograd.grad(prop_val, cur_vec,grad_outputs=torch.ones_like(prop_val))[0]
+            dydx3 = torch.tensor([], dtype=torch.float32, device=cuda0)
+            for i in range(2):
+                li = torch.zeros_like(prop_val)
+                li[:, i] = 1.0
+                d = torch.autograd.grad(
+                    prop_val, cur_vec, retain_graph=True, grad_outputs=li
+                )[
+                    0
+                ]  # dydx: (batch_size, input_dim)
+                dydx3 = torch.concat((dydx3, d.unsqueeze(dim=1)), dim=1)
+
+            dydx3 = dydx3.squeeze()
+            cur_vec.data + lr * dydx3[0].data
+            cur_vec.data + lr * dydx3[1].data
+
+            cur_vec = cur_vec.data + lr * dydx3[1].data + lr * dydx3[0].data
+
+            # cur_vec = cur_vec.data + lr * grad.data
+
             cur_vec = create_var(cur_vec, True)
             visited.append(cur_vec)
 
