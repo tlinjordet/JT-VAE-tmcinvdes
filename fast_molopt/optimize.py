@@ -1,14 +1,16 @@
 import argparse
+import json
 import math
 import os
 import random
 import sys
-from collections import deque
+import time
+from collections import defaultdict, deque
 from pathlib import Path
 
+import pandas as pd
 import rdkit
 import rdkit.Chem as Chem
-import sascorer
 import torch
 import torch.nn as nn
 from rdkit.Chem import Descriptors
@@ -36,9 +38,9 @@ parser.add_argument("--batch_size", type=int, default=32)
 parser.add_argument("--latent_size", type=int, default=56)
 parser.add_argument("--depthT", type=int, default=20)
 parser.add_argument("--depthG", type=int, default=3)
-parser.add_argument("--cutoff", type=float, default=0.2)
+parser.add_argument("--cutoff", type=float, default=0.5)
 
-parser.add_argument("--lr", type=float, default=1e-3)
+parser.add_argument("--lr", type=float, default=1.5)
 parser.add_argument("--clip_norm", type=float, default=50.0)
 parser.add_argument("--beta", type=float, default=0.0)
 parser.add_argument("--step_beta", type=float, default=0.002)
@@ -54,7 +56,6 @@ parser.add_argument("--save_iter", type=int, default=1000)
 
 
 opts = parser.parse_args()
-print(opts)
 
 vocab = [x.strip("\r\n ") for x in open(opts.vocab_path)]
 vocab = Vocab(vocab)
@@ -69,6 +70,7 @@ model = JTpropVAE(
 print(model)
 model.load_state_dict(torch.load(opts.model_path))
 model = model.cuda()
+
 
 # data = []
 # with open(opts.test_path) as f:
@@ -86,20 +88,33 @@ loader = MolTreeFolder_prop(
     opts.output_path, vocab, batch_size=1, shuffle=False
 )  # , num_workers=4)
 
+
+results = defaultdict(list)
+
+output_dir = Path(f"opt_{time.strftime('%Y%m%d-%H%M%S')}")
+output_dir.mkdir(exist_ok=True)
+
+with open(output_dir / "opts.json", "w") as file:
+    file.write(json.dumps(vars(opts)))
+
 for batch in loader:
     # Extract smiles
     smiles = batch[0][0].smiles
-    print(f"Smiles: {smiles}")
+
+    props = batch[1].numpy().squeeze()
+
+    results["props"].append(props)
+    results["smiles"].append(smiles)
 
     mol = Chem.MolFromSmiles(smiles)
-    score = 1
 
-    new_smiles, sim = model.optimize(batch, sim_cutoff=sim_cutoff, lr=2, num_iter=100)
+    new_smiles, sim = model.optimize(
+        batch, sim_cutoff=sim_cutoff, lr=opts.lr, num_iter=100
+    )
+
     new_mol = Chem.MolFromSmiles(new_smiles)
-    new_score = 0
-    print(f"New smiles {new_smiles}")
+    results["new_smiles"].append(new_smiles)
+    results["sim"].append(sim)
 
-    res.append((new_score - score, sim, score, new_score, smiles, new_smiles))
-    print(new_score - score, sim, score, new_score, smiles, new_smiles)
-
-print(sum([x[0] for x in res]), sum([x[1] for x in res]))
+df = pd.DataFrame(data=results)
+df.to_csv(output_dir / "optimize_results.csv", index=False)
