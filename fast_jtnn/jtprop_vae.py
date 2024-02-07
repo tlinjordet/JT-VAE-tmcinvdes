@@ -91,7 +91,7 @@ class JTpropVAE(nn.Module):
         z_mol = torch.randn(1, self.latent_size).cuda()
         return self.decode(z_tree, z_mol, prob_decode)
 
-    def optimize(self, x_batch, sim_cutoff, lr=2.0, num_iter=20):
+    def optimize(self, x_batch, sim_cutoff, lr=2.0, num_iter=20, type="both"):
         x_batch, x_prop, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
         x_tree_vecs, x_tree_mess, x_mol_vecs = self.encode(x_jtenc_holder, x_mpn_holder)
 
@@ -123,11 +123,15 @@ class JTpropVAE(nn.Module):
                 dydx3 = torch.concat((dydx3, d.unsqueeze(dim=1)), dim=1)
 
             dydx3 = dydx3.squeeze()
-            cur_vec.data + lr * dydx3[0].data
-            cur_vec.data + lr * dydx3[1].data
 
-            cur_vec = cur_vec.data + lr * dydx3[1].data + lr * dydx3[0].data
-
+            if type == "both":
+                cur_vec = cur_vec.data + lr * dydx3[1].data + lr * dydx3[0].data
+            elif type == "first":
+                cur_vec = cur_vec.data + lr * dydx3[0].data
+            elif type == "second":
+                cur_vec = cur_vec.data + lr * dydx3[1].data
+            else:
+                raise ValueError
             # cur_vec = cur_vec.data + lr * grad.data
 
             cur_vec = create_var(cur_vec, True)

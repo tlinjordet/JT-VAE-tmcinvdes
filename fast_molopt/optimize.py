@@ -109,7 +109,7 @@ for batch in loader:
     mol = Chem.MolFromSmiles(smiles)
 
     new_smiles, sim = model.optimize(
-        batch, sim_cutoff=sim_cutoff, lr=opts.lr, num_iter=100
+        batch, sim_cutoff=sim_cutoff, lr=opts.lr, num_iter=200, type="first"
     )
 
     new_mol = Chem.MolFromSmiles(new_smiles)
