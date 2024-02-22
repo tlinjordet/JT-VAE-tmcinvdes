@@ -67,7 +67,6 @@
 [Li]<-P(c1ccccc1)=c1c(Cl)c1C(F)(F)F
 [Be]=[C](NCc1ccco1)c1ccc(C)cc1
 [Li]<-S(CC)C1=C(C(F)(F)F)c2ccccc2C1
-[Li]<-N=c1scc(C)n1-c1ccccc1[N+](=O)[O-]
 [Li]<-n1ccc(C(C)=O)c(-c2ccccc2)c1
 [Li]<-N=C(CC)n1nccc1-c1ccccc1
 [Li]<-N#CC(c1ccc(C)cc1)c1ccsc1
@@ -115,7 +114,6 @@
 [Li]<-n1c(-n2cc(C)nn2)sc2ccccc21
 [Li]<-n1ncn(Cc2ccc(OC)cc2)c1C
 [Li]<-N(C(=O)c1ccccc1F)=C(C)OCC
-[Li]<-N1C=Nc2c(ccc3ccccc23)C1N
 [Be]=[C]1N(C(=C)C)C=CN1c1ccc(F)cc1
 [Be]=[C]1N(CC#N)C=CN1C(C)c1ccccc1
 [Li]<-n1nc(-c2ccccc2)n2ccccc21
@@ -166,7 +164,6 @@
 [Be]=[C]1N(C)C=CN1Cn1cnc2ccccc21
 [Be]=[C]1N(C)C=CN1CC(=O)c1ccccc1
 [Li]<-n1ccc(-c2ccccc2)c(C(C)=NO)c1
-[Li]<-N=C(CC)Nc1ccncc1C(=O)OC
 [Li]<-N1=C(C)N(c2ccc(F)cc2)C(=O)CC1
 [Li]<-n1ccc(Cc2ccc(C#N)cc2)cc1
 [Li]<-n1cc(C)cc(C(=C)c2cccnc2)c1
@@ -179,13 +176,10 @@
 [Be]=[C]1NC(N)=CN1Cc1ccc(OC)cc1
 [Li]<-n1ccc(-n2cnc(C(C)(C)O)c2)cc1
 [Li]<-n1ccn(CC(=O)c2ccc(F)cc2)c1N
-[Li]<-[nH]1cc(N=Nc2cccc(C)c2)nc1C
 [Li]<-n1cccc(-c2ccccc2)c1N=C=O
 [Li]<-n1cccc(-c2cccc(C(=O)O)c2)c1
 [Li]<-Nc1ccc(C#Cc2ccccc2)cc1
-[Li]<-N=c1[nH]cc(N)n1-c1ccccc1C#N
 [Be]=[C]1N(Cc2ccccc2)C=CN1C(C)OC
-[Li]<-[nH]1cc(N=Nc2ccc(C#N)cc2)c(C)n1
 [Li]<-O=C(NC1CCCCC1)c1ccccc1
 [Li]<-n1ccc(C(=O)c2ccc(F)cc2)cc1
 [Li]<-N=C1OC(CC)C2C(=O)c3ccccc3C12
@@ -211,8 +205,6 @@
 [Li]<-n1cccc(C23CCN(CC2)C(C=C)C3)c1
 [Be]=[C]1Nc2c(SCCCC)cccc2N1C
 [Be]=[C]1N(Cc2ccccc2)C=CN1C(C)N
-[Li]<-[nH]1cnc(-c2ccc(OC)cc2)c1CC
-[Li]<-[nH]1cnc(N2CC(=O)c3ccccc32)c1
 [Li]<-n1ccc(C(=O)OC)c(-c2ccccc2)c1
 [Be]=[C]1NCN(c2ccccc2Cl)C1(N)C=C
 [Li]<-n1cn(C)cc1-c1ccc([N+](=O)[O-])cc1
@@ -270,14 +262,12 @@
 [Li]<-Nc1ccccc1C=Cc1ccccc1N
 [Li]<-N1=CC(c2ccccc2)C(=NC(C)(C)C)C1
 [Li]<-n1cccc(C=NN=Cc2csc(C)c2)c1
-[Li]<-N=C(C)N(C)c1ccc([Si](C)(C)C)cc1
 [Li]<-n1cccc(-c2cccc(OC(C)=O)c2)c1
 [Li]<-n1ccc(-c2cc(C)ccc2C(C)=O)cc1
 [Li]<-n1cc(C=O)cc(-c2cncn2CCCl)c1
 [Li]<-n1cc2ccccc2c(-n2cccn2)n1
 [Be]=[C]1NC(N)(c2ccccc2)c2ccccc21
 [Be]=[C]1N(Cc2ccccc2)C=CN1C(C)=O
-[Li]<-N=C(C)N(C)c1ccc(C(=O)OC)cc1
 [Li]<-n1c(C(C)C)n(C(C)C)c2ccccc21
 [Li]<-n1cccc(-c2ccccc2[N+](=O)[O-])c1
 [Be]=[C]1NC(N)c2ccccc2C(N)(CO)N1
@@ -297,7 +287,6 @@
 [Be]=[C]1NC(OC)C(c2ccccc2)C(=O)O1
 [Li]<-N1=COC(Nc2cncnc2N(C)C)C1
 [Be]=[C]1CN(C(C)(O)O)c2cc(C(C)C)ccc21
-[Li]<-N=C(C)N1CCN(c2cccc(Cl)n2)CC1
 [Li]<-n1cccc(C=Nc2ccccc2)c1O
 [Li]<-NCc1cccc(N=Nc2ccccc2)c1
 [Li]<-n1cc(C)cc(B2C=CNC(N)C2=O)c1
@@ -310,7 +299,6 @@
 [Be]=[C]1N(CC)C(Cl)=CN1c1cccc(C)c1
 [Be]=[C]1NC=C(N)N1c1ccc(C)c(C(C)C)c1
 [Li]<-n1ccc(C(C)(CC)c2cn[nH]c2)cc1
-[Li]<-N1C=NCC(N)(Sc2ccccc2)C1C
 [Li]<-n1ccc(N=Cc2ccccc2)cc1C
 [Li]<-N=c1[nH]c(C)c(C)n1Cc1ccccc1
 [Be]=[C]1N(C)C=CN1Cc1cccc(C=C)c1
@@ -356,7 +344,6 @@
 [Be]=[C]1CNC(N)(c2ccccc2)O1
 [Li]<-N1(Cc2ccccc2)CCCC1
 [Be]=[C]1N(C(C)C)CC2CCCCN12
-[Li]<-N=C(C)Nc1cccc(C)c1C
 [Li]<-N=C(OC)c1ccccc1OC
 [Li]<-n1ccc(-c2nnc(C)o2)cc1
 [Li]<-O=C1CCN(C2CCCCC2)C1
@@ -386,7 +373,6 @@
 [Be]=[C]1NC=C(N)N1C(Br)C(F)(F)F
 [Li]<-NCc1ccc(C(F)(F)F)cc1
 [Li]<-n1ccn(Cc2cccnc2)n1
-[Li]<-N=C(N)c1ccc(C)c(C)c1C
 [Be]=[C]1N(CC)C=CN1C(Br)C(=O)O
 [Li]<-[O-][n+]1c(C)cccc1C(C)(C)C
 [Li]<-N1CCCC1CN1CCOCC1
@@ -403,7 +389,6 @@
 [Li]<-P1(c2ccccc2)OC1C(C)=O
 [Li]<-S=c1[nH]ccn1Cc1cccs1
 [Li]<-P(C)=c1[nH]c2ccccc2n1C
-[Li]<-N=C(CC)NC(C)C(=O)OCC
 [Li]<-NCc1ccc2ccncc2c1
 [Li]<-n1cc(-c2cccnc2)n(C)n1
 [Be]=[C](Nc1ccc(C)cc1)C(C)C
@@ -430,7 +415,6 @@
 [Li]<-n1c(COC)[nH]c2ccccc21
 [Li]<-S=C(c1ccc(C)cc1)N(C)C
 [Li]<-n1nc(-c2ccccc2)sc1N
-[Li]<-[nH]1nnc(-c2ccccc2)c1C
 [Be]=[C]1Oc2cccc(OC)c2N1C
 [Be]=[C](C)Nc1ccc(C(C)C)cc1
 [Li]<-n1cn(C)nc1-c1ccccc1
@@ -459,7 +443,6 @@
 [Li]<-S=c1cc(C(C)(C)C)c(C)n[nH]1
 [Be]=[C]1OC(OC)=CC2=C1CCCC2
 [Li]<-n1[nH]c(C)c(C(=O)N(C)C)c1C
-[Li]<-[nH]1c(N)nnc1-c1cscc1Cl
 [Li]<-N1=CN(C(C)C)C2C=CC=CC21
 [Li]<-NC1CCCc2ccccc2C1
 [Li]<-N=Cc1cccc(C(F)(F)F)c1
@@ -490,7 +473,6 @@
 [Li]<-N1=CC(C)(CC)CC1NC(C)=O
 [Li]<-n1cc(-c2cscc2Br)[nH]c1N
 [Li]<-n1ccn(-c2ncc(O)cn2)c1
-[Li]<-[nH]1c(C(C)=O)nc2ccccc21
 [Li]<-Nc1cc(C(N)=O)ccc1OC
 [Li]<-n1cccc(C(=O)O)c1C(=O)O
 [Li]<-n1nn(-c2ccccc2)cc1C
@@ -504,7 +486,6 @@
 [Li]<-S=C(SC)C(=O)c1ccccc1
 [Li]<-N1=C(c2ccc(N)cc2)OCC1
 [Li]<-n1csc2c(N(C)C)cccc21
-[Li]<-[nH]1c(-c2ccccc2)cnc1C
 [Li]<-n1c(N)cccc1-c1ccoc1
 [Li]<-P(C)(NC(C)=O)c1ccccc1
 [Li]<-O=Cc1ccc(OC)c(OC)c1
@@ -535,7 +516,6 @@
 [Li]<-N(C)=C(NCC(=O)OC)C(C)=O
 [Li]<-n1cnc2[nH]c(C)c(O)c(=O)n21
 [Li]<-P(O)(c1cnc(C)[nH]1)C(C)(C)C
-[Li]<-[nH]1c(C(N)=O)nc2ccccc21
 [Li]<-N1=Cc2ccccc2C1OCC
 [Li]<-n1ccn(Cc2ccccn2)c1
 [Li]<-N1CC(=O)C(C)(C(=O)OC)C1C
@@ -545,11 +525,9 @@
 [Li]<-n1c(C(S)S)sc2ccccc21
 [Li]<-n1cn(C)c2c(C#N)cccc21
 [Li]<-N1=NN(c2ccccn2)CC1=O
-[Li]<-[nH]1c(C)nc2c(OC)cccc21
 [Li]<-S=C(Nc1ccccc1)C(N)=S
 [Li]<-n1cc(C)cn1C(C)C(=O)CN
 [Be]=[C]1CN(C([SiH3])[Si](C)(C)C)CN1C
-[Li]<-N=C(CC)Nc1ccnc(Cl)c1
 [Li]<-n1ccc(CCC(=O)OC)cc1
 [Li]<-S=C1NC(=O)CC(=O)N1C(C)C
 [Li]<-S=C1NC(C)=C(C(N)=O)C(C)N1
@@ -581,7 +559,6 @@
 [Li]<-N1C=CN(C(C)C(=O)OCC)C1
 [Be]=[C]1N(CC)C(Cl)=C2NC=CCN12
 [Li]<-NCc1ccccc1C(F)(F)F
-[Li]<-N=C1C=C(C)NCN1C(C)(C)C
 [Be]=[C]1N(C)C=CN1c1ccccc1
 [Li]<-n1cc(C)c(-c2ccccc2)[nH]1
 [Be]=[C]1NC(N)(C(=C)OC)CN1CC
@@ -603,14 +580,12 @@
 [Li]<-S=C1CN(C(C)C)CN1C(C)C
 [Be]=[C]=Cc1cccc(OC)c1OC
 [Be]=[C](N)C1=CC(O)(O)CC(OC)=C1
-[Li]<-[nH]1cnc(N)c1-c1ccccc1
 [Li]<-S=C(NC(C)(C)C)N(CC)CC
 [Li]<-S(Cc1ccsc1)c1ccsc1
 [Li]<-n1ccc(C(C)=NN(C)C)cc1
 [Be]=[C]1NC(N)=CN1C(C)C(=O)OC
 [Li]<-N1=CC(c2ccccc2)=CC1C
 [Li]<-NC(C)c1ccc(C(=C)C)cc1
-[Li]<-[nH]1ncc(-c2ccccc2)c1N
 [Li]<-n1ccc(-c2c[nH]cc2C)cc1
 [Li]<-P(O)(C1CCCCC1)C(C)(C)C
 [Li]<-[O-][n+]1cccc2ccc(C)cc21
@@ -639,7 +614,6 @@
 [Li]<-n1ccncc1C=C(C)OCC
 [Li]<-S=C(C)Nc1c(C)cccc1C
 [Be]=[C]1NC(N)=C(Nc2c[nH]cn2)N1
-[Li]<-[nH]1c(N)nc2cc(C#N)ccc21
 [Li]<-P(F)C1(C)C(C)=C(C)C(C)=C1C
 [Li]<-n1ccc(-c2c[nH]c(N)n2)cc1
 [Be]=[C]1Nc2cc(C)c(C)cc2N1C
@@ -652,11 +626,9 @@
 [Li]<-N(CCO)=C1C=CC(F)(F)C=C1
 [Li]<-S=c1[nH]c([N+](=O)[O-])cn1C(C)C
 [Be]=[C]1N(CC=C)CCN1CCOC
-[Li]<-N=C(C)NCc1ccccc1C
 [Be]=[C]1CN(C(C)C)C2(CCCN2)N1
 [Li]<-n1cccc(-c2cnc(N)[nH]2)c1
 [Li]<-N(CC(=O)OCC)CC(F)(F)F
-[Li]<-N1C=NC(N)C1c1cccnc1
 [Li]<-n1ccn(-c2ccccc2Br)c1
 [Be]=[C]1NC=C(N)N1C(C)C(=O)OC
 [Li]<-n1oc(-c2ccncc2)cc1N
@@ -684,20 +656,16 @@
 [Li]<-n1ccc(C2NC=NC2N)cc1
 [Li]<-n1cccc(COCCCO)c1
 [Li]<-n1cc(C)cc2ccc(C)cc21
-[Li]<-[nH]1cnc(CC(=O)OCC)c1N
 [Li]<-N#Cc1ccccc1C=NOC
-[Li]<-N=C(O)Nc1cccc(C)c1C
 [Li]<-S=c1[nH]cc(C(C)C)n1C(C)C
 [Li]<-N1=CN(C2OC(C)CC2C)CC1
 [Li]<-n1c(N)sc2ccc(OC)cc21
 [Li]<-P(Cl)(c1ccc(C)cc1)C(C)C
-[Li]<-[nH]1c(N)nc2c(C)c(C)ccc21
 [Li]<-S=C(C(=O)OC)c1ccccc1
 [Li]<-n1cc2c(n1C(C)O)CCC=C2
 [Li]<-P1(C(C)(C)C)CC(C(F)(F)F)O1
 [Li]<-N1=CN(c2ccncc2Br)CC1
 [Li]<-P(C)=Cc1cc(C)c(C)cc1C
-[Li]<-[nH]1cnc(-c2ccccc2)c1C
 [Li]<-P(=C1CCCC1)c1ccccc1
 [Li]<-O=C(O)c1nc2ccccc2[nH]1
 [Li]<-OC(C)Nc1cccc(OC)c1
@@ -707,7 +675,6 @@
 [Li]<-N1C(N)C2c3ccccc3SC21
 [Be]=[C]=Nc1cnnc(C(C)(C)C)c1
 [Li]<-N1CC(N)(CC)c2ccccc21
-[Li]<-N=C(C)N1CCN(C(C)=O)CC1
 [Li]<-n1ccc(C(=O)NOCC)cc1
 [Li]<-S=C(C(=O)NC)c1ccccc1
 [Li]<-n1cc2cc(C(=O)O)ccc2[nH]1
@@ -758,7 +725,6 @@
 [Li]<-NC(CO)C(=C)c1ccccc1
 [Li]<-n1c(N)sc2c(C#N)cccc21
 [Li]<-n1c(C(C)O)[nH]c2ccccc21
-[Li]<-[nH]1ncc(-c2cccnc2)c1C
 [Li]<-P1OCC(C)(C)C(C)(C(C)C)O1
 [Li]<-n1ccn(C(C)c2ccsc2)c1
 [Li]<-n1cncn1Cc1ccncc1
@@ -797,12 +763,10 @@
 [Li]<-n1ccc(C=NC(C)(C)C)cc1
 [Li]<-S(Cc1ccccc1)CN(C)C
 [Li]<-n1cn(Cc2ccccn2)cn1
-[Li]<-[nH]1cc(-c2ccccc2)nc1N
 [Li]<-N1=C(N)OCC1c1ccccc1
 [Li]<-O=C(C)Nc1ccc(C)c(C)c1
 [Be]=[C](NC)Nc1c(C)cccc1C
 [Be]=[C]1Nc2c(SC)cccc2N1C
-[Li]<-[nH]1c(N)nnc1-c1ccccc1
 [Be]=[C]1CN(c2ccccc2)C(N)N1
 [Li]<-N=C1C=CC2(C=CC=CC2)C=C1
 [Li]<-n1nn(CCO)c2ccccc21
@@ -836,7 +800,6 @@
 [Be]=[C]1Oc2cc(I)ccc2N1CC
 [Li]<-n1c(C)oc2c(C)cc(C)cc21
 [Li]<-NCc1ccc(OC)c(OC)c1
-[Li]<-[nH]1c(C(C)N)nc2ccccc21
 [Be]=[C]1N(C)C=CN1Cc1ccsc1
 [Li]<-N1=CSC(n2cc(C)c(N)n2)C1
 [Li]<-N(C)=CNc1cc(C)cc(C)c1
@@ -850,7 +813,6 @@
 [Li]<-P(Cl)(C(=O)OC)c1ccccc1
 [Li]<-n1cc2cc(C(N)=O)ccc2[nH]1
 [Li]<-n1cccc(-c2scnc2C)c1
-[Li]<-[nH]1nc(N)c2c1C1CC2C=C1O
 [Be]=[C]1NC=CN1CC1CCCCC1
 [Li]<-n1c(-c2scnc2O)csc1N
 [Li]<-S1CCN(c2ccccc2)CC1
@@ -861,14 +823,12 @@
 [Li]<-n1nnn(C)c1-c1ccccn1
 [Li]<-n1cccc(Cc2cccs2)c1
 [Li]<-O=c1ccn(CC)c(C(C)C)c1
-[Li]<-N=C(CC)N=Cc1ccccn1
 [Li]<-n1cccc(-c2ccc(C)s2)c1
 [Li]<-n1cccn1Cc1ccncc1
 [Li]<-NC(C)c1ccc(C(C)=O)cc1
 [Be]=[C](c1ccccc1)n1ccnc1
 [Be]=[C]1N(C(C)(C)C)C(N)NC1(C)C
 [Li]<-S=c1[nH]c(CC(=O)C=C)nn1C
-[Li]<-N=C(CC)Nc1cccc(O)c1
 [Li]<-n1csc(-c2cccc(C)c2)n1
 [Li]<-Nc1cc(I)ccc1C(F)(F)F
 [Li]<-O=c1[nH]c(CC)c(CC)n1CC
@@ -882,7 +842,6 @@
 [Be]=[C]1N(CC)C=CN1c1ccc(SC)cc1
 [Be]=[C]1CN(c2ccc(C)c(C)c2C)C(=O)N1
 [Be]=[C](Nc1cccc(I)c1)c1ccccc1
-[Li]<-[nH]1cc(-c2ccccc2)c(C(C)(C)C)n1
 [Li]<-n1cccc2c(-c3ccsc3)cncc21
 [Li]<-n1cccc(-c2cn[nH]c2C(F)(F)F)c1
 [Be]=[C]1N(Cc2ccccn2)C=CN1C(C)C
@@ -931,7 +890,6 @@
 [Li]<-n1nn(-c2cccnc2)c2ccccc21
 [Li]<-n1cccc(C(C)=Cc2ccccc2)c1
 [Li]<-n1ccn(C(C)C(=C)c2ccccc2)c1
-[Li]<-[nH]1cnc2cc(-c3ccccc3)ccc21
 [Be]=[C]1NC(C(C)(C)C)=C(NC(C)(C)C)N1C
 [Be]=[C](Nc1ccc(C)cc1)c1ccccc1
 [Li]<-n1cccc(C(C)=NNC(=S)N(C)C)c1
@@ -981,9 +939,7 @@
 [Li]<-n1c(-c2ccccc2O)[nH]c2[nH]cnc21
 [Li]<-n1cccc(C(C)N2CCSSCC2)c1
 [Li]<-N#Cc1cccc(N(C(C)C)C(C)C)c1
-[Li]<-[N-]=[N+](C)c1cccc(-c2ccccc2)c1
 [Li]<-n1csc(N2CCCc3ccccc32)c1
-[Li]<-N1C(N)=NC(C)(c2ccccc2)C1=NC
 [Li]<-P(Cl)(C(Cl)C(F)(F)F)C(F)(F)C(F)(F)F
 [Li]<-n1ccc(N=Nc2ccc(C)cc2)cc1
 [Li]<-n1cccc(C=C(C)c2ccccc2)c1
@@ -1004,11 +960,9 @@
 [Li]<-[O-][N+]1=CC(C)=C(C)C1(O)c1ccccc1
 [Li]<-n1ccn(Cc2c(C)cc(C)cc2C)c1
 [Li]<-Nc1ccc(C=Nc2ccccc2)cc1
-[Li]<-N1CCN(c2ccccc2[N+](=O)[O-])CC1
 [Li]<-n1ccc(N)c(-c2ccc(OC)cc2)c1
 [Li]<-S=C(NC(=O)c1cccs1)N(CC)CC
 [Li]<-O=c1cc(Nc2ccccc2)occ1C
-[Li]<-N1C=NC(C)C1(N)c1cccc(OC)c1
 [Li]<-N1=C(C)C=CN(Cc2ccccc2)C1N
 [Li]<-n1c(C)cc(C)n1-c1ccc(C#N)cc1
 [Be]=[C]1NC(c2ccc(F)c(F)c2)=C(N)N1C
@@ -1215,12 +1169,10 @@
 [Be]=[C](C)Nc1ccc(C)c(C)c1
 [Be]=[C](C)NC(C)c1ccccc1Cl
 [Li]<-Nc1cccc(C(=O)O)c1C
-[Li]<-[nH]1cnc(-c2ccccc2)n1
 [Li]<-P1(c2ccccc2)C23CC21C3=C
 [Li]<-n1cc([N+](=O)[O-])n(C(C)=O)c1
 [Li]<-NNC(=O)c1ccc(F)cc1
 [Li]<-Nc1cccc(C)c1N=CC
-[Li]<-[nH]1nc(-c2ccccc2)nc1N
 [Li]<-n1cccn1CCOCCCC
 [Li]<-O=C(Nc1ccccc1)C(C)=O
 [Li]<-n1cccc(-c2nnc(C)o2)c1
@@ -1230,7 +1182,6 @@
 [Li]<-n1csc(-c2nc(N)cs2)c1
 [Be]=[C]1NC(N)(C(C)=O)NC1(N)C=C
 [Li]<-n1ccn(-c2ccccc2C)c1
-[Li]<-n1c(C)cn(C(C)O)c1[N+](=O)[O-]
 [Li]<-P(Cl)(OCC)c1ccccc1
 [Li]<-n1ccn(C(C)c2c[nH]cn2)c1
 [Li]<-n1cccc2cnc(N)cc21
@@ -1252,12 +1203,9 @@
 [Li]<-P1(c2ccccc2)CC1=C(C)C
 [Li]<-O=C1C2CCC(C)(C2)C1(C)C
 [Li]<-P1CC(C(C)(C)C)C(N(C)C)=N1
-[Li]<-N=C(C)Nc1cccc(O)c1
 [Li]<-n1cn(-c2ccccc2C)cn1
 [Li]<-NC1C2CC3CC(C2)CC1C3
-[Li]<-N(=C=CC#N)c1ccccc1
 [Li]<-P1(C)C(C)c2ccccc2C1C
-[Li]<-N(CC)C(=O)c1ccccc1
 [Li]<-n1cc(-c2ccccc2)oc1C
 [Li]<-n1c(C(=O)O)[nH]c2ccccc21
 [Li]<-P(O)(CC(C)C)c1ccccc1
@@ -1268,7 +1216,6 @@
 [Li]<-N1N=C(c2ccccc2)SC1C
 [Li]<-n1cccc(C2CCNC2)c1
 [Li]<-N(=C(C)OCC)c1ccccc1
-[Li]<-[nH]1cc(N)c(-c2ccccc2)n1
 [Be]=[C]=Nc1ccc(C)c(OC)c1
 [Li]<-n1ccn(N=Cc2ncc[nH]2)c1
 [Be]=[C]1N(CC)C=CN1CCC(C)C
@@ -1288,9 +1235,7 @@
 [Li]<-[C]Nc1ccc([N+](=O)[O-])cc1C
 [Li]<-n1cc(-c2csc(C)n2)sc1N
 [Li]<-Nc1cccc(C)c1C(F)(F)F
-[Li]<-N=C(C)Nc1ccc(C)c(C)c1
 [Li]<-n1c(C(=O)OCC)ccn1C
-[Li]<-N=C(CC)N1CCCCC1N
 [Li]<-n1cccc(C2CCCCN2)c1
 [Li]<-P(Cl)(C(=S)Cl)c1ccccc1
 [Li]<-n1csc(Cc2ccccc2)c1
@@ -1298,8 +1243,6 @@
 [Li]<-N(CCCC)=C(C)C(F)(F)F
 [Li]<-n1ccc(-c2ccccn2)n1C
 [Be]=[C]1c2ccccc2N(C)N1C
-[Li]<-n1ccn(C(O)(O)C(F)(F)F)c1
-[Li]<-[nH]1cnc(NC2CCCNC2)c1
 [Li]<-n1cnn(C)c1-c1ccccc1
 [Li]<-N1=C(C)OCC12NC=CN2C#N
 [Li]<-n1cccc(C(=C)C(C)=O)c1
@@ -1319,7 +1262,6 @@
 [Li]<-N(=CC(=O)c1ccccc1)CC
 [Be]=[C]1NC(c2ccccc2)=C(C)S1
 [Li]<-N1=COC(c2cccnc2)C1
-[Li]<-N1C=NC(C)c2ccccc21
 [Li]<-Nc1nccc2c1OC(C)(C)O2
 [Li]<-O=C(OC)C1NCCCC1=C
 [Li]<-N1=C(N)C=CN(CCC(=O)O)C1
@@ -1328,7 +1270,6 @@
 [Li]<-P1(C)NC(N)C2(CN=CNC2)N1
 [Be]=[C](N1CCCC1)N1CCCC1
 [Li]<-n1nc(-c2ccccn2)sc1N
-[Li]<-N=C(C)NCc1ccccn1
 [Be]=[C]1NCN(C(C)(C)C)C=C1N
 [Li]<-N(Cc1ccsc1)C(C)(O)O
 [Li]<-N(C)=CNC1C=CC=C(O)C1
@@ -1401,12 +1342,10 @@
 [Be]=[C]1SC(N)=CN1C(C)C(=O)O
 [Li]<-n1cccc(C2CCCCC2)c1
 [Li]<-n1cc(-c2cnc(N)s2)sc1N
-[Li]<-N=C1N(CCC)CCN1C(C)C
 [Li]<-Nc1cc(O)cc(C(=O)O)c1
 [Li]<-n1ccn(-c2ccnnc2)c1
 [Be]=[C](C)N1CSc2ccccc21
 [Li]<-n1ccn(CC(=O)C(C)(C)C)c1
-[Li]<-N=C(CC)Nc1ccncc1
 [Li]<-n1cn(CC)c2c(Br)cccc21
 [Li]<-n1cn(-c2ccncc2)c(C)n1
 [Be]=[C]1NC(F)(F)CC(C)(C)N1C
@@ -1456,12 +1395,10 @@
 [Li]<-n1cn(C)c2ncnc(O)c21
 [Li]<-n1cccc(NS(=O)CC)c1C
 [Li]<-P(C)(CCBr)c1ccccc1
-[Li]<-N1C(=O)Cc2cc(OC)ccc21
 [Be]=[C]1N(C(C)C)C=CN1C(C)C#N
 [Li]<-N1CCC(c2ccncc2)C1
 [Be]=[C](C)NC(C)c1ccccc1
 [Be]=[C]1C(N)NCNC1(N)C(O)O
-[Be]=[C]1CCN(c2cccnc2)C1
 [Li]<-n1ccc(N(C)C(C)O)cc1
 [Li]<-S=C1NC2(C)C=CC=CC2S1
 [Li]<-N1CCN(C)CCN(C)CC1
@@ -1481,13 +1418,11 @@
 [Li]<-n1cc([N+](=O)[O-])n(CCO)c1
 [Be]=[C](NC(C)C)c1ccccc1
 [Li]<-n1c[nH]c2cc(C)cc(Br)c21
-[Li]<-N=C(C(=O)OC)N1CCCCC1
 [Be]=[C]1NC2(CCCCN2)NC1N
 [Li]<-n1ccn(-c2ccccc2)c1C
 [Li]<-NC(C)c1ccc(C)c(C)c1
 [Li]<-N(CCO)Cc1cccnc1
 [Be]=[C]1Oc2c(OC)cccc2N1C
-[Li]<-N=C(CC)N(C(C)C)C(C)C
 [Li]<-O=C(OC)c1ccc(C)cc1
 [Li]<-n1ccccc1-c1[nH]ncc1C
 [Li]<-n1ccc(-c2cc(C)[nH]n2)cc1
@@ -1511,9 +1446,7 @@
 [Li]<-n1ccc(-c2ccncn2)cc1
 [Li]<-N(C(=C)C)=C1NC(N)NC1N
 [Li]<-n1cnn2c(=O)c(O)c(C)[nH]c21
-[Li]<-N=C(CC)NCC(=O)OCC
 [Li]<-n1ccc(C(C)=O)c(C(C)=O)c1
-[Li]<-N=CNc1ccccc1C#N
 [Li]<-P1(C([SiH3])[Si](C)(C)C)OCC1C
 [Li]<-n1ccc(C(=O)NCCO)cc1
 [Li]<-S=c1n(CCC)ccn1C(C)C
@@ -1527,7 +1460,6 @@
 [Li]<-O=C1CNC(N)(c2c[nH]cn2)N1
 [Li]<-N=C(CC)OC(C)(C)C(F)(F)F
 [Li]<-n1c(-c2ccccc2)ccn1S
-[Li]<-N1C=NC(C)(C)C1(CC)CC
 [Li]<-n1csc2cc(N(C)C)ccc21
 [Li]<-N1=C(c2ccccc2)OCC1N
 [Be]=[C]1OC=C2CCC=CC2=C1C
@@ -1576,11 +1508,9 @@
 [Li]<-N(=C(C)C)c1cccc(C)c1
 [Li]<-S(CCOCC)CCC(C)C
 [Li]<-n1cc(-c2csc(Cl)n2)sc1C
-[Li]<-[nH]1ncc(-c2ccccc2)c1O
 [Li]<-n1[nH]c2c(=O)[nH]cnc2c1C
 [Li]<-O=c1cc(P)c2ccccc2o1
 [Li]<-n1ccn(Cc2cccs2)c1
-[Li]<-N1C(=O)C(N)=C(N)NC1(C)C
 [Be]=[C]1Oc2cc(C)c(C)cc2N1C
 [Li]<-NCc1c(C)cc(C)cc1C
 [Li]<-N#CN=Cc1cccc(C)c1C
@@ -1629,7 +1559,6 @@
 [Li]<-Nc1cccc(CC)c1CC
 [Li]<-O=C(CC#C)c1ccccc1
 [Li]<-n1ccn(CCOCC=C)c1
-[Li]<-[nH]1c(C(C)C)nc2ccccc21
 [Li]<-n1cccc(C=NC(C)=O)c1
 [Li]<-n1c(N)sc2cc(Cl)ccc21
 [Li]<-Nc1ccccc1C(=O)OC
@@ -1642,7 +1571,6 @@
 [Li]<-n1cccc(-c2cccnc2)c1
 [Li]<-n1n[nH]c(N)c1-c1ccccc1
 [Li]<-NC12CC3CC(CC(C)(C3)C1)C2
-[Li]<-[nH]1ncc(-c2ccccc2)c1C
 [Li]<-n1ccc(P)c(-n2ccnc2)c1
 [Li]<-O=C(O)C(O)c1ccccc1
 [Li]<-n1c(OC(C)C)[nH]c2[nH]ccc21
@@ -1712,7 +1640,6 @@
 [Li]<-N(CCCC)CC(=O)OCC
 [Li]<-n1ccccc1CC(C)(C)N
 [Li]<-S=C(C)Nc1ccc(OC)cc1
-[Li]<-[nH]1nccc1-c1ccccc1
 [Li]<-NC(N)c1cccc(N=C=O)c1
 [Li]<-N(=CC(=O)OC)C1CCCCC1
 [Li]<-n1ccc(C)c2ncccc21
@@ -1757,11 +1684,8 @@
 [Be]=[C]1NC(C)(C)N(CC)C1(C)C
 [Li]<-n1cn[nH]c1-c1ccncc1
 [Li]<-n1ccc(C=NNC(C)=O)cc1
-[Li]<-O=C1C(=O)n2cncc2NC1N
 [Li]<-n1cccc2ccc(OP)cc21
 [Li]<-NCc1cccc(C(=O)OC)c1
-[Li]<-[nH]1cc(C(=O)OC(C)C)cn1
-[Li]<-N=C(C)NC(C)c1ccccc1
 [Li]<-N=Cc1cc(OC)ccc1OC
 [Li]<-n1cn(-c2cccc(C)c2)cn1
 [Li]<-n1c(-c2ccccc2)ncn1C
@@ -1779,7 +1703,6 @@
 [Li]<-n1ccn(C(C)C(C)(C)C)c1
 [Li]<-Nc1ccc(C)c(C)c1N(C)C
 [Li]<-n1ncccc1N=CC(C)(C)C
-[Li]<-N1C=NCC(N2CCCCC2)C1
 [Li]<-n1cc[nH]c1C=Cc1ncc[nH]1
 [Li]<-n1ccn(-c2cncc(C)c2)c1
 [Li]<-n1cccc(-c2nccn2C)c1
@@ -1798,7 +1721,6 @@
 [Li]<-n1cc(CC=C)ccc1CO
 [Li]<-O=c1cc2c(cn1CC)OCO2
 [Li]<-O=C1NCCN1CC(=O)OC
-[Li]<-N=C(C)Nc1ccccc1OC
 [Li]<-N#Cc1cccc(C(F)(F)F)c1
 [Li]<-n1cccc(-c2cncnc2)c1
 [Li]<-NCc1ccnc2ccccc12
@@ -1815,14 +1737,11 @@
 [Li]<-n1cc(C)cc(C(=C)C(=O)O)c1
 [Li]<-N1=CCCC1=NN1CCCCC1
 [Li]<-S=C(NC(C)C)c1ccccc1
-[Li]<-[nH]1c(N)nc2ncnc(N)c21
-[Li]<-[nH]1nc(C)nc1N
 [Li]<-NC(C)c1ccco1
 [Li]<-[O-][S+](CCC)CCC
 [Be]=[C](N)N1CCOCC1
 [Li]<-Nc1cnc(O)nc1
 [Li]<-n1cccc(C=C)c1
-[Li]<-N=C1CCCCN1
 [Li]<-n1cc(C)c(N)[nH]1
 [Li]<-N=C(C)OCCO
 [Li]<-n1nn(CC)cc1C
@@ -1831,14 +1750,12 @@
 [Li]<-N(C)=CCC(C)C
 [Be]=[C]1SC=C(C)N1C
 [Li]<-n1cnc(N)cc1C
-[Li]<-[nH]1cnc(CC)c1
 [Li]<-S=C1CNCC1=O
 [Li]<-N(C(C)C)C(C)O
 [Li]<-n1cc(C)n(N)c1
 [Li]<-n1nnn(C)c1C
 [Li]<-NCC(=O)N(C)C
 [Li]<-S=c1cc(C)cc[nH]1
-[Li]<-N=C1N(C)CCN1C
 [Li]<-NC1(C(=O)OC)CC1
 [Li]<-n1c(C)ncn1C=C
 [Li]<-O=c1ccoc(C)c1
@@ -1849,13 +1766,10 @@
 [Li]<-N1=C2SCCN2CC1
 [Li]<-N=C(C=C)OCC
 [Li]<-S=C(C)N1CC=CC1
-[Li]<-[nH]1nc(N)c(N)c1I
 [Li]<-N=c1[nH]ccn1CC
 [Be]=[C](C#N)NC(=C)C
-[Li]<-[nH]1cc(C=O)cn1
 [Li]<-N=C(CC=C)OC
 [Li]<-O=c1[nH]cccc1O
-[Li]<-[nH]1cnc(C#N)c1
 [Li]<-N=C(C)ON(C)CC
 [Li]<-S=c1ssc(C)c1C
 [Li]<-n1ccc(F)cc1Cl
@@ -1863,7 +1777,6 @@
 [Li]<-O=CC(=C)C(C)(C)N
 [Li]<-S(CC(=O)O)C(N)=O
 [Li]<-N(O)=Cc1ccc[nH]1
-[Li]<-[nH]1cc(N)nc1CO
 [Li]<-N(=C(C)C)C(C)(O)O
 [Li]<-NCc1cccnc1
 [Li]<-n1nc(C)[nH]c1N
@@ -1876,9 +1789,7 @@
 [Li]<-S=C1NCC(C)(N)S1
 [Be]=[C]1N(C)C=C(C)N1C
 [Li]<-O=C(CO)C1CC1
-[Li]<-[nH]1cnc(CO)c1
 [Li]<-N(C)C(C)N(C)C
-[Li]<-N1C(N)=NCC1N
 [Li]<-S(C)Cc1ccon1
 [Li]<-n1csc(N)c1C
 [Li]<-[O-][S+](C(C)C)C(C)C
@@ -1888,7 +1799,6 @@
 [Li]<-N(CC)C(C)C(F)F
 [Li]<-Nc1ccccc1I
 [Li]<-N#CN=C(C)SC
-[Li]<-[nH]1ccc(C(F)F)n1
 [Li]<-n1cn(C)cc1C#N
 [Li]<-P1(Cl)NCCN1C
 [Li]<-n1ccc(F)cc1F
@@ -1900,13 +1810,10 @@
 [Li]<-n1cnc(Br)c(N)c1
 [Li]<-n1c(F)cccc1F
 [Li]<-N1C(C)C1C(C)=O
-[Li]<-N=C1NC(C)=C[SH]1C
 [Be]=[C]=CCC(C)(C)C
 [Li]<-n1cccc(N)c1Br
 [Li]<-S1C(C)CCC1C
 [Li]<-N(=C)C1CCCCN1
-[Li]<-[nH]1nc(N)c(C)c1C
-[Li]<-[nH]1c(SC)cnc1C
 [Li]<-Sc1ccccc1F
 [Li]<-S(C)CCC(C)C
 [Li]<-n1cn(C)nc1C
@@ -1916,7 +1823,6 @@
 [Li]<-n1[nH]cc(C)c1C
 [Li]<-O=C1CNCNC1
 [Li]<-SC1C=CC=CC1
-[Li]<-[nH]1cc(CBr)cn1
 [Li]<-S=c1scc(NC)s1
 [Li]<-NC(N)C(=O)OCC
 [Li]<-N=C(C)C(C)(C)C
@@ -1928,7 +1834,6 @@
 [Li]<-n1csc(CC)c1
 [Li]<-N1CNCCC1C
 [Li]<-O(C)c1ccccc1
-[Li]<-S=Nc1ccccc1
 [Be]=[C]=NCC(=O)OC
 [Li]<-O1CC(C)COP1
 [Li]<-N1CCN(C)C(N)C1
@@ -1942,15 +1847,11 @@
 [Li]<-n1[nH]c(C)c(I)c1C
 [Be]=[C]1C=CCOCC1
 [Li]<-N#CN1CC1(C)C
-[Li]<-N#C[SH]1C=CC=C1C
-[Li]<-N=C(NC)C(=O)OC
 [Li]<-NCc1ccoc1
 [Li]<-O=C(CC)OCC
 [Li]<-n1cn(C)cc1C
 [Li]<-S=CC(=C)C(O)O
-[Li]<-[nH]1cnc(N)c1C=O
 [Li]<-S1CSCC(C)(C)C1
-[Li]<-N=C(OC)N(C)C
 [Li]<-n1cncc(O)c1
 [Li]<-n1c(N)cc(C)n1C
 [Li]<-S1CSC(C)SC1C
@@ -1964,13 +1865,11 @@
 [Li]<-n1csc(N)c1N
 [Li]<-P1(C)NCCN1C
 [Be]=[C]1SC=C(C)N1CC
-[Li]<-N=C(C)NCCO
 [Li]<-S=C(N=CC)N(C)C
 [Li]<-N1=CCC(N(C)C)C1
 [Li]<-n1ccc(SC)nc1
 [Li]<-n1c(C)ccn1C
 [Li]<-N(C)=CCN(C)C
-[Li]<-[nH]1cc(N)nc1CN
 [Li]<-n1c(N)ccnc1N
 [Li]<-n1cn(CC)cc1C
 [Li]<-n1ccncc1C#N
@@ -1983,14 +1882,12 @@
 [Li]<-n1c[nH]cc1OC
 [Li]<-N1=CCC(N)C1(C)C
 [Be]=[C](NC)NN(C)C
-[Li]<-[nH]1c(C)cnc1C
 [Be]=[C](C)N(CC)CC
 [Li]<-N1CCC(C)(C)C1
 [Li]<-S=C(CO)CN(C)C
 [Li]<-n1cc(N)cc(N)c1
 [Li]<-P1(C)C23C=CCC21C3
 [Be]=[C]1C=CC=C(C)N1
-[Li]<-N(=O)Cc1ccsc1
 [Li]<-P1(O)N(C)CCN1C
 [Li]<-n1c(CCl)csc1N
 [Li]<-NC1CCCNC1
@@ -1999,14 +1896,12 @@
 [Be]=[C](NC)c1ccsc1
 [Li]<-n1c(Cl)ccnc1N
 [Li]<-n1cccc(OC)c1
-[Li]<-[nH]1cc(C(C)C)cn1
 [Li]<-S=CNCC(=O)O
 [Li]<-S=C1NC(N)NC1N
 [Li]<-O=C(C)NC(O)O
 [Li]<-S=C(NC)N(C)C
 [Li]<-n1cc(C)[nH]c1C
 [Li]<-N1=C(C)CCC1(C)C
-[Li]<-[nH]1c(N)nnc1Cl
 [Li]<-O=C(OC)C1CC1
 [Li]<-O=C1CCCCNC1
 [Li]<-n1cnn(C(C)C)c1
@@ -2019,11 +1914,9 @@
 [Li]<-Sc1ccccc1C
 [Li]<-S=C(CC)OCC
 [Li]<-O=C1NCNC1N
-[Li]<-N=C(C)NC(C)=O
 [Li]<-O=c1ccn(C)cc1
 [Li]<-N(C)=C(C)OCC
 [Be]=[C]1SC(Cl)=C(C)N1C
-[Li]<-[nH]1cnc([N+](=O)[O-])c1
 [Li]<-NC(C)(C)C(C)C
 [Li]<-P1N=C(P)C([SiH3])C1P
 [Li]<-N1=C(C)CNC(=O)N1
@@ -2040,16 +1933,13 @@
 [Li]<-SC(C(=C)C)=C(C)C
 [Li]<-N#CC(C)(C)C(=C)O
 [Li]<-O=C(O)C(C)NC
-[Li]<-N1C=NC(C)(C)CC1
 [Li]<-O=C(OC)C(=C)N
 [Li]<-S=C(C)NC(C)C
 [Li]<-O=Cc1c[nH]cn1
 [Be]=[C]1COC(C)(C)C1
 [Li]<-O=C1CNCC1N
-[Li]<-[nH]1ncc(N)c1C
 [Li]<-NC(C)c1cccs1
 [Li]<-n1ccc(CCl)cc1
-[Li]<-N=C(C#C)N(C)C
 [Li]<-O(C)CC(F)(F)F
 [Li]<-P1(Cl)NC(N)C(N)N1
 [Li]<-n1ccsc1C(N)=O
@@ -2070,16 +1960,13 @@
 [Li]<-N1CCCC1(C)C
 [Li]<-N#CN=C(C)OC
 [Li]<-N#CC(CO)OCC
-[Li]<-NC(C)(CO)CO
 [Be]=[C]1N(C)N=NN1C
 [Li]<-S=C(N)CN(C)C
 [Li]<-N(C)=C(C)C(C)=O
 [Li]<-S=C(N)C(=O)OC
 [Li]<-n1cn(N)c(C)n1
-[Li]<-[SH+]([O-])CC(C)(C)C
 [Li]<-n1ccn2c1CCC2
 [Li]<-O=C1CNC(N)N1
-[Li]<-N=C(CC)NCC=C
 [Li]<-P(O)c1ccccc1
 [Li]<-n1cccnc1C
 [Be]=[C]1C=CC=CN1C
@@ -2091,7 +1978,6 @@
 [Be]=[C]1NCCN1CCO
 [Li]<-n1ccsc1C(C)N
 [Li]<-N1=NC(C)(C)C=C1C
-[Li]<-[nH]1nc(C)c(N)c1N
 [Li]<-N(C(=O)CC)=C(C)C
 [Li]<-S=C(SCC)N(C)C
 [Be]=[C]1C=C(C)C=CN1
@@ -2103,7 +1989,6 @@
 [Li]<-NCC(C)(C)C#N
 [Li]<-n1cccc(C)c1Br
 [Li]<-S=C(C=CC)OCC
-[Li]<-N=C(CC)N(C)C
 [Li]<-Pc1ccccc1N
 [Li]<-n1nc(C)n(C)n1
 [Li]<-NC(C)N1CCCC1
@@ -2151,7 +2036,6 @@
 [Li]<-O=C(CC=C)N(C)C
 [Be]=[C]1SC(N)=CN1C
 [Li]<-N(CC)C(C)N(C)C
-[Li]<-[nH]1ncc(C)c1N
 [Li]<-N#CC(C)(O)CCl
 [Li]<-n1cc(C)[nH]c1CC
 [Li]<-N#CC(=O)OCC
@@ -2163,7 +2047,6 @@
 [Li]<-n1ccc(C(C)=O)[nH]1
 [Li]<-n1csc(C)c1N
 [Li]<-O=C(C)NC(=O)OC
-[Li]<-N1C(N)=CNC1N
 [Li]<-N(=O)Cc1ccco1
 [Li]<-n1c(C)ccn1CO
 [Li]<-N(=C)C1CCCNC1
@@ -2178,7 +2061,6 @@
 [Li]<-n1ccc(I)c(C)c1
 [Li]<-NC1NC=CN1CC
 [Be]=[C]1N(C)C=CN1C
-[Li]<-[nH]1ncc(C)c1CN
 [Li]<-N1CCC(C)CC1
 [Li]<-N(CC)C(C)C=C
 [Li]<-n1cncc(C)c1C
@@ -2199,7 +2081,6 @@
 [Li]<-O=c1[nH][nH]cc1O
 [Li]<-n1c(C)ncn1C
 [Li]<-n1ccn(C(C)O)c1
-[Li]<-[nH]1cncc1[N+](=O)[O-]
 [Li]<-n1cc(C)n(CC)c1
 [Li]<-N(=C)C1CCNCC1
 [Li]<-n1c[nH]c2c1NCC2
@@ -2221,26 +2102,19 @@
 [Li]<-n1cpcn1C=C
 [Li]<-P1(C)OCCC(C)O1
 [Be]=[C]1C=CN(CO)S1
-[Be]=[C](NN)NC(C)(C)C
 [Be]=[C](N)NC(C)(C)C
 [Li]<-N=CC(=O)OCC
-[Li]<-[nH]1cnc(CC)c1C
 [Li]<-S=C(NC)OCC
 [Li]<-n1cc(C)cc(P)c1
 [Li]<-N1NC12CCCCC2
 [Li]<-S=c1cc[nH]cc1C
 [Li]<-Nc1ccccc1F
-[Li]<-[nH]1cnc(N)c1C
-[Li]<-NC1CCCCC1O
 [Li]<-NCCn1cncn1
-[Li]<-N=C(C)NC(=C)C
 [Li]<-n1cc(C(C)C)co1
 [Li]<-N1=NC(C)=CC1(C)C
 [Li]<-N(C)=CC=C(C)C
 [Li]<-P(Cl)(I)C(C)(C)C
 [Li]<-N1=CC=CN(C)C1C
-[Li]<-[nH]1cncc1CC
-[Li]<-N=C(C)NC(C)O
 [Be]=[C](C#N)N(CC)CC
 [Li]<-S=C(SC)N(C)C
 [Be]=[C]1CC(C)(C)OC1C
@@ -2276,7 +2150,6 @@
 [Li]<-S=c1scc(N)n1C
 [Li]<-S=c1[nH]cc(C)s1
 [Li]<-S=C1CNC(N)NC1
-[Li]<-N=C(CC)NC(C)O
 [Li]<-S=C(NC)C(=O)OC
 [Li]<-S=c1sscc1O
 [Li]<-n1ncn(C(C)=O)n1
@@ -2292,13 +2165,10 @@
 [Li]<-S=c1[nH]ccn1CC
 [Li]<-NCC(C)(C)N=C
 [Li]<-N(CCC)CCO
-[Li]<-N=C(NN)N(C)C
 [Li]<-S=c1[nH]cncc1N
 [Li]<-N#Cc1cccs1
-[Li]<-[nH]1ncc(C)c1C
 [Be]=[C]1NC=CN1CCO
 [Li]<-N1=CNCC1(C)C
-[Li]<-N#CN=CC(C)=O
 [Li]<-O=C(C)C1CCCC1
 [Li]<-N#CCC(C)(C)C
 [Li]<-n1cccc(P)c1
@@ -2306,7 +2176,6 @@
 [Be]=[C]1OCC(=O)C1(C)C
 [Li]<-P1(C(C)C)OCPO1
 [Li]<-Nc1cccc(Cl)c1
-[Li]<-N=C(C)NC(C)(C)C
 [Li]<-NC(C)CNC(C)=O
 [Li]<-N1CCNCCC1N
 [Li]<-n1ccn(CCO)c1
@@ -2316,7 +2185,6 @@
 [Li]<-N(O)=C(C)C(C)=O
 [Li]<-NC(C)NC(C)=O
 [Li]<-n1cc(N)sc1C
-[Li]<-[nH]1nc([SeH])c(C)p1
 [Li]<-N=Cc1ccsc1
 [Li]<-O=c1cc(N)cc[nH]1
 [Li]<-S=c1[nH][nH]c(Cl)c1C
@@ -2339,7 +2207,6 @@
 [Li]<-N1c2ccccc21
 [Li]<-S1CCN(CC)CC1
 [Li]<-n1ccn(CC)c1C
-[Li]<-[nH]1nc(N)nc1C
 [Li]<-N(C)CC(=O)OC
 [Li]<-PC([SiH3])[Si](C)(C)C
 [Li]<-P(C)(O)C(C)C(C)C
@@ -2353,9 +2220,7 @@
 [Li]<-N(=C(C)C)C(C)O
 [Li]<-Nc1cccc(I)c1
 [Li]<-n1cn(C=C)cc1C
-[Li]<-[nH]1c(N)cccc1=O
 [Li]<-N(CCC)CCC#N
-[Li]<-[nH]1nc(C)nc1NC
 [Li]<-n1ccsc1C(C)=O
 [Li]<-N=C1CNCC1=O
 [Li]<-n1nc(SC)sc1N
@@ -2363,7 +2228,6 @@
 [Li]<-P1(Cl)NC(C)CN1C
 [Be]=[C]1CNC(C)(C)C1
 [Li]<-N#CC(=C)C(F)(F)F
-[Li]<-[nH]1c(N)cnc1N
 [Li]<-n1csc(C=C)c1
 [Li]<-N(CC)C(C)=C(C)Cl
 [Li]<-N(CC)CCOC
@@ -2389,21 +2253,16 @@
 [Li]<-n1nc(N)n(N)c1C
 [Li]<-S=C(C)NC(C)=O
 [Li]<-NCCC(=O)OCC
-[Li]<-[nH]1c(N)cnc1C#N
 [Be]=[C]1C(=O)NC(N)C1N
 [Li]<-N=C(C)C(C)CO
-[Li]<-[nH]1ncc(C)c1OC
 [Be]=[C](C)NC(C)CC
 [Li]<-n1nc(N)n(S)c1C
-[Li]<-[nH]1cc(CO)nc1N
 [Li]<-n1ccn(C)c1N
 [Li]<-n1ccc(C)cc1O
-[Li]<-N=C(C)N1CCCC1
 [Li]<-S=c1n(C)nnn1C
 [Li]<-n1nc(C=C)nn1C
 [Li]<-N1CC1C(=O)OC
 [Li]<-n1ccn(C(C)=O)c1
-[Li]<-N1C=NCC1(N)CN
 [Be]=[C](C)c1ccccc1
 [Li]<-N#CCc1cccs1
 [Li]<-N#CC=C(C)C#N
@@ -2421,7 +2280,6 @@
 [Li]<-Sc1ccccc1N
 [Li]<-n1ccc(OC)nc1
 [Li]<-N(CCC)=C(C)C
-[Li]<-[nH]1cc(N)cnc1=O
 [Li]<-N1C(C(=O)O)C1(C)C
 [Li]<-N=CC(C)NC1CC1
 [Li]<-n1cncn1C(C)C
@@ -2432,10 +2290,8 @@
 [Li]<-N(C)(O)C(C)(C)CO
 [Li]<-N(O)=C(C)C(=O)OC
 [Li]<-N(C)CC(F)(F)F
-[Li]<-[nH]1c(N)cnc1C
 [Li]<-O=C1CN(C)C(N)N1
 [Li]<-N1CCCNC(N)C1
-[Li]<-N(C(C)C)C(C)(O)O
 [Li]<-S1CCCC1=C(C)C
 [Li]<-N=C(CC)C1CC1
 [Li]<-NC(C)C(=O)OCC
@@ -2446,7 +2302,6 @@
 [Li]<-S=CNC(C)(C)C
 [Li]<-n1occ(N)c1C
 [Li]<-n1cc(C)c(N)o1
-[Li]<-[nH]1cnc(C)c1C
 [Li]<-N#Cc1ccoc1
 [Li]<-O1CCOCC1(C)C
 [Li]<-N(C)=C1C2CC3C(OC)=CC=CC2C13
@@ -2462,7 +2317,6 @@
 [Li]<-N1=C(c2cccnc2)OCC1(C)N
 [Li]<-S=C(NCc1ccncc1)N(C)C
 [Be]=[C]1N(CC)C=CN1c1ccccc1F
-[Li]<-S=C(N)N=Nc1cc(C)c(C)c(C)c1
 [Be]=[C]1CNC(N)(c2cccc(C)c2)N1
 [Li]<-n1cn(Cc2ccc(O)cc2)cn1
 [Li]<-O=c1[nH]n(-c2ccccc2)c(N)c1C
@@ -2482,7 +2336,6 @@
 [Li]<-n1cc(C)c(-c2ccccc2)n1CC
 [Li]<-Nc1ccc2c(=O)ccoc2c1C
 [Li]<-N1CCC(C(=C)c2ccccc2)CC1
-[Li]<-[nH]1ncc(C)c1Sc1ccccc1
 [Li]<-n1cc(C)c(-c2ccoc2)n1C(C)O
 [Li]<-n1ccn(CC(=O)N(CC)CC)c1
 [Be]=[C]1CNC(c2cccc(OC)c2)O1
@@ -2498,7 +2351,6 @@
 [Li]<-n1nc(-c2ccc(Br)cc2)sc1N
 [Li]<-n1ccn(-c2ccc(C)c(C)c2)c1
 [Be]=[C]1N(CC)C=CN1C(Br)C(F)(F)F
-[Li]<-N=C(C)N(C)c1ccccc1OC
 [Li]<-n1c[nH]c(C=C)c1-c1ccccc1
 [Li]<-P1(c2ccccc2)C=NC(N(C)C)C1
 [Li]<-n1cn(N)c(-c2cccc(C)c2)n1
@@ -2514,7 +2366,6 @@
 [Li]<-Nc1ccc(C(=O)OCCC)cc1
 [Li]<-N1=CC(NC(C)=O)c2ccccc21
 [Li]<-S=c1[nH]ccn1-c1cccc(C)c1
-[Li]<-[nH]1ncc(-c2c(F)cccc2F)c1C
 [Li]<-n1ccn(Cc2ccc(Br)cc2)c1
 [Be]=[C]1CN(Cc2ccccc2)C(C)(N)N1
 [Li]<-S=C(NCC)C(=C)c1ccccc1
@@ -2526,7 +2377,6 @@
 [Li]<-O=c1[nH]c2c(C)c(C)ccc2n1C
 [Li]<-n1ccn(CC)c1-c1ccccc1
 [Li]<-N=C(CC)n1cnc(C(C)(C)C)c1
-[Li]<-N=C(CC)NC=C(C)c1ccccc1
 [Li]<-n1ccc(-c2ccccc2)c(C)c1
 [Li]<-n1ccc(C(=C)c2ccoc2)cc1
 [Li]<-n1c[nH]c(C(N)=O)c1-c1ccccc1
@@ -2538,7 +2388,6 @@
 [Be]=[C]=NC(=C(C)C)c1ccccc1C
 [Li]<-[Se]1CC(C)(C)C(c2ccccc2)[Se]1
 [Li]<-N(Cc1cccs1)=C1CCCCC1
-[Li]<-N=C(c1cccnc1)N1CCCCC1
 [Li]<-NCc1cccc([Se]C(C)(C)C)c1
 [Li]<-n1csc(N=Nc2ccccc2)c1C
 [Li]<-n1ccn(-c2cc(C)cc(C)c2)c1
@@ -2611,9 +2460,7 @@
 [Li]<-n1cc(N)cc2cc(C)c(C)cc21
 [Li]<-P(O)(CNC(C)=O)c1ccccc1
 [Li]<-S=C(c1ccccc1)N(CC)CC
-[Li]<-[nH]1cc(-c2cccc(Br)c2)nc1N
 [Li]<-P(CC(C)(OC)C(C)(C)C)C(C)C
-[Li]<-N=C(C)N(C)c1c(C)cccc1C
 [Li]<-n1cn(CC)c(=O)c2ccccc21
 [Li]<-N1=CN(c2ccc(C)c(C)n2)CC1
 [Li]<-P(Cl)(c1ccc(C)cc1)C(C)(C)C
@@ -2631,11 +2478,9 @@
 [Li]<-O=Cc1ccc(N2CCCC2)cc1
 [Li]<-n1cn(CC)c2c1N=C(N)NC2N
 [Li]<-n1cn(-c2ccc(C=C)cc2)cn1
-[Li]<-[nH]1nc(-c2cccc(C)c2)nc1C
 [Li]<-P12NN3C(N)N(N1)C(N)N(N2)C3N
 [Li]<-P1(c2ccccc2)C(P)C(C)C1P
 [Li]<-N(=Cc1ccccc1)CC(=O)OC
-[Li]<-[AsH](C1CCCCC1)C1CCCCC1
 [Be]=[C]1NC(N)=CN1Cc1cccc(C)c1
 [Li]<-n1ccc(C(=O)O)c2ccccc21
 [Be]=[C]1Nc2c(C)cc(C)cc2N1CC
@@ -2677,7 +2522,6 @@
 [Li]<-N=CC(C)CNc1ccccc1Cl
 [Li]<-n1ccc(-c2cncnc2C)cc1
 [Li]<-N1=COC(c2c(N)cccc2Cl)C1
-[Li]<-S=C([O-])C[n+]1cccc(C=CC)c1
 [Li]<-n1cccc2nc(C(=O)O)ncc21
 [Li]<-n1ccc(C#N)c2c(Cl)ccnc21
 [Li]<-n1ccc(C(=O)OC)c(C(N)=O)c1
@@ -2710,7 +2554,6 @@
 [Li]<-P(=Cc1ccccc1)c1ccccc1
 [Li]<-n1cc(C)c(-c2ccccc2F)[nH]1
 [Li]<-n1nc(-c2cccnc2)nn1CC
-[Li]<-[nH]1nc(N)c(-c2ccccc2)c1C
 [Be]=[C]1NC(CC(C)C)=CN1CC(C)C
 [Li]<-O=C(C)Nc1ccccc1C(C)=O
 [Li]<-S=C1CNC(N)(c2ccccc2)NC1
@@ -2793,7 +2636,6 @@
 [Li]<-n1[nH]c(C)cc1-c1ccc(Br)cc1
 [Li]<-n1c(C)cc(NC(C)(C)C)cc1C
 [Li]<-S=C(NC)NN=Cc1cccnc1
-[Li]<-[nH]1cc(-c2ccc(OC)cc2)cn1
 [Be]=[C]1CC(NC2CCCCC2)OC1C
 [Be]=[C]1C=CN(C=C)N1c1ccccc1
 [Li]<-n1cccc(C(=O)C(=C)N(C)C)c1
@@ -2818,7 +2660,6 @@
 [Li]<-N#Cc1ccc(-n2cccn2)cc1
 [Li]<-n1cn(CC(C)=O)c2ccccc21
 [Be]=[C](NC1CCCCC1)c1ccoc1
-[Li]<-N=C(C)NC(CC)c1ccccc1
 [Li]<-n1ccn(Cc2cccc(C)c2)c1
 [Be]=[C]1Nc2ccc(SC)cc2N1CC
 [Li]<-n1cc(N)cc(-c2ccccc2)c1
@@ -2843,7 +2684,6 @@
 [Li]<-NCC(=O)Nc1c(C)cccc1C
 [Li]<-Nc1cc(C(C)=O)cc(C(N)=O)c1
 [Li]<-n1cccc(N2CCC(=O)C2=O)c1
-[Li]<-[nH]1cnc(C(F)(F)F)c1C(F)(F)F
 [Li]<-n1cc(C(C)(C)C)c(C(C)(C)C)[nH]1
 [Li]<-n1cccc(-c2cncnc2C)c1
 [Li]<-n1ccc(C)c2c(=O)cc(C)oc21
@@ -2860,7 +2700,6 @@
 [Be]=[C]1N2C=CC(Cl)=CC2=C(Cl)N1CC
 [Li]<-P(Cc1cc(C)cc(C)c1)CC(C)C
 [Li]<-n1csc(-n2nc(C)c(C)c2Br)c1
-[Li]<-[nH]1c(N)nc2c3c(ccc21)OCO3
 [Li]<-n1c(C(=O)OCC)cc(C)n1C=N
 [Li]<-O=C(CP(=S)(OC)OCC)N(C)C
 [Li]<-n1c(C)n(C(C)C)c2ccccc21
@@ -2872,7 +2711,6 @@
 [Li]<-N(Cc1ccccc1)CC(F)(F)F
 [Li]<-n1ccn(COc2ccccc2)c1
 [Li]<-S1c2ccccc2CC1C(C)(C)C
-[Li]<-[nH]1nc(C(=O)OC)c2ccccc21
 [Li]<-N#CC(C)=C(OCC)c1ccccc1
 [Li]<-N(C)=C1C2C=CC=C(O)C3C1CC23
 [Li]<-n1ccc(C=[N+]([O-])C(C)(C)C)cc1
@@ -2902,7 +2740,6 @@
 [Li]<-n1c(C(O)O)ccc2ccccc21
 [Li]<-n1ccn(Cc2ccccc2O)c1
 [Be]=[C]1NC(OCC)Oc2ccccc21
-[Li]<-NC(=O)c1cccc2ccccc12
 [Li]<-N1=CSC(NN=C(C)C(=O)OC)C1
 [Li]<-S=C(SCC)c1ccc(OC)cc1
 [Li]<-S1CC(C)=CC(c2ccc(F)cc2)N1
@@ -2924,16 +2761,13 @@
 [Li]<-n1cn(C(C)C)c2nc(Cl)ncc21
 [Li]<-[O-][n+]1c(C)cc(F)cc1C(F)(F)F
 [Li]<-n1c(C(F)(F)F)sc2ccccc21
-[Li]<-[nH]1cnc2cc(C(=O)OC)ccc21
 [Li]<-N#CC(C)=Nc1ccccc1OC
 [Li]<-O=C(C)NN=C(C)c1ccccn1
 [Li]<-N1=CN(C(C)C(C)C)C(C(C)C)C1
 [Li]<-n1cnn(-c2cc(Cl)c(Cl)nn2)c1
 [Li]<-n1cc(-c2ccccc2)ccc1N
-[Li]<-N1C=NC(c2c(F)ccnc2F)C1N
 [Li]<-N=C(CC)ONC(C)(C)C(C)=NC
 [Be]=[C]1N(CC(C)C)CC2CCCCN12
-[Li]<-N1C=NC(N)(c2cccc(C)c2)C1
 [Li]<-n1cccc(C)c1OCC(F)(F)F
 [Be]=[C](NC1CCCCC1)c1ccco1
 [Li]<-S=c1n(C)ccn1Cc1ccsc1
@@ -2966,7 +2800,6 @@
 [Li]<-n1cccc(C=[N+]([O-])c2ccccc2C)c1
 [Be]=[C]1N(C)C=C(C)N1c1ccc(C(C)C)cc1
 [Be]=[C]1N(C)C2=C(NCC=C2)N1c1ccccc1
-[Li]<-[nH]1ncc(-c2cncc3ccccc23)c1C
 [Be]=[C]1N(CCOC)CCN1Cc1ccccn1
 [Li]<-n1cc(C)[nH]c1-c1ccc(C(F)(F)F)cc1
 [Li]<-N1CCN(c2cc3ccccc3cn2)CC1
@@ -2986,12 +2819,10 @@
 [Li]<-Nc1ccc(C=C(OC)c2ccco2)cc1
 [Li]<-P(OC)(c1ccccc1)C(F)(F)C(F)(F)F
 [Li]<-P1(c2ccccc2)CCC(=O)C(C)(C)C1=O
-[Li]<-[nH]1nc(C(F)(F)C(F)(F)F)cc1C(F)(F)F
 [Li]<-[As](C)(c1ccccc1)c1ccc(OC)cc1
 [Li]<-n1cccc(C=Nc2cccc(C#N)c2)c1
 [Li]<-S=c1[nH]cc(N)n1Cc1cccc(OC)c1
 [Li]<-n1c(-c2ccc(F)cc2)ccn1C(F)(F)F
-[Li]<-O=c1c(-c2ccccc2)c1-c1ccccc1
 [Be]=[C]1NC(C=C(C)OCC)=CN1CC(C)(C)C
 [Li]<-N=c1n(C)ccn1Cc1ccc(OC)cc1
 [Li]<-NCCP(c1ccccc1)c1ccccc1
@@ -3187,7 +3018,6 @@
 [Li]<-N1=C(CC)C(N)=CN(Cc2ccccc2)C1
 [Li]<-n1ccc(C(=O)C=CN2CCCCC2)cc1
 [Li]<-n1ccn(-c2cccc(-c3cn[nH]c3)c2)c1
-[Li]<-N=C(Nc1ccc(O)cc1)c1ccccc1
 [Li]<-n1cccc(Cc2cccc(N(C)C)c2)c1
 [Li]<-n1cccc(C(=O)Oc2cccc(Br)c2)c1
 [Li]<-n1cc(C)cc(C(C)=Nc2ccccc2)c1
@@ -3212,7 +3042,6 @@
 [Be]=[C](Nc1c(C)cccc1C)c1cccnc1
 [Li]<-n1ccc(-c2ccc(OC)cc2OC)cc1
 [Li]<-n1cc(C)n(Cc2cc(C)c(C)c(C)c2)c1
-[Li]<-N=CN1Cc2ccccc2-c2ccccc21
 [Li]<-n1c(C)n(-c2ccccc2)c2ccccc21
 [Li]<-n1cccc2ccc(N3CCOCC3)cc21
 [Be]=[C]1N(CSC)C=CN1c1ncc(C)cc1C
@@ -3271,7 +3100,6 @@
 [Li]<-N=C(C)ON(C)C(=O)c1ccccc1
 [Li]<-n1nn(CC(=O)OCCCC)cc1C
 [Li]<-N#Cc1cc(C(=O)OC)cc(C(C)C)c1
-[Li]<-[N-]=[N+](C)c1ccc(-c2ccccc2)cc1
 [Li]<-NCc1ccc(Sc2ccccc2)cc1
 [Li]<-n1cccc(N(C(C)(C)O)C(C)(O)O)c1
 [Li]<-n1cccc(CNc2ccccc2O)c1
@@ -3295,7 +3123,6 @@
 [Li]<-N#Cc1csc2cc3sccc3cc12
 [Li]<-N#CSc1ccccc1-c1ccccc1
 [Li]<-N(C)=CNc1ccc2ccccc2c1
-[Li]<-[nH]1c(N)nc2cc(C(=O)OC)ccc21
 [Li]<-n1ccc(SC(C)c2ccncc2)cc1
 [Li]<-N1=COC(C)(Sc2ccccc2F)C1
 [Be]=[C]1NCN(c2cc(C)c(C)c(C)c2)C1N
@@ -3303,7 +3130,6 @@
 [Li]<-n1ccccc1N=C(N(C)C)N(C)C
 [Li]<-N#Cc1ccccc1-c1ccccc1
 [Li]<-n1c(C)ccn(C(C)C(=O)OC)c1=O
-[Li]<-[nH]1cc(-c2ccc(OC(C)C)cc2)cn1
 [Li]<-n1c(C)cn(-c2ccc(C)cc2)c1C
 [Li]<-N1CCC(C(C)(C)C)c2ccccc21
 [Li]<-N(=Cc1ccoc1)c1ccc(F)cc1
@@ -3318,7 +3144,6 @@
 [Li]<-N1=CN(C)CC1c1cccc(C(=O)O)c1
 [Li]<-N1Cc2ccc(-c3ccccc3)cc2C1
 [Li]<-O=Cc1cccc(N2CCOCC2)c1
-[Li]<-N=C1C=C(C)NC(C(=O)OC)N1OC
 [Be]=[C]1N(c2ccccc2)CCN1C(C)C
 [Li]<-N1=C(N)C2(C=CC(=[N+]([O-])[O-])C=C2)[S+]=C1
 [Be]=[C]1N(CC)C=CN1c1ccc(C)cc1
@@ -3332,7 +3157,6 @@
 [Be]=[C]1OCC(C)(C2CNCCN2C)C1C
 [Li]<-N(=Cc1sccc1C)c1ccccc1
 [Be]=[C]1NC2=C(C=CCN2)N1N1CCC(C)C1
-[Li]<-[nH]1ncc(C(C)=Nc2ccccc2)c1C
 [Li]<-S=c1ccn(Cc2ccncc2)cc1C
 [Li]<-N1=C(C)CCC1Nc1ccc(Cl)cc1
 [Li]<-P1(C)CC2(OCCO2)c2ccccc21
@@ -3346,7 +3170,6 @@
 [Li]<-N(=CC(=O)OCC)c1ccc(OC)cc1
 [Li]<-n1cn(C)c2ccc(C(=O)OC)cc21
 [Li]<-n1ccc(C(C)=Nn2ccc(C)c2)cc1
-[Li]<-n1cc(-c2ccccc2)c(C)n1C(C)O
 [Li]<-P1(c2ccccc2)NCC(OC)CO1
 [Li]<-n1c(C(=O)OCC)cn(C)c1COC
 [Li]<-n1cccc(-c2cn(C(C)=O)nn2)c1
@@ -3366,7 +3189,6 @@
 [Be]=[C]1NC(N)=CN1CC(=O)c1ccccc1
 [Be]=[C](c1ccccc1)N(C)c1ccccc1
 [Li]<-O=C(CO)CN1CCc2ccccc21
-[Li]<-[nH]1cnc2cc(C(C)C)c(C(C)C)cc21
 [Li]<-N(=CNC(C)=O)c1cc(C)cc(C)c1
 [Li]<-n1ccn(C(C)=Nc2ccccc2)c1C
 [Be]=[C]1N(C(C)O)C=CN1C(C)C(C)(C)C
@@ -3390,7 +3212,6 @@
 [Li]<-S=Cc1nccn1Cc1ccccc1
 [Li]<-n1cccc(N=Cc2cccnc2)c1
 [Li]<-O=c1oc2ccccc2c2[nH]cnc12
-[Li]<-N=C(C)N1CC(=O)C(c2ccccc2)C1
 [Be]=[C]1N(C)C=CN1c1cc(C)c(C)c(C)c1
 [Li]<-n1cc(O)c(C)c(C=NNC(C)C)c1
 [Li]<-n1ccn(Cc2cccc(O)c2)c1C
@@ -3493,7 +3314,6 @@
 [Li]<-n1cn(C)c2c1CC(C[SH](=O)=O)=CC2
 [Be]=[C]1N(CCl)C=CN1c1cccc(C)c1C
 [Li]<-n1ccc(C2=NC(C)(C)CN2C)cc1
-[Li]<-[nH]1cnc(-c2ccccc2[N+](=O)[O-])c1N
 [Li]<-n1[nH]c(C)cc1C(=O)c1ccccc1
 [Li]<-n1[nH]c(C)cc1N=Nc1ccccc1
 [Li]<-n1cn(CCCC(=O)O)c2ccccc21
@@ -3606,13 +3426,11 @@
 [Li]<-n1ccn(C(C)N(C)C)c1
 [Li]<-S=C(NC)c1ccccn1
 [Li]<-N1=CCCC1(Cl)C(F)(F)F
-[Li]<-n1cccc(N)c1[N+](=O)[O-]
 [Li]<-S=c1c(N(C)C)c1N(C)C
 [Li]<-OCC(C)c1ccccc1
 [Li]<-n1ccn(C(C)C(C)C)c1
 [Li]<-S=c1[nH]c(N)cn1C(=C)C
 [Li]<-n1nc(C)n(CC#N)c1C
-[Li]<-N=C(C)N1CCCCC1C
 [Li]<-Nc1cccc(C(N)=O)c1
 [Li]<-S=C(NCC)NN=C(C)C
 [Li]<-n1cc(N)c(Cl)n(C)c1=O
@@ -3632,10 +3450,8 @@
 [Li]<-n1ccc(N(C)C)cc1F
 [Li]<-n1ccc(CNC)cc1C
 [Li]<-N1=CCC(c2ccsc2)C1
-[Li]<-N1C=NC(F)(F)C(C)(C)C1
 [Li]<-Nc1ccccc1C(N)=O
 [Li]<-O=C(N)c1ccc(C)cc1
-[Li]<-[nH]1cc(C(F)(F)F)nc1N
 [Li]<-n1cc(C)cc(C(S)S)c1
 [Li]<-n1ccc(C)c(C(=O)O)c1
 [Li]<-O=CP(C)c1ccccc1
@@ -3649,12 +3465,10 @@
 [Li]<-n1cccc(C(=O)OC)c1
 [Li]<-S=C(NC)c1ccccc1
 [Li]<-O=C(C)Oc1ccccc1
-[Be]=[C](C)C=Cc1ccccc1
 [Li]<-O=C(Cl)c1ccc(Cl)cc1
 [Li]<-N=c1[nH]c2ccccc2s1
 [Li]<-O=C(C)N(C(C)C)C(C)C
 [Li]<-p1(O)ccc([Si](C)(C)C)c1
-[Li]<-N=C(N(C)C)n1cccn1
 [Li]<-NCc1cccc(C=C)c1
 [Li]<-S(C)c1cccc(OC)c1
 [Li]<-N1=COC(C)C12CCCC2
@@ -3670,12 +3484,10 @@
 [Li]<-N(Cc1cccs1)=C(C)C
 [Li]<-n1ccc(C(C)=CC)cc1
 [Li]<-p1(N(C)C)c(C)ccc1C
-[Li]<-N=C(NC)c1ccccn1
 [Be]=[C]1N(C)C=CN1C(C)(O)O
 [Li]<-n1ccn(C(C)OCC)c1
 [Li]<-N1=CSCC1n1cccn1
 [Li]<-N(CC1COCO1)C(C)C
-[Li]<-N1C=NC(C)(C)C(=O)C1=C
 [Li]<-P1(C(S)S)NC(N)C(N)N1
 [Li]<-n1cccc(C)c1N=CC
 [Li]<-N=c1n(C)ccn1C(C)C
@@ -3706,8 +3518,6 @@
 [Li]<-S1Cc2ccc(F)cc2C1
 [Li]<-NCCc1ccc(C)cc1
 [Li]<-n1ccnc(C(=O)O)c1C
-[Li]<-S=C([O-])C[n+]1ccccc1
-[Li]<-N1C=NC(N)C1=NC(C)C
 [Li]<-N(=O)c1ccccc1OC
 [Li]<-O=C(C)c1cccc(C)c1
 [Li]<-Nc1ccc2nsnc2c1
@@ -3723,7 +3533,6 @@
 [Li]<-O=C(Cc1ccco1)NC
 [Li]<-Sc1c(C)ccc(C)c1C
 [Li]<-S=c1[nH]cc(C)n1CC=C
-[Li]<-N1C=NCCC1C(F)(F)F
 [Li]<-O=Cc1ccc(NC)cc1
 [Li]<-O=Cc1c(F)cccc1F
 [Be]=[C](C(=O)OC)N1CCCC1
@@ -3737,7 +3546,6 @@
 [Be]=[C]1NC(N)=CN1C(C)(C)O
 [Li]<-NCc1c(N)cccc1Cl
 [Be]=[C]1NC(C(C)(C)C)ON1C
-[Li]<-[nH]1c(C)nc2ccccc21
 [Li]<-[O-][N+]1=C(C(C)(C)C)C=CC1
 [Be]=[C]1N(C)C=CN1CC(=O)O
 [Be]=[C](NC(C)C)c1ccoc1
@@ -3748,7 +3556,6 @@
 [Li]<-Nc1cccc(C(=O)O)c1
 [Li]<-n1c(C)cccc1N=C=O
 [Be]=[C](SCC(=O)OC)N(C)C
-[Li]<-N=C(C)Nc1cccnc1
 [Li]<-S=c1ssc(C)c1OCC
 [Be]=[C](C)Nc1ccccc1O
 [Be]=[C]1N(C)CCN1CC(C)C
@@ -3756,15 +3563,12 @@
 [Li]<-O=CC(C)c1ccccc1
 [Li]<-O=C1NCCC(=O)N1CC
 [Li]<-n1cccc(C)c1COC
-[Li]<-N=C(F)N1C=NCC1(C)O
 [Li]<-N=C(C)C1=CC2CCC1C2
 [Be]=[C]1N(C)CCN1C(C)(C)C
 [Li]<-p1(O)c(C)cc2c1C=CC2
 [Li]<-N=CC(=O)c1ccccc1
-[Li]<-N=C(C)NC1CCCCC1
 [Be]=[C]1ONC(C(C)(C)C)N1C
 [Li]<-OC(CC(C)C)C(F)(F)F
-[Li]<-[nH]1cnc2nc(Cl)ncc21
 [Li]<-n1ccc(CO)c(CO)c1
 [Li]<-S=C(C)NCc1ccoc1
 [Li]<-n1cc(O)cc(C(C)=O)c1
@@ -3774,7 +3578,6 @@
 [Li]<-S=C1CNC(N)NC1(C)C
 [Li]<-N#CC(C)c1ccccc1
 [Li]<-P1(N(C)C)N(C)CCN1C
-[Li]<-N=C(CC)NC(C)OCC
 [Li]<-n1cccc(C(C)=NO)c1
 [Li]<-PC(C)(C)c1ccccc1
 [Li]<-n1cccc(C(=O)O)c1O
@@ -3794,7 +3597,6 @@
 [Be]=[C]1CN(C)c2ccccc21
 [Li]<-Pc1ccccc1N(C)C
 [Li]<-n1cc(C)n(C(C)=O)c1O
-[Li]<-[nH]1cc(C)c(C(C)(C)O)n1
 [Li]<-NCC(=O)Cc1ccsc1
 [Li]<-P1(c2ccccc2)C2CC21
 [Li]<-N=Cc1ccc(OC)cc1
@@ -3803,10 +3605,7 @@
 [Li]<-S(CC=C)c1ccccc1
 [Li]<-N1CCC(c2ccc[nH]2)C1
 [Li]<-n1ccc2[nH]cc(C)c2c1
-[Li]<-N=C(NC)c1ccccc1
 [Li]<-S=C(NC(C)=O)C(C)(C)C
-[Li]<-N(N)C(=O)c1ccccc1
-[Li]<-N#CN=Nc1ccccc1
 [Li]<-N#Cc1ccccc1SC
 [Li]<-P1(C)SC=PC1C(C)(C)C
 [Li]<-N1CCCC1C(=O)OCC
@@ -3824,7 +3623,6 @@
 [Li]<-P(F)(OC)c1ccccc1
 [Li]<-Nc1cncc(C(C)=O)c1
 [Li]<-N1C(N)=C(C)C=NC1(N)Cl
-[Li]<-N1C=NCC(C)(N)C1(C)Cl
 [Li]<-NCc1cccc(NC)c1
 [Li]<-S=C(OC)c1ccccc1
 [Li]<-N(O)=C1CC2(C)CCC1C2
@@ -3891,12 +3689,10 @@
 [Li]<-S=C1NC(N)(C(C)=O)CS1
 [Li]<-[S+](C)([O-])c1ccccc1C
 [Li]<-O=C1C=CC(N(C)C)=CC1
-[Li]<-[nH]1cnc(N)c1CN(C)C
 [Li]<-n1c(N)nnn1C(C)(C)C
 [Li]<-P12OCC(CO1)C(C)(C)O2
 [Be]=[C](C)NP(N(C)C)N(C)C
 [Li]<-p1(C(C)C)c(C)ccc1C
-[Li]<-n1ccsc1-c1ccsc1
 [Li]<-N(C)=C(O)c1ccccc1
 [Li]<-NC1(C)CC12CCCCC2
 [Be]=[C]1NC=C(N)N1CC(=O)O
@@ -3904,7 +3700,6 @@
 [Li]<-n1ccc(C(Cl)(Cl)OC)[nH]1
 [Li]<-N(C)Cc1ccc(F)cc1
 [Li]<-S(c1ccccc1)C(C)O
-[Li]<-[SH](=O)C(=C)c1ccccc1
 [Li]<-S1CCN(CC)CC1(C)C
 [Li]<-Nc1ncccc1C(=O)O
 [Li]<-n1cccc(C(=O)NO)c1
@@ -3927,7 +3722,6 @@
 [Li]<-NCc1ccc(C=O)cc1
 [Li]<-Nc1ncccc1C(C)=O
 [Li]<-S=C(N)Nc1ccncn1
-[Li]<-[SH+]([O-])CC(F)(F)C(F)(F)F
 [Be]=[C]1N(C)CC2CCCN1C2
 [Li]<-n1cn(COCC)cc1C
 [Li]<-P1(c2ccccc2)OC1C
@@ -3935,18 +3729,15 @@
 [Be]=[C]1N(C)C=CN1CCOC
 [Li]<-O=C([O-])Cn1cc[nH+]c1N
 [Li]<-P(O)(OC)c1ccccc1
-[Li]<-N=C(CC)OB(CC)CC
 [Li]<-N=C(C(=C)OCC)C1CC1
 [Li]<-[O-][n+]1ccccc1C(C)C
 [Li]<-N1=C(CCC)CC1CC=C
 [Li]<-P1(OC)OC=CC(C)(C)O1
-[Li]<-N=C(C)N(C(C)C)C(C)C
 [Be]=[C](NN)c1ccccc1C
 [Li]<-O=Cc1ccc(C=C)cc1
 [Li]<-P(F)(F)c1nn(C)pc1C
 [Be]=[C]1N(C)C=C2NCC=CN12
 [Li]<-N#CC(N)c1ccccc1
-[Li]<-[nH]1c(N)nc2ccccc21
 [Li]<-n1ccn(CCC(=C)C)c1
 [Li]<-[O-][S+]1CCC(C(C)(C)C)C1
 [Li]<-n1ccc(C=CCO)cc1
@@ -3993,13 +3784,10 @@
 [Li]<-NN=Cc1ccccc1O
 [Li]<-n1[nH]c(C(C)(C)C)nc1N
 [Li]<-Nc1ccncc1C(C)C
-[Li]<-N=C(CC)N=C(C)N(C)C
 [Li]<-n1c(N)cn2cnccc21
 [Li]<-n1cccc(CC(C)O)c1
-[Li]<-[nH]1nc(C(C)(C)C)cc1N
 [Li]<-n1cncc(O)c1C(N)=O
 [Li]<-N#CC(C)N1CCNCC1
-[Li]<-[nH]1ncc(N)c1C(F)(F)F
 [Li]<-n1ccc(C(=O)OC)nc1
 [Li]<-n1cnc2[nH]cnc2c1C
 [Li]<-n1ccn(C)c1CN(C)C
@@ -4015,14 +3803,12 @@
 [Li]<-N1=CC(C)C(C)([N+](=O)[O-])C1
 [Li]<-OCc1ccc(OC)cc1
 [Li]<-N(=CC)c1ccc(C)cc1
-[Li]<-N(CC(=O)OCC)C(C)=O
 [Li]<-Nc1ccc(SCC)cc1
 [Li]<-P(C)(C=C)c1ccccc1
 [Be]=[C]1NC=C(C(C)SCC)S1
 [Li]<-n1ccc(C(C)=NO)cc1
 [Li]<-Nc1ccccc1C(=O)O
 [Li]<-[O-][N+]1=C(C)C=CC(C)(C)C1
-[Li]<-[nH]1ncc2c(Br)cccc21
 [Li]<-N(C)=CNC1CCCCC1
 [Li]<-[C]Nc1c(C)cccc1C
 [Be]=[C](Cc1ccccc1)NC
@@ -4066,12 +3852,10 @@
 [Li]<-S=C(C(=O)C=CC)N(C)C
 [Li]<-n1ccn(CCSCC)c1
 [Be]=[C](n1cccn1)C(C)(C)C
-[Li]<-[nH]1cc(-c2ccsc2)cn1
 [Be]=[C]1N(C)C=CN1C(C)(C)C
 [Li]<-NCc1ccc(F)c(F)c1
 [Li]<-n1c(C)[nH]c(CN)c1CO
 [Li]<-n1[nH]c(C(C)=O)c(O)c1C
-[Li]<-n1c(C)cccc1[N+](=O)[O-]
 [Be]=[C]=Cc1ccccc1OC
 [Li]<-n1cccc(C(O)OC)c1
 [Li]<-n1cc(N(C)C)ccc1N
@@ -4080,7 +3864,6 @@
 [Li]<-S=c1[nH]c(=O)[nH]c(N)c1C
 [Li]<-S=C(NC)C(=C)C(C)(C)C
 [Li]<-S=C(CN(C)C)C(C)(C)C
-[Li]<-N=CNc1ccc(C)cc1
 [Be]=[C]1NC=C(N)N1CN(C)C
 [Li]<-S=C(C)NC1CCCCC1
 [Li]<-N(C)=C(C)c1ccccc1
@@ -4103,11 +3886,9 @@
 [Li]<-O=Cc1ccccc1OC
 [Li]<-n1[nH]c(C)cc1C(F)(F)F
 [Li]<-n1ccc(CN(C)C)cc1
-[Li]<-N=C(C)N1CCOC(C)C1
 [Li]<-O=C(CO)C1CC(C)CN1
 [Li]<-n1cc(O)cc(C(N)=O)c1
 [Li]<-N1=CSC(n2cccn2)C1
-[Li]<-N1C=NCC2(CNCS2)C1
 [Li]<-N1=C(C(=O)O)CCC1(C)O
 [Li]<-P(C(C)(C)C)C1(C)CC1C
 [Li]<-n1cc(C)c(C(F)(F)F)[nH]1
@@ -4152,7 +3933,6 @@
 [Be]=[C]1NN=C(OC)N1C(C)C
 [Li]<-n1cnn(C(C)=C(C)C)c1
 [Li]<-N1=C(N)N(C(C)(C)C)CC1
-[Li]<-[nH]1nc(C)c(C)c1[N+](=O)[O-]
 [Li]<-n1csc(-c2cncs2)c1
 [Li]<-S=C1CNC(N)N1C(C)C
 [Li]<-n1cc(I)cc(C(C)=O)c1
@@ -4178,11 +3958,9 @@
 [Li]<-Nc1ccc(C=O)cc1I
 [Li]<-P(O)(C=C(C)C)C(C)(C)C
 [Li]<-S=c1[nH]c(N)cn1C(C)O
-[Li]<-N1C=NC(C)(C)C1(C)OC
 [Li]<-n1ccc(C=C(C)C)cc1
 [Li]<-O(CC(=O)O)CC(F)(F)F
 [Li]<-P1(C)C2CCCC1CCC2
-[Li]<-[O-][NH+](C)c1cccc(C)c1
 [Li]<-N#CCSc1ccccc1
 [Li]<-S=c1[nH]c(C)c(C)n1CC
 [Li]<-Nc1cccc(C(C)C)c1
@@ -4242,7 +4020,6 @@
 [Li]<-O=CC(C)(c1ccncc1)N(C)C
 [Li]<-n1cn(CC)c2c(=S)n(C)cnc21
 [Li]<-Nc1ccc(C)c(C)c1C(=O)OC
-[Li]<-[nH]1cnc(N=Nc2ccccc2)c1
 [Li]<-Nc1cccc(-c2ccccc2)n1
 [Li]<-P(F)(Oc1ccccc1)C(C)(C)C
 [Be]=[C]1OC=C(C)C(C=CC(=O)O)=C1O
@@ -4260,7 +4037,6 @@
 [Li]<-n1ccn(C(C)(C(C)=O)C(C)C)c1
 [Li]<-n1nnn(Cc2ccccc2)c1C
 [Li]<-O=Cc1cccc(C(=O)OC)c1C
-[Li]<-N=C(NC1CCCCC1)C(C)(C)C
 [Li]<-Nc1cc(C)c(C)c(CC(=O)O)c1
 [Li]<-N1=CSC(Nc2cccc(C)c2)C1
 [Li]<-n1ccccc1-c1cccc[n+]1[O-]
@@ -4273,7 +4049,6 @@
 [Be]=[C]1NC(c2ccccc2)=NN1CC
 [Li]<-n1csc(-c2cccc(SC)c2)c1
 [Li]<-n1c(C)c(C)cn1-c1cccnc1
-[Li]<-[nH]1cc(-c2ccoc2)c(N)nc1=O
 [Li]<-N1=COC(c2ccc(SC)cc2)C1
 [Li]<-N(=Cc1cccs1)c1ccccc1
 [Li]<-n1c(C)ccn1Cc1ccccc1
@@ -4339,9 +4114,7 @@
 [Be]=[C](NC(C)(C)C)c1ccc(C)cc1
 [Li]<-n1cc(C)n(-c2ccc(C)cc2)c1
 [Li]<-N#Cc1cccc(OCC#N)c1
-[Li]<-N=C1NCC(c2ccccc2)C1=O
 [Li]<-O=c1cc[nH]c2c(Br)cc(C)cc12
-[Li]<-[AsH2]c1ccccc1-c1ccccc1
 [Li]<-[As](C)(COCC)Cc1ccccc1
 [Li]<-n1nnc(C)n1Cc1ccccc1
 [Li]<-N#Cc1cccc(OC(F)(F)F)c1
@@ -4388,7 +4161,6 @@
 [Be]=[C]1N(CC)C=C([N+](=O)[O-])N1C(C)C
 [Li]<-P1(c2ccccc2)NC(N)C(N)N1
 [Li]<-S=c1[nH]c(C(C)(C)C)cn1C(=C)C
-[Li]<-N=C(C)N(C)c1ccc(OC)cc1
 [Li]<-n1cn(C(C)C=C)c2ccccc21
 [Be]=[C](Nn1ccnc1)c1ccccc1
 [Li]<-N(=Cc1ccccc1)C(C)(C)C
@@ -4396,7 +4168,6 @@
 [Li]<-n1ccn(Cc2cccc(Cl)c2)c1
 [Be]=[C]1CC2CN(C1)CN(C(C)(O)O)C2
 [Li]<-P(CC)(CC)c1ccc(CC)cc1
-[Li]<-[nH]1cc(C)c(Oc2ccccc2)n1
 [Li]<-n1cnn(-c2ccc(C)c(C)c2)c1
 [Li]<-n1cccc(C=Cc2ccco2)c1
 [Li]<-N1=C(C)N(Cc2ccccn2)CC1
@@ -4444,7 +4215,6 @@
 [Li]<-N=c1[nH]c(N)cn1CC(=O)OC
 [Li]<-n1ccc(N(CCO)C(C)C)cc1
 [Li]<-n1c[nH]c2ccc(C(=O)OC)cc21
-[Li]<-N1C=NC(c2cccnc2)C(=O)C1
 [Li]<-n1ncn(-c2ccccc2Br)c1C
 [Li]<-O=C(C)Nc1c(F)cc(F)cc1F
 [Li]<-n1cn(Cc2ccccn2)nc1C
@@ -4478,8 +4248,6 @@
 [Li]<-n1cccc(-c2ccc[n+]([O-])c2)c1
 [Be]=[C]1CNC2(CCCN2)N1C(C)(C)C
 [Be]=[C](C#N)Nc1ccccc1C(C)C
-[Li]<-N1C=NC(C(N)=O)c2ccccc21
-[Li]<-N(CCCl)C(=O)c1ccc(F)cc1
 [Li]<-N#CCc1ccnc(C(=O)OC)c1
 [Li]<-P1(c2ccccc2)OC1C(C)(C)C
 [Li]<-N1=COC(c2ccc(C)cc2)C1C
@@ -4508,7 +4276,6 @@
 [Li]<-S=c1[nH]c(N)c(-c2ccccc2)[nH]1
 [Be]=[C]1N(CC)c2ccccc2N1CC
 [Li]<-N1=CN(CC(C)=O)C2C=CC=CC21
-[Li]<-[nH]1cnc2ccc(C(C)(C)C)cc21
 [Be]=[C](NC(C)(C)C)c1cccc(C)c1
 [Li]<-P1(O)OC(C(=O)OC)=CC(C)(C)O1
 [Li]<-N(=CC(=O)c1ccccc1)CC=C
@@ -4523,7 +4290,6 @@
 [Li]<-n1ccn(C)c1-c1ccc(F)cc1
 [Li]<-N1CCN(c2ncccc2F)CC1
 [Li]<-P(C)(c1ccccc1)n1cccc1
-[Li]<-N=C(C)N1CCOC(C(=O)OC)C1
 [Li]<-n1cn(-c2ccc(C#N)cc2)cn1
 [Li]<-N1=C2Sc3ccccc3N2CC1N
 [Li]<-N=C1CNc2ccccc2C1(C)N
@@ -4533,7 +4299,6 @@
 [Be]=[C]1Nc2sc3ccccc3c2N1C
 [Be]=[C]1N(CCC)C=CN1CCC(C)C
 [Li]<-O=Cc1cccc(N2CC=CC2)c1
-[Li]<-N=C(Nc1ccc(I)cc1)C(=C)C
 [Li]<-N1=COC(c2ccc(OC)cc2)C1
 [Be]=[C]1NC2=C(NC(C)(C)O2)N1C(C)C
 [Be]=[C]1N(C(C)C)C=CN1C(C)C(=O)O
@@ -4550,8 +4315,6 @@
 [Li]<-n1ccc(Cn2cccn2)cc1
 [Li]<-P(O)(c1ccc(F)cc1)C(F)(F)F
 [Li]<-p1cnn(-c2cccc(SC)c2)c1
-[Li]<-[nH]1cc(C(C)(C)C)c(C(C)(C)C)n1
-[Li]<-[nH]1nnc2c(C(F)(F)F)cccc21
 [Li]<-N1=CC(=NOC)CC1c1ccoc1
 [Li]<-P(C)(CCc1ccccc1)N(C)C
 [Li]<-n1nnn(C)c1-c1ccc(C)cc1
@@ -4560,7 +4323,6 @@
 [Be]=[C](Nc1ccccc1OC)N(C)C
 [Li]<-n1ccc(N(C(C)Cl)C(C)Cl)cc1
 [Be]=[C](Nc1ccc(C)cc1C)SCC
-[Li]<-N=C(C)NC(C)OCc1cccs1
 [Be]=[C]1N(CC)C=CN1CC(=O)OCC
 [Be]=[C]1N(CC)C=CN1c1ccccc1
 [Li]<-S=c1n(CCCC)ccn1C(C)C
@@ -4579,18 +4341,15 @@
 [Li]<-n1ccn(Cc2ccc(O)cc2)c1
 [Be]=[C](NC(C)O)c1cccc(OC)c1
 [Li]<-n1ccc(C(C)N=CC#N)c(C)c1
-[Li]<-[nH]1ncc(-c2ccccc2F)c1C
 [Be]=[C]1N(CCN(C)C)C=CN1C(C)C
 [Li]<-n1ccccc1-c1nccnc1C
 [Li]<-n1ccn(-c2c(C)cccc2C)c1
 [Li]<-n1ccn(OC)c1-c1ccccc1
 [Li]<-[O-][N+](C)=Cc1c(C)cc(C)cc1C
-[Li]<-[nH]1c(CC(=O)O)nc2ccccc21
 [Li]<-NCC(C)Nc1ccccc1OC
 [Li]<-O=C(OC)C1CCNC1C(C)(C)C
 [Li]<-n1ccn(-c2cccc(C=C)c2)c1
 [Li]<-N(O)=C(C)c1nc2ccccc2[nH]1
-[Li]<-N(CC)C(C)C(O)c1ccccc1
 [Be]=[C](C#N)Nc1c(C)cc(C)cc1C
 [Li]<-n1[nH]c(-c2ccccc2)cc1C#N
 [Li]<-P(O)(c1cccc(C)c1)C(C)(C)C
@@ -4644,7 +4403,6 @@
 [Li]<-n1ccc(C)c2ccc(OC)cc21
 [Li]<-n1cccc(Cc2ccccc2)c1
 [Li]<-Nc1ccc(C(N)=O)cc1C(C)C
-[Li]<-N=C(C)Nc1ccc([N+](=O)[O-])cc1
 [Be]=[C]1Nc2ccc(C(=O)O)cc2N1C
 [Li]<-P1(c2ccccc2)C=C(P)C(P)P1
 [Li]<-S=C1C=CN(CC)C(C)(N)N1CC
@@ -4679,7 +4437,6 @@
 [Li]<-P1(F)CC(c2ccccc2)=CC1C
 [Li]<-P1(OCC)OCC(C)C(C(N)=O)O1
 [Li]<-N(C)Cc1cccc2ccccc12
-[Li]<-N=CNCC(C)(O)c1ccccc1
 [Li]<-n1cccc(-c2cnccc2Br)c1
 [Li]<-n1cc(C)cc2cc(CCl)ccc21
 [Li]<-n1cn(C(C)C)c2ncnc(Br)c21
@@ -4688,9 +4445,7 @@
 [Li]<-n1cn(-c2ccc(CC)cc2)cn1
 [Li]<-n1cn(-c2cccc(OC)c2)nn1
 [Li]<-P(=C=CC(C)(C)C)c1ccccc1
-[Li]<-n1c(C(=C)C)sc2ccccc21
 [Li]<-N=C(C)c1cccc2ccccc12
-[Li]<-N1C=NC(N)C1c1cccnc1F
 [Be]=[C]1N(C)C=C(N)N1c1ccccc1
 [Li]<-n1ncn(-c2ccccc2C=O)n1
 [Li]<-O=C1CNCN(c2ccccc2)C1
@@ -4713,10 +4468,7 @@
 [Li]<-P1(C)CC(C)C(c2ccccc2)C1
 [Li]<-n1c(N)[nH]c(C(F)(F)F)c1[N+](=O)[O-]
 [Li]<-P1(OC)OC=CC2(C=CC=CC2)O1
-[Li]<-N1C=NC(N)(c2ccc(C)cc2)C1
-[Li]<-N=C(Cc1ccc(OC)cc1)NC
 [Li]<-N#Cc1ccccc1-n1cccc1
-[Li]<-N1C=NC(N)(c2ccc(Br)cc2)C1
 [Li]<-n1cc(-c2ccc(O)cc2)sc1N
 [Li]<-N1=CSC(C(=C)c2ccccc2)C1
 [Li]<-N=c1[nH]c2c(C(C)C)cccc2s1
@@ -4743,9 +4495,7 @@
 [Li]<-n1ccc(C(=O)N(CC)CC)cc1
 [Li]<-P(=C(C)CC)c1cccc(CC)c1
 [Be]=[C]1CN(c2cccc(I)c2)CN1C
-[Be]=[C]1C(=O)NC(N)(C(C)(C)O)NC1N
 [Li]<-O=C(CN1CCCCC1C)OCC
-[Li]<-N=C1NCCC2(C)CC3C=CC12O3
 [Be]=[C]1N(C)c2ccc(C=C)cc2N1C
 [Li]<-O=C1C=CC(N2CCCCC2)=CC1
 [Li]<-O=C(O)C(O)Oc1cccc(Cl)c1
@@ -4792,7 +4542,6 @@
 [Li]<-n1cccc(C(=O)N(CC)CC)c1O
 [Li]<-N1=C(C)ON(C)C1(N)c1ccccc1
 [Li]<-N1=CC(n2nc(C)cc2C)CC1(C)C
-[Li]<-[nH]1c(N)nc2c(OC)c(OC)ccc21
 [Li]<-P(c1cc(C)c(C)c(C)c1)C(C)(C)C
 [Li]<-n1cccc(C=NNC(C)C)c1OC
 [Li]<-Nc1cnc(N2CCOCC2)nc1C
@@ -4800,7 +4549,6 @@
 [Li]<-P1(c2ccc(F)cc2)N(C)CCN1C
 [Li]<-N(CC)=C1C2CC(C)(C)C1C(C)C2=O
 [Li]<-n1cc(-c2ccccc2)n(C(=C)C)c1
-[Li]<-N=C1NC23C=CC=CC2(C=CC=C3)S1
 [Li]<-n1ccc(-c2cccc(C)c2C)cc1
 [Li]<-N1=CSC(n2ncc3ccccc32)C1
 [Li]<-S=C(Nc1ccc(C)cc1C)N(C)C
@@ -4897,7 +4645,6 @@
 [Li]<-n1cccc2c(C(C)(C)C)ccnc21
 [Li]<-n1ccc(C2COC(C(C)C)=N2)cc1
 [Be]=[C](Nc1ccccc1)c1cccnc1
-[Li]<-[nH]1cc(C([Si](C)(C)C)[Si](C)(C)C)cn1
 [Li]<-N(Cc1ccccc1OC)=C(C)OC
 [Li]<-n1c[nH]c(N=Nc2ccccc2C)c1
 [Li]<-n1ccn(CCC)c1-c1ccccc1
@@ -4925,7 +4672,6 @@
 [Li]<-n1cccc(C(=O)C(=C)C(=O)OC)c1
 [Li]<-n1cnc(-c2ccccc2C)n1CC
 [Be]=[C]1NC(N)=CN1c1ccccc1C#N
-[Li]<-[nH]1cnc(N=Nc2ccccc2)c1N
 [Be]=[C](NC1CCCCC1)c1[nH]ccc1C
 [Li]<-n1cccc(CNC2CCCCC2)c1
 [Be]=[C]1SC=C(c2ccccc2OC)N1C
@@ -4951,7 +4697,6 @@
 [Li]<-n1ccn2c1-c1cc(OC)ccc1C2
 [Li]<-n1ccc(C2=NC(C(=O)O)CO2)cc1
 [Li]<-n1ccc(-c2ccc(OC)cc2)cc1
-[Li]<-N1C=NC(C)(OC)C1c1ccccc1
 [Be]=[C]1N(C)C=C(Sc2ccccc2)N1C
 [Be]=[C]1N(C)C=CN1C(C)OC(=O)C(C)O
 [Li]<-N=C(C)c1c(O)ccc2ccccc12
@@ -4986,7 +4731,6 @@
 [Be]=[C]1N(c2ncccn2)C=CN1C(C)C
 [Li]<-n1oc(-c2ccccc2)cc1N(C)C
 [Li]<-NCc1c(C#N)cccc1C(F)(F)F
-[Li]<-[nH]1nc(-c2cccc(C#N)c2)nc1N
 [Li]<-O=C1C2CC(C)C1C(C)(NN)C2(C)C
 [Li]<-n1nc(N)n(N=C(C)c2cccs2)n1
 [Li]<-n1cnn(-c2ccc(C(C)C)nn2)c1
@@ -5006,7 +4750,6 @@
 [Li]<-n1ccn(-c2cccc([N+](=O)[O-])c2)c1
 [Be]=[C]1Oc2c(ccc(OC)c2OC)N1C
 [Li]<-S(Cc1ccccc1)c1ccccc1
-[Li]<-N=C(CC)Nc1ccccc1OCC
 [Be]=[C]1N(CC(=O)C(=C)F)C=CN1C(C)C
 [Li]<-S=c1[nH]cc(C)n1Cc1ccccc1
 [Li]<-N1=CN(c2ccc(C)cc2C)CCC1
@@ -5034,7 +4777,6 @@
 [Li]<-S(C)C(C)Oc1c(F)ccc(F)c1F
 [Li]<-n1ccc2c(c1)C=CC(C)([N+](=O)[O-])C2
 [Li]<-N=C(CC)ON(C)Cc1ccccc1
-[Li]<-n1c2ccccc2cc2cccnc21
 [Li]<-n1c(C(=O)OCC)oc2ccccc21
 [Li]<-P(O)(ON=C(C)C=C)c1ccccc1
 [Li]<-n1ccc(C=Nc2ccccc2)cc1
@@ -5044,7 +4786,6 @@
 [Li]<-O=C(c1ccccc1)c1cccn1C
 [Be]=[C]1NC(c2cncc(F)c2)=C(N)N1C
 [Li]<-n1cn(C(C)=O)c2c(SC)cccc21
-[Li]<-N1C=NCC(N)(c2ccccc2F)C1
 [Li]<-Nc1ccccc1-c1cccc(N)c1
 [Li]<-n1cc(C)n(Cc2ccccc2F)c1
 [Li]<-S=C(N1CCCCCC1)n1cccn1
@@ -5083,7 +4824,6 @@
 [Be]=[C]1NC=C(N)N1C[Se]c1ccccc1
 [Li]<-n1ccccc1C1COC(C(C)C)=N1
 [Li]<-N(=C(C)OCC)c1cccc(OC)c1
-[Li]<-N1C=NCC(C(F)(F)F)C1C(F)(F)F
 [Li]<-n1cccc(C(=O)OC)c1C(=O)OC
 [Li]<-S1c2ccccc2C2(C)C=CC=CC12
 [Li]<-S=c1[nH]c2ccccc2n1CC(C)C
@@ -5101,11 +4841,9 @@
 [Li]<-n1csc(N=Nc2cccc(C)c2)c1
 [Li]<-n1cn(-c2ccc(C)c(C)c2C)cn1
 [Li]<-N1C=C(N)N(C(=O)c2ccccc2)C1
-[Li]<-[nH]1cnc(-c2c(F)cccc2F)c1N
 [Be]=[C]1NC(N)N(C(C)C)c2ccccc21
 [Li]<-n1ccn(Cc2ccc(C(C)=O)s2)c1
 [Li]<-P(N)(c1ccccc1)c1ccccc1
-[Li]<-[nH]1ncc(-c2ccccc2OC)c1C
 [Li]<-n1ccc(-c2ccc(C)c(C)c2)cc1
 [Li]<-S=C(Nc1ccccc1)N(CC)CC
 [Be]=[C]1NC(C(C)(C)C)N(C(C)(C)C)C1N
@@ -5138,7 +4876,6 @@
 [Li]<-N(C)c1cc(C(C)C)cc(C(C)C)c1
 [Li]<-n1ccn(C)c1-c1sccc1C=NO
 [Li]<-S(Cc1cccnc1)c1ccccc1
-[Li]<-[nH]1cnc(-c2ccccc2OC)c1C
 [Be]=[C]1Nc2cc(OC)c(OC)cc2N1C
 [Be]=[C]1N(CCOC)CCN1CC(C)(C)C
 [Li]<-n1cc(C)cc2c(C(N)=O)cccc21
@@ -5158,7 +4895,6 @@
 [Be]=[C]1N(CC)C=CN1c1ccc(C)nc1
 [Li]<-OCC(N)c1ccccc1C(F)(F)F
 [Li]<-n1cncc(C(=O)c2ccccc2)c1
-[Li]<-[nH]1c(N)nc2c1c(=O)n(C)c(=O)n2C
 [Li]<-n1n[nH]c(-c2ccccc2C(=O)O)n1
 [Li]<-S=c1[nH]nc(CC)n1-c1ccccc1
 [Li]<-N=c1[nH]c(C(C)(C)C)c(C(C)C)n1C
@@ -5202,7 +4938,6 @@
 [Li]<-P1(CN(C)C)CC(C)C(C)C1
 [Li]<-N#Cc1ccc(C(C)C)cc1
 [Be]=[C]1NC(N)(C(C)(C)C)NC1N
-[Li]<-n1ccn(CC)c1C(C)(C)O
 [Li]<-O=C(Cl)C=Nc1ccccc1
 [Be]=[C](N)Nc1c(C)cccc1C
 [Li]<-NCC12CC(CCC1(C)C)C2
@@ -5222,7 +4957,6 @@
 [Be]=[C](NC(=C)C)c1ccccc1
 [Li]<-n1ccc(N(CC)CC)cc1
 [Li]<-n1ccn(CCC(=O)OC)c1
-[Li]<-n1ccccc1C(=S)N(C)C
 [Li]<-N1=NC(C(C)(C)C)=CC1(C)C
 [Li]<-n1cc(C)n(CC(=O)OC)c1
 [Li]<-N1=COC(C(F)(F)F)C1(C)N
@@ -5252,7 +4986,6 @@
 [Li]<-n1cc(-c2cscn2)sc1N
 [Li]<-NC(C)c1ccccc1C=O
 [Li]<-n1ccc(C(C)=NC)c(C)c1
-[Li]<-N1C=NC2CCCNCC2C1
 [Li]<-n1cc(-c2nccs2)sc1N
 [Li]<-P(c1ccccc1)C(C)(C)C
 [Li]<-n1ccc(-c2nccs2)cc1
@@ -5267,25 +5000,20 @@
 [Li]<-Nc1cccc(C(=O)OC)c1
 [Li]<-N(=c1cc[nH]cc1N)C(C)C
 [Li]<-n1[nH]ccc1-c1ccccc1
-[Li]<-N1C(C)=NC(NCC)C1(C)N
 [Li]<-[O-][N+](C)=Cc1ccc(C)cc1
 [Li]<-N(C)CCOc1ccccc1
 [Li]<-n1c[nH]c(=O)c2ccccc21
 [Li]<-S=c1[nH]c2cccc(C)c2[nH]1
-[Li]<-[nH]1c(C#N)nc2ccccc21
-[Li]<-N(=C(C)C)c1ccc(Br)cc1
 [Li]<-N(O)=C(C)c1cccc(F)c1
 [Be]=[C]1N(CCl)C=CN1C(C)(C)C
 [Be]=[C]=Cc1c(C)cc(C)cc1C
 [Li]<-S1Cc2ccc(OC)cc2C1
-[Li]<-N1=CC=CCC1N=C(C)OC
 [Li]<-P1(c2ccccc2)OCPO1
 [Be]=[C]1N(C)C(Cl)=C2C=CC=CN12
 [Li]<-N12CN3CP(CN(C1)C3N)C2
 [Li]<-[S+]([O-])(CC)c1ccc(C)cc1
 [Li]<-n1cnc2[nH]cc(N)c2c1Cl
 [Li]<-n1csc(-c2ccncc2)n1
-[Li]<-N(Cc1ccccc1)C(N)=O
 [Li]<-N(CC)C(C)OCC(F)(F)F
 [Li]<-N1NC12CCC(OCC)CC2
 [Be]=[C]1c2ccccc2CNC1N
@@ -5303,7 +5031,6 @@
 [Li]<-NC(C)c1cccc(OC)c1
 [Li]<-OCC(CO)c1ccccc1
 [Be]=[C]1N(CCC)C=CN1C(C)C
-[Li]<-N1C=NC(c2ccncc2)C1
 [Li]<-N(C)=CNc1ccccc1C
 [Li]<-[N-]=[N+](C)c1cc(C)ccc1C
 [Be]=[C]1CC23C=CC(CC2(C)N1)O3
@@ -5316,7 +5043,6 @@
 [Li]<-O=C(C)Nc1ccc(C)cc1
 [Li]<-n1nc(-c2ccco2)nn1C
 [Li]<-N=CC(C)(C)c1ccccc1
-[Li]<-NCc1ccccc1[N+](=O)[O-]
 [Li]<-NN=C(C)c1ccccc1C
 [Li]<-S=Cc1ccccc1C(N)=O
 [Li]<-P(=C(C)C(F)(F)F)C(C)(C)C
@@ -5324,7 +5050,6 @@
 [Li]<-NCc1ccc([Si](C)(C)C)s1
 [Li]<-N(=Cc1ccccc1)C(C)N
 [Li]<-[O-][n+]1ccccc1CC(C)C
-[Li]<-N=C(CC)Nc1ccccc1
 [Li]<-n1cncc(C(=O)OCC)c1
 [Be]=[C](NC)c1ccc(F)cc1
 [Li]<-n1cnc(C)c(NC(C)=O)c1
@@ -5338,13 +5063,11 @@
 [Be]=[C]1NCC23C=CC(CC12C)O3
 [Li]<-NCC(=O)NC1CCCCC1
 [Li]<-O=C1COCc2ccccc21
-[Li]<-[nH]1cncc1-c1ccccc1
 [Li]<-n1cccc2c(C)nccc21
 [Li]<-N(CC)CCN1CCCCC1
 [Li]<-O=CC=C(N)c1ccccc1
 [Li]<-S=C1C=CNC(C)(N)N1CC
 [Li]<-NN1Cc2ccccc2C1=O
-[Li]<-[nH]1cnc2c(OC)cccc21
 [Li]<-Pc1cccc(C(C)(C)N)c1
 [Li]<-N(Cc1cccnc1)=C(C)C
 [Li]<-S=C(N)N(C)c1ccccc1
@@ -5356,8 +5079,6 @@
 [Li]<-N1=CSC(n2cc(C)cn2)C1
 [Li]<-Pc1ccc(CN(C)C)cc1
 [Li]<-N1=CN(C)Cc2ccccc21
-[Li]<-N1C=NC2(N)C=CC=CC12N
-[Li]<-[nH]1ncc(C(=O)OCC)c1N
 [Li]<-n1c(CO)c(C)c(N)n1CO
 [Li]<-N12CN3CN(C1)C([SeH])P(C3)C2
 [Li]<-N1=C(C)ON(C(C)(C)C)C1N
@@ -5394,7 +5115,6 @@
 [Be]=[C]1N(CC#N)C=CN1C(C)C
 [Li]<-N#Cc1ccc(C(C)=O)cc1
 [Li]<-Nc1cnc(C)cc1C(=O)O
-[Li]<-N=C(NC(C)C(C)=O)C(C)C
 [Li]<-P1(C(C)C)CC12CCCCC2
 [Li]<-N1CC(CO)c2ccccc21
 [Li]<-S=c1[nH]c(N)cn1C(C)(C)C
@@ -5408,7 +5128,6 @@
 [Li]<-N#CN1Cc2ccccc2C1
 [Li]<-N(=C)NC(C)c1ccccc1
 [Li]<-n1ccc(N)c(C(=O)OC)c1
-[Li]<-N=C(C)Nc1ccccc1I
 [Li]<-P1(S)C(C)C1c1ccccc1
 [Li]<-NCc1ccccc1C(C)C
 [Li]<-NCc1ccc2c(c1)COC2
@@ -5421,7 +5140,6 @@
 [Li]<-N1=CCC(c2ccccc2)C1
 [Li]<-n1cn(CC)c2ccccc21
 [Li]<-n1ccn2ccc(=O)n(C)c21
-[Li]<-[nH]1c(N)nc2ccc(C)cc21
 [Li]<-n1ccccc1CNCCCl
 [Li]<-n1ccn(C(=O)CN(C)C)c1
 [Li]<-n1ccn(Cc2ccoc2)c1
@@ -5448,7 +5166,6 @@
 [Li]<-n1cc(C(=O)OCC)c(C)[nH]1
 [Li]<-N(CCC)C(C)C1OCCO1
 [Li]<-S1CCCC1c1ccccc1
-[Li]<-NC(C)=Nc1ccc(I)cc1
 [Li]<-N#CN=C(C#N)OC(C)(C)O
 [Li]<-Nc1cc(C)cc(C#CN)c1
 [Li]<-n1c(C)cccc1N=C(C)O
@@ -5482,7 +5199,6 @@
 [Li]<-n1ccn(C(C)C(=O)OC)c1
 [Li]<-N1CCCC1c1ccccc1
 [Li]<-P1(C(C)=O)NC(N)C(=O)CO1
-[Li]<-N=C(C)Nc1ccccc1C
 [Li]<-n1ccc(C(=O)NOC)cc1
 [Li]<-N#Cc1cccc(C(C)C)c1
 [Li]<-n1nc2ccccc2n1CN
@@ -5521,7 +5237,6 @@
 [Li]<-n1csc(C2OCCCO2)c1
 [Li]<-n1ccsc1-c1ccccc1
 [Li]<-P(CC(=C)C)c1ccccc1
-[Li]<-[nH]1c(N)cnc1-c1ccsc1
 [Li]<-n1cn(C(C)O)cc1C(O)Cl
 [Li]<-n1c(C)ccn1CC(=O)CO
 [Li]<-P1(O)OCC(C)C([N+](=O)[O-])O1
@@ -5534,7 +5249,6 @@
 [Li]<-n1cc(N)c2ccccc2c1
 [Li]<-N(c1ccc(C)cc1)C(C)C
 [Li]<-NCC(C)Nc1ccccn1
-[Li]<-[nH]1cc(-c2ccccc2)cn1
 [Li]<-n1cc(C)n(C(C)(C)C)c1Cl
 [Li]<-n1ccc(CN(C)C)c(C)c1
 [Be]=[C]1C2OC(C)(C)OC2CN1C
@@ -5544,9 +5258,7 @@
 [Li]<-n1cc(C(C)C)n(C(C)C)c1
 [Li]<-N1=CN(C2CCCCC2)CC1
 [Li]<-N1=COC(c2ccncc2)C1
-[Li]<-NC(C)C(O)c1ccccc1
 [Li]<-N(=CC=C)c1ccccc1C
-[Li]<-[nH]1c(CN)nc2ccccc21
 [Li]<-S=C(N)NCc1ccccc1
 [Li]<-N(N)c1ccccc1[N+](=O)[O-]
 [Li]<-n1ccc(-c2ncc[nH]2)cc1
@@ -5555,7 +5267,6 @@
 [Be]=[C]1N(CC)C=C2C=CC=CN12
 [Li]<-N(C)=CNc1ccccc1
 [Li]<-[S+](C)([O-])Cc1ccc(F)cc1
-[Li]<-[nH]1ncc2cc(OC)ccc21
 [Li]<-n1cc(CC)cc(N(C)C)c1
 [Li]<-NCC1C(=O)CCCC1CC
 [Li]<-n1cc(C)cc(C=C(C)C)c1
@@ -5564,7 +5275,6 @@
 [Li]<-n1cncc(C(Cl)(Cl)OC)c1
 [Li]<-Nc1c(C)cccc1C(=O)O
 [Li]<-N1=C(N)C(=O)c2ccccc21
-[Li]<-N=C(C)Nc1ccc(O)cc1
 [Li]<-NCc1cccc(C(=O)O)n1
 [Li]<-P1(c2ccccc2)C23CC21C3
 [Li]<-n1ccc(NS(C)(=O)=O)cc1
@@ -5613,7 +5323,6 @@
 [Li]<-n1c(N)oc2cc(I)ccc21
 [Li]<-n1cccc(C(Br)N(C)C)c1
 [Be]=[C](N)C=C(C)c1ccccc1
-[Li]<-N=C(C)NCc1ccncc1
 [Be]=[C]1N(CC=C)C=CN1C(C)C
 [Li]<-O=C(C=C)Nc1ccccc1
 [Li]<-N(C)c1c(F)cc(F)cc1F
@@ -5640,7 +5349,6 @@
 [Li]<-O=C(Cl)c1cccc(OC)c1
 [Li]<-P(O)(c1cnc[nH]1)C(C)(C)C
 [Li]<-O=C([O-])C[n+]1ccc(C)cc1
-[Li]<-O=C([O-])C[n+]1ccccc1F
 [Li]<-N1CCc2cc(OC)ccc21
 [Li]<-N(=Cc1ccccc1)CCO
 [Li]<-n1cc(CN(C)C)n(CC)c1
@@ -5662,7 +5370,6 @@
 [Li]<-[O-][n+]1ccc(C(F)(F)F)cc1
 [Li]<-NC12CCC(C1C)C(C)(C)C2
 [Li]<-S=C(NC)NN=CC(=O)OC
-[Li]<-N=C(C)NC(C)C(=O)OC
 [Li]<-N=C(C)C(O)c1ccccc1
 [Li]<-n1cccc(CNC(C)=O)c1
 [Li]<-O=C(O)C1CCN(C)C1O
@@ -5682,7 +5389,6 @@
 [Li]<-O=C1c2ccccc2NC1N
 [Be]=[C](C)Nc1nccc(C)c1C
 [Li]<-O=C(OCC)c1c[nH]c(N)c1
-[Li]<-[nH]1ncc(N)c1C(=O)OCC
 [Be]=[C](C)NC(=O)c1ccccc1
 [Li]<-Nc1c(C)cc(Cl)cc1C
 [Li]<-P(Cl)(c1ccoc1)C(C)(C)C
@@ -5693,7 +5399,6 @@
 [Li]<-n1ccc(CC(C)(C)O)cc1
 [Li]<-N(C)=CNc1cccc(C)c1
 [Li]<-N=C1CC(O)CC(C(C)C)C1
-[Li]<-[nH]1cnc(-c2ccccc2)c1
 [Li]<-P(O)(C[Si](C)(C)C)C(C)(C)C
 [Li]<-n1csc(CC(=O)OCC)c1
 [Li]<-PCc1cc(C)c(C)c(C)c1
@@ -5708,7 +5413,6 @@
 [Li]<-S=Nc1c(C)cc(C)cc1C
 [Li]<-S=C1NCCCN1[Si](C)(C)C
 [Li]<-S=c1c(N)c1-c1ccccc1
-[Li]<-[nH]1c(N)nc2nc(N)ncc21
 [Li]<-S=C(Cc1ccccc1)NC
 [Be]=[C]1N(C(C)C)C=CN1C(C)Cl
 [Li]<-Nc1ccc([N+](=O)[O-])c(Cl)c1
@@ -5716,9 +5420,7 @@
 [Li]<-N=C(C)SCc1ccccc1
 [Li]<-n1ccn(CC(C)(O)CO)c1
 [Li]<-n1nn(CC)c2ccccc21
-[Li]<-N=C(C(=O)OC)N1CCCC1
 [Be]=[C]1NC(N)=CN1CC(C)C=C
-[Li]<-[nH]1ncc(CC(=O)OC)c1C
 [Li]<-N(c1ccccc1F)C(C)C
 [Li]<-S=Nc1ccc(C(C)C)cc1
 [Li]<-N(Cc1ccccc1)C(C)C
@@ -5731,7 +5433,6 @@
 [Li]<-n1cc2cc(C)cc(C)c2s1
 [Li]<-N(C)=CNc1ccccc1I
 [Li]<-n1csc(-c2ccoc2)c1N
-[Li]<-[nH]1c(N)nc2ncnc(Br)c21
 [Be]=[C]1NC2(C)C=CC=CC2(N)N1
 [Li]<-N1=CSC(n2nccc2Cl)C1
 [Li]<-N(C)CCC(=O)OCCCC
@@ -5740,7 +5441,6 @@
 [Li]<-S(C)C(C)c1ccccc1C
 [Li]<-N1=C2C=CC=CC2N(C)C1N
 [Li]<-n1c(C)c(N)cn(CO)c1=O
-[Li]<-[nH]1cnc(=O)c2ccccc21
 [Li]<-n1ccccc1C1COCN1
 [Li]<-N(N)c1cc(C)c(C)c(C)c1
 [Li]<-N(=Cc1ccccc1)C(C)C
@@ -5749,7 +5449,6 @@
 [Li]<-NC(C)c1ccc(Cl)c(Cl)c1
 [Li]<-N1CC(N)CC(C(C)(C)C)C1
 [Li]<-N#Cc1ccccc1C(C)C
-[Li]<-[nH]1c(C)nc2c(Br)cccc21
 [Li]<-O=C1C=C(N(C)C)C=C(C)C1
 [Li]<-N(C(C)NCC)C(C)N(C)C
 [Li]<-N1C(COC)CCC1COC
@@ -5757,7 +5456,6 @@
 [Li]<-O=Cc1ccc(N(C)C)cn1
 [Li]<-n1cccc(N(CC)CC)c1
 [Li]<-N=c1[nH]cc(C(C)C)c(=O)[nH]1
-[Li]<-[nH]1ncc(N)c1C(=O)C(N)N
 [Be]=[C]1Oc2ccccc2N1CC
 [Li]<-n1nn(CC(=O)OC)cc1C
 [Li]<-n1c[nH]c2c(C)ccc(C)c21
@@ -5786,7 +5484,6 @@
 [Li]<-n1cccc2nc(C)ccc21
 [Be]=[C]1N(C)C=CN1CC(=O)OC
 [Li]<-P(CN(C)C)C(C)C(=O)OC
-[Li]<-[nH]1cc(-c2cccnc2)cn1
 [Li]<-[Se]1CC(c2ccccc2)C[Se]1
 [Be]=[C]1C2CCC1N(C)C(C)N2C
 [Be]=[C]1N(C(C)C)C=CN1C(C)O
@@ -5801,8 +5498,6 @@
 [Li]<-P1(C)CN2CNCN(C2)C1C
 [Be]=[C](COC)Cc1ccccc1
 [Li]<-n1cc(C)cn1C(C)=C(C)C
-[Li]<-n1cc(CN(C)C)[nH]c1CO
-[Li]<-[nH]1c(C[SeH])nc2ccccc21
 [Li]<-O=CC=C(O)c1ccccc1
 [Be]=[C]1NCC(C)(C)CN1CCO
 [Li]<-n1ccccc1CC(C)(C)C
@@ -5810,14 +5505,12 @@
 [Li]<-OCc1c(C)cc(C)cc1C
 [Be]=[C]1Nc2c(Cl)cccc2N1C
 [Li]<-NCc1cc(C)c(C)c(C)c1
-[Li]<-O=C([O-])C[n+]1ccccc1C
 [Li]<-n1cccc2cnc(C)cc21
 [Li]<-N=C(CC)ON1CCC(C)C1
 [Li]<-n1ccc(-c2cc[nH]c2)cc1
 [Li]<-NCC(=C)c1ccccc1
 [Li]<-NC(C)c1ccccc1C=C
 [Li]<-n1ccc(C(=O)N(C)C)cc1
-[Li]<-N=CN(C)Cc1ccccc1
 [Li]<-n1cccc(C2COCN2)c1
 [Li]<-n1ccn(Cc2ccsc2)c1
 [Li]<-n1c[nH]c2cc(I)c(I)cc21
@@ -5852,10 +5545,8 @@
 [Li]<-N(=O)CN(C)C
 [Be]=[C]=CC
 [Be]=[C]=CC(C)(C)N
-[Li]<-[nH]1ncnc1N
 [Li]<-N#CCC(=O)O
 [Li]<-N=C(C#N)OC
-[Li]<-N(C)=CC(C)=O
 [Li]<-N1(C)CC1
 [Li]<-N#CC(=C)C
 [Li]<-N#CCN
@@ -5864,7 +5555,6 @@
 [Li]<-S=C1CNCS1
 [Be]=[C]=NN(C)C
 [Li]<-SCC
-[Li]<-[SeH]C
 [Be]=[C]1CCCO1
 [Be]=[C]=NCN
 [Be]=[C]1NC(C)=CS1
@@ -5874,30 +5564,23 @@
 [Li]<-S=C(C)OC
 [Li]<-OCC(F)(F)F
 [Li]<-NCC(C)(C)O
-[Li]<-[nH]1nncc1C
 [Li]<-o1ccc(C)c1
 [Li]<-S(OC)C(C)C
 [Li]<-N#CC1(C)CC1
 [Li]<-NCC(C)(C)C
-[Li]<-[nH]1cncc1N
-[Li]<-[nH]1cnc(N)c1
 [Li]<-S(C)C(C)C
 [Li]<-NCC(=C)CO
-[Li]<-N1C=NCC1N
 [Li]<-NC(N)([SeH])[SeH]
 [Be]=[C]1CNCN1
 [Li]<-[O-][N+](C)=CC=C
 [Li]<-N(C)=C(C)CC
 [Li]<-OC(C)N(C)C
 [Li]<-O=CC(=C)CO
-[Li]<-[nH]1nccc1C
-[Li]<-[nH]1cncc1C
 [Be]=[C]=NC(C)(C)C
 [Be]=[C](N)OCC
 [Li]<-OCCO
 [Li]<-N#CCl
 [Li]<-S=CC(N)=O
-[Li]<-N1C=NCC1C
 [Be]=[C](F)F
 [Li]<-NOC
 [Be]=[C]=NCC(C)=O
@@ -5909,7 +5592,6 @@
 [Li]<-N(=O)CC
 [Li]<-NC(C)NCC
 [Li]<-N#CC(C)N
-[Li]<-N1C=NCC1
 [Li]<-P(C)(C)N=CN
 [Be]=[C](C#N)OCC
 [Li]<-[N-]=[N+]=C(C)C
@@ -5917,15 +5599,12 @@
 [Li]<-O=C(O)C(=N)N
 [Be]=[C]1OC=CN1C
 [Li]<-N(C)CC=C
-[Li]<-N=C(CC)CO
 [Li]<-N(O)=CC(C)=O
-[Li]<-[SH](=O)CC
 [Li]<-N#CCO
 [Li]<-N(C)=CC(C)C
 [Li]<-N(C)=C(C)OC
 [Be]=[C]1CCOC1
 [Li]<-N#CC
-[Li]<-[AsH2]C(C)C
 [Li]<-N=C(CC)SC
 [Li]<-O=CP(C)C
 [Be]=[C]1C=CC=CN1
@@ -5936,7 +5615,6 @@
 [Li]<-O(C)C(C)(O)O
 [Li]<-NCCC(=C)C
 [Li]<-P(C)(CC)NC
-[Li]<-S
 [Li]<-P(S)(C=C)SC
 [Li]<-N=CC
 [Li]<-N(C)CCCC
@@ -5951,7 +5629,6 @@
 [Li]<-S(C)CCC
 [Li]<-O=C(O)N(C)C
 [Li]<-N(C)CCC
-[Li]<-[nH]1cnnc1
 [Li]<-S=C(F)F
 [Li]<-S=C(CC)OC
 [Li]<-n1ncoc1Br
@@ -5969,8 +5646,6 @@
 [Li]<-S=C(NN)SC
 [Li]<-[O-][S+](C)CC
 [Be]=[C](NC)N(C)C
-[Li]<-[nH]1nnnc1C
-[Li]<-N1CCC1=O
 [Li]<-O=C(C)NC=N
 [Li]<-N(C)=CCOC
 [Li]<-S=C1NCS1
@@ -6017,7 +5692,6 @@
 [Be]=[C]1SC=CN1C
 [Be]=[C](F)NC
 [Li]<-N=C(CC)ON
-[Li]<-NC(C)(O)O
 [Li]<-S=C(CC)CC
 [Li]<-O=CC
 [Li]<-S=C(N)OCC
@@ -6034,7 +5708,6 @@
 [Li]<-n1[nH]cnc1N
 [Li]<-S=C(N)C=C
 [Li]<-S=C1CSCS1
-[Li]<-NC(C)=O
 [Li]<-S=C(NC)SC
 [Li]<-N=CC(C)CO
 [Li]<-n1ccc(N)[nH]1
@@ -6048,29 +5721,23 @@
 [Li]<-N=C(C)CC
 [Li]<-NC(C)C(C)=O
 [Li]<-O=CCC
-[Li]<-[nH]1cnnn1
 [Li]<-N#CCOCC
 [Li]<-NCC1CC1
 [Li]<-O=CC(C)N
 [Li]<-N(C)=CC=C
 [Li]<-[O-][N+](C)=N
-[Be]=[C]=C(C)OC
 [Li]<-S(C)CC(C)=O
 [Li]<-n1cc[nH]c1N
-[Li]<-[nH]1nccc1N
 [Li]<-[O-][S+](C)CC=C
 [Li]<-N(CC)C(C)O
 [Li]<-NC(C)CCl
 [Li]<-OCC(C)CC
-[Li]<-[SH](=O)CCC
 [Li]<-N(CC)CCCl
 [Li]<-SC(C)C
 [Li]<-N=CC(C)C
 [Be]=[C]=NCC
-[Li]<-N(=O)C(N)=S
 [Li]<-NCC(F)(F)F
 [Li]<-NCC(C)C#N
-[Li]<-N1CCCC1=O
 [Li]<-NC(C)C(=C)C
 [Li]<-OCC(C)OC
 [Li]<-O=CCN(C)C
@@ -6099,7 +5766,6 @@
 [Li]<-OC(C)(C)N
 [Be]=[C](C)NC(=C)C
 [Li]<-P1(C)C2CC21
-[Li]<-[nH]1cc(C)cn1
 [Li]<-n1c[nH]cc1N
 [Li]<-NC(C)C=C
 [Li]<-N=C(C)C#C
@@ -6113,29 +5779,22 @@
 [Li]<-N#CC(S)S
 [Be]=[C]=O
 [Li]<-S=C(NC)OC
-[Li]<-NC(C)CO
-[Li]<-N=CN(C)C
 [Li]<-n1c[nH]c(C)n1
-[Li]<-[nH]1ccnc1C
 [Li]<-S=c1ccss1
 [Li]<-O=C(O)C=NC
 [Li]<-N(C)=O
 [Li]<-N=CC(=O)OC
 [Li]<-PCC(C)CC
-[Li]<-[SH+]([O-])CC(C)C
 [Li]<-NCCC(C)=O
 [Li]<-N#CCC=C
-[Li]<-N(C)=[Si](C)C
 [Li]<-N1CCC(C)C1
 [Li]<-N#CC(C)C#N
-[Li]<-[nH]1ncc(C)p1
 [Li]<-N(=O)C(C)C
 [Li]<-S1CC1C(C)C
 [Li]<-S=C(C)N(C)C
 [Li]<-S=NC
 [Li]<-OC(C)CC
 [Li]<-NNC(C)C
-[Li]<-[SH](C)(C)C
 [Li]<-OCCOCC
 [Be]=[C]1NC=CN1C
 [Li]<-SCS
@@ -6153,7 +5812,6 @@
 [Li]<-n1c[nH]nc1C
 [Li]<-N(C)(C)CO
 [Li]<-N=C(C)SCC
-[Li]<-[nH]1nccp1
 [Li]<-O=C(C)CO
 [Li]<-N=CC(C)=O
 [Be]=[C](C)C=C(C)C
@@ -6179,7 +5837,6 @@
 [Be]=[C](I)OC
 [Li]<-P1(C)CCOC1
 [Li]<-O=C(C)NC
-[Li]<-[SH](C)(C)CC
 [Li]<-PC(C)C
 [Li]<-N=CC(C)(C)O
 [Li]<-O(C)CC(=C)C
@@ -6205,7 +5862,6 @@
 [Li]<-S=CP
 [Li]<-OC(C)(C)CC
 [Li]<-NC(C)(C)Cl
-[Li]<-N(C)C(C)O
 [Li]<-NC(C)=C(C)C
 [Li]<-N(C)=c1cc1C
 [Be]=[C]1CCCN1
@@ -6263,8 +5919,6 @@
 [Li]<-n1ccn(C=C)c1C
 [Li]<-O=C(O)C1CCNC1
 [Li]<-S=C1CN(C)CN1
-[Li]<-N=C(CC)NC1CC1
-[Li]<-[nH]1ncc(C#N)c1C
 [Li]<-n1cncc(N)c1C
 [Li]<-n1cccn1C(C)O
 [Li]<-N(C)=C1CCCC1
@@ -6274,7 +5928,6 @@
 [Li]<-n1cccnc1OC
 [Li]<-n1cncc(C)c1N
 [Li]<-N1=C(COC)CCC1
-[Li]<-[nH]1ncc(N)c1Cl
 [Li]<-n1c(C)ccnc1N
 [Li]<-S=c1ccc(O)co1
 [Li]<-n1cnc(O)c(N)c1
@@ -6288,7 +5941,6 @@
 [Be]=[C]1NC=CN1C(C)C
 [Li]<-n1c(O)ccnc1N
 [Li]<-N(=CC(C)(C)C)CC
-[Li]<-N1C=NC(C)(SC)C1
 [Li]<-S=C1SC=C[SH]1CS
 [Li]<-O=C(C)N(CC)CC
 [Li]<-N(C)=C1CCCC1=O
@@ -6298,7 +5950,6 @@
 [Be]=[C]1SCCN1CC=C
 [Li]<-O1POCCC1C
 [Li]<-n1ncn(N)c1C
-[Li]<-[nH]1ncc(C)c1I
 [Li]<-P1(C)CC(C)=CC1C
 [Li]<-n1c(N)csc1CCl
 [Li]<-S(CC(=O)O)C(C)C
@@ -6341,7 +5992,6 @@
 [Li]<-NC(C)OC(=C)C
 [Li]<-n1cnc(C)cc1O
 [Li]<-N1=CC=C(C)C1(O)O
-[Li]<-N=C(C(=C)C)N(C)C
 [Li]<-S=C1NCC(C)(N)N1
 [Li]<-N(C)=c1[nH]cc(N)[nH]1
 [Li]<-S=C1CNC(O)SC1
@@ -6352,7 +6002,6 @@
 [Li]<-n1cccc(SC)c1
 [Li]<-[Se]1[Se]CCC1(C)OC
 [Li]<-O1CC(C)(C)COP1
-[Li]<-[nH]1nc(N)c(C)c1Br
 [Li]<-N1CCNC(N)CC1
 [Li]<-n1ccn(COC)c1
 [Li]<-N#CC(=O)NC(C)C
@@ -6362,13 +6011,10 @@
 [Li]<-O=c1[nH]cccc1S
 [Li]<-n1cnc(N)c(O)c1
 [Li]<-n1ccc(N)c(N)c1
-[Li]<-N=CN1CCCCC1
 [Li]<-n1ccc(Cl)c(Cl)c1
-[Li]<-[nH]1nnc(N)c1C
 [Li]<-P1(C(C)C)C(C)C1C
 [Be]=[C]1NC=C(C)N1CC
 [Li]<-O=C1CCCNCC1
-[Li]<-[nH]1c(N)nnc1N
 [Li]<-n1cncc(N)c1Cl
 [Li]<-n1ccnc(C)c1C
 [Li]<-n1cccc(CBr)c1
@@ -6385,7 +6031,6 @@
 [Li]<-N#CC(C)C(=C)C
 [Li]<-S=c1ccc(N)c[nH]1
 [Be]=[C]=Nc1ccccc1
-[Li]<-[nH]1nc(C)cc1OC
 [Li]<-NCCOCCOC
 [Li]<-n1c[nH]c2c1CNC2
 [Li]<-p1(O)ccc(C)c1C
@@ -6442,7 +6087,6 @@
 [Li]<-N1=C(CC)C=C=C=C1
 [Li]<-S=c1scc(N)s1
 [Be]=[C]1OCNC1(C)OC
-[Li]<-[nH]1ncc(CO)c1C
 [Li]<-N1CCNCC(N)C1
 [Li]<-S=C(NCC)C(=C)C
 [Li]<-P(N(C)C)C(C)(C)C
@@ -6454,7 +6098,6 @@
 [Li]<-N1=CN(C(C)C)CC1
 [Be]=[C](O)c1ccccc1
 [Li]<-O=C(O)C=NNC
-[Li]<-[nH]1c(=O)cn[nH]c1=O
 [Li]<-n1cncc(OC)c1
 [Li]<-N(CC)=C(C)C(C)C
 [Be]=[C]1NC(N)=C(N)N1C
@@ -6466,13 +6109,10 @@
 [Li]<-N1CCCCC1(C)C
 [Li]<-S=C(N)C(=O)OCC
 [Li]<-Oc1ccccc1
-[Li]<-[nH]1nc(N)c(C)c1N
 [Li]<-NC(C)C(C)=C(C)C
 [Be]=[C]=NCc1ccoc1
-[Li]<-S=C1CNCNC1=O
 [Li]<-S=C(OC)C(C)(C)C
 [Li]<-O=C(N)CC(C)(C)N
-[Li]<-[SH+]([O-])c1ccccc1
 [Li]<-Nc1cccc(C)c1
 [Li]<-n1ccc(C)nc1O
 [Li]<-S=C(C)N(CC)CC
@@ -6481,7 +6121,6 @@
 [Li]<-P1(C)C(P)=CCP1C
 [Li]<-n1cn(CC)cc1Cl
 [Li]<-S=C(NCC)N(C)C
-[Li]<-N1C=NC(N)C1(C)C
 [Li]<-NCCc1cccs1
 [Li]<-S=c1[nH]nc(C#C)s1
 [Li]<-n1nc(O)sc1CC
@@ -6492,7 +6131,6 @@
 [Li]<-N=C(CC)OCC=C
 [Li]<-N(CCOC)C(C)C
 [Li]<-n1nc(CCl)[nH]c1N
-[Li]<-O=P(C)(O)OCC
 [Li]<-N=P(C)(C)C
 [Li]<-S=P(CC)(CC)OCC
 [Li]<-O=[PH](Cl)Oc1ccccc1
@@ -6555,7 +6193,6 @@
 [Li]<-S=[PH](=CC)(CC)OCC
 [Li]<-S=P(C=C)(c1ccccc1)c1ccccc1
 [Li]<-O=P(CC)(CC)OC
-[Li]<-O=P(O)(OCC)OCC
 [Li]<-O=P(C)(c1ccccc1)C(C)(C)C
 [Li]<-O=P(Cl)(OCC)C(C)C
 [Li]<-O=P(Cl)(c1ccccc1)c1ccccc1C
@@ -6579,8 +6216,6 @@
 [Li]<-P(=CC=C)c1ccccc1
 [Li]<-n1c(C)cc(C=O)cc1O
 [Li]<-S=c1n(C)ccn1C(C)C
-[Li]<-N=CNc1ccccc1C
-[Li]<-[nH]1nccc1-c1cccnc1
 [Li]<-N(C)c1ccc(OC)cc1
 [Li]<-S=c1cc(C)n(C)c(=O)[nH]1
 [Li]<-n1csc(-c2cnc[nH]2)c1
@@ -6598,7 +6233,6 @@
 [Li]<-N1CCOCC1C(=O)OC
 [Li]<-n1cc(C)n(CO)c1CO
 [Li]<-n1ccn(CC(=O)OC)c1
-[Li]<-N=C(C)Nc1ccccn1
 [Li]<-n1ccc([N+](=O)[O-])cc1C
 [Li]<-n1ccccc1CN=C=O
 [Li]<-O=c1occc(OC)c1C
@@ -6609,7 +6243,6 @@
 [Li]<-Nc1ccccc1C#CN
 [Li]<-n1cc(C)c2cc[nH]c2c1
 [Li]<-N(C)c1c(F)cccc1F
-[Li]<-N=C(C)N1CCC(C)CC1
 [Be]=[C]1N(CCC)CCN1CCC
 [Li]<-P(CC)(CC)n1cccn1
 [Li]<-P(C)(OC(=C)C)C(C)(C)C
@@ -6617,13 +6250,11 @@
 [Li]<-S=CC(C)(C)C
 [Li]<-N=C(CC)CC
 [Li]<-O=C1CCNC1
-[Li]<-[nH]1nnnc1N
 [Li]<-N(CC)=C(C)C
 [Li]<-NOCC(=O)O
 [Be]=[C](I)NC
 [Li]<-N(C)(CC)P=N
 [Li]<-S=C(N)CCO
-[Li]<-N(C)C(C)(O)O
 [Be]=[C](C=CC)NC
 [Li]<-S=CNC(C)=O
 [Li]<-S1CCNCC1
@@ -6634,7 +6265,6 @@
 [Li]<-N=C(C)C(C)=O
 [Be]=[C]1NC=C(C)S1
 [Li]<-N#CC(=C)OC
-[Li]<-N=C(N)N(C)C
 [Li]<-N(C)=CNCC
 [Li]<-NC(C)CI
 [Li]<-N=C(C)C=CC
@@ -6654,10 +6284,8 @@
 [Li]<-S=C(C)SCC
 [Li]<-N=C(C)C=C
 [Li]<-N(CC)C(=C)C
-[Li]<-[SH](=O)CN(C)C
 [Li]<-n1cc(N(C)C)ccc1N
 [Li]<-n1cc2scc(C)c2cn1
-[Li]<-N1C=NCC(C)(N)C1(C)Cl
 [Li]<-N=Cc1ccccc1OC
 [Li]<-p1(C(C)C)c(C)ccc1C
 [Li]<-N#CC=Cc1ccccc1
@@ -6676,7 +6304,6 @@
 [Be]=[C]1N(C)C=C2C=CC=CN12
 [Li]<-O=c1cc1-c1ccccc1
 [Li]<-N(CCO)c1ccccc1
-[Li]<-[nH]1cc(N)nc1CN(C)C
 [Li]<-S=c1[nH]c(C(C)C)nn1C
 [Be]=[C](C)Nc1ccc(C)cc1
 [Li]<-N1=CN(C)CC(C)(C)C1=O
@@ -6704,7 +6331,6 @@
 [Li]<-Nc1cc(C(C)=O)ccn1
 [Be]=[C](C=C(C)C)c1ccoc1
 [Li]<-n1cc(C)nc(C(=O)O)c1
-[Li]<-N1C=NC(N)C1=NC(C)C
 [Li]<-n1cc2c(Cl)cncn2c1
 [Li]<-S=C(N)NC1CCCCC1
 [Li]<-N#CSc1ccccc1C
@@ -6719,10 +6345,8 @@
 [Li]<-n1cnn(CC(C)(C)C)c1
 [Li]<-n1c(C)ccc2c1CNC2
 [Li]<-n1[nH]c(C(F)(F)F)cc1N
-[Li]<-[SH+]([O-])CC(F)(F)C(F)(F)F
 [Li]<-S=C(C)NCc1ccoc1
 [Be]=[C]1NC(C#N)=C(C#N)N1C
-[Li]<-[nH]1cnc2nc(Cl)ncc21
 [Be]=[C]=Cc1ccccc1OC
 [Li]<-N1CCCC1CC(=O)OC
 [Li]<-P(c1ccccc1)C(C)C
@@ -6741,7 +6365,6 @@
 [Li]<-[C]Nc1cc(C)cc(C)c1
 [Li]<-O=C(C)c1ccc(F)cc1
 [Li]<-O=C(CO)CN1CCCC1
-[Li]<-n1ccsc1-c1ccsc1
 [Be]=[C](C#N)Nc1ccccc1
 [Li]<-n1ncn(C(C)(C)C)c1N
 [Li]<-n1ccc(C(C)=NC)cc1
@@ -6760,20 +6383,16 @@
 [Be]=[C]1N(C=C)CC1(C)N(C)C
 [Li]<-O=C1CNc2ccccc21
 [Be]=[C]1N(CC)C=CN1C(F)F
-[Li]<-[nH]1c(C)nc2ccccc21
 [Li]<-N(N)=C(C)c1ccccc1
 [Li]<-NC1(C)CC12CCCCC2
 [Li]<-n1ccc(N(C)C)c(C)c1
 [Be]=[C]1C=CC2=C(OCO2)N1C
 [Li]<-P1(C)C2C=CC=CCCC21
-[Li]<-[SH](=O)C(=C)c1ccccc1
 [Li]<-P(F)(F)c1nn(C)pc1C
 [Li]<-S=C(C(=O)C=CC)N(C)C
 [Li]<-N#Cc1ccccc1SC
 [Be]=[C](N)NC1CCCC(O)C1
 [Be]=[C](Cl)Oc1ccc(Cl)cc1
-[Li]<-[nH]1cc(OC(C)=O)c(C)n1
-[Li]<-[nH]1cc(C(C)(C)C)nc1N
 [Li]<-NCc1ccccc1C=O
 [Li]<-N(C)=C(O)c1ccccc1
 [Li]<-S1C2CCC1(N(C)C)CC2
@@ -6791,7 +6410,6 @@
 [Li]<-S=C(SNC(C)=O)N(C)C
 [Li]<-N12CCC(C=C)(CC1)CC2
 [Li]<-Nc1ccc(C=O)cc1I
-[Li]<-NCC(=O)C=CC(=O)OC
 [Li]<-n1cc(C)c(C=O)c(N)c1
 [Li]<-N1=CCC(c2cc[nH]c2)C1
 [Li]<-N(N)=C(C)c1c[nH]cc1C
@@ -6803,7 +6421,6 @@
 [Li]<-N1=CCC(n2cccc2)C1
 [Li]<-n1c(C)cccc1[N+](=O)[O-]
 [Li]<-N#CC=C(C#N)C(C)(C)C
-[Li]<-[nH]1nc(C(C)(C)C)cc1N
 [Li]<-S=c1[nH]c(C)cc(=O)n1C
 [Be]=[C](C)Nc1cccc(C)c1
 [Li]<-N#Cc1ccc(C)c(C)c1
@@ -6811,7 +6428,6 @@
 [Li]<-Nc1ncccc1C(C)=O
 [Li]<-n1cc(N)cc(C(C)C)c1
 [Be]=[C](C)Nc1cccc(I)c1
-[Li]<-N=C(C)Nc1ccccc1
 [Li]<-n1cccc(CC(C)O)c1
 [Li]<-n1c(C)[nH]c(CN)c1CO
 [Li]<-O=CC(C)(OCC)C(O)O
@@ -6836,7 +6452,6 @@
 [Li]<-NCc1cccc(C#N)c1
 [Li]<-NC(C)c1cncc(F)c1
 [Li]<-n1ccc(SC(C)C)nc1
-[Li]<-N=C(CC)NC(C)OCC
 [Be]=[C](C)Nc1ccccc1I
 [Li]<-O=C(C)N(C(C)C)C(C)C
 [Li]<-P(C)(OC)C1CCCCC1
@@ -6860,11 +6475,9 @@
 [Li]<-n1ccc(N(C)C)cc1C
 [Be]=[C]1N(C)C=CN1C(C)(C)C
 [Li]<-n1ccn(C(O)(O)CC)c1
-[Li]<-N=C(C)NC1CCCCC1
 [Li]<-n1cccc(CC(C)C)c1
 [Li]<-NCc1ccc(C)cc1C
 [Li]<-N=c1n(C)ccn1C(C)C
-[Li]<-N=C(NCC)c1ccoc1
 [Li]<-N=c1[nH]c(N)c(C)c(=O)[nH]1
 [Li]<-N=C(CC)OCCC(C)C
 [Li]<-P1(N(C)C)N(C)CCN1C
@@ -6875,7 +6488,6 @@
 [Li]<-n1ccc(C=C(C)C)cc1
 [Li]<-N1=C(N)C=CN(C(=O)O)C1
 [Be]=[C](C)Nc1ccccc1C
-[Li]<-N=C(F)N1C=NCC1(C)O
 [Li]<-Nc1cc(C(=O)O)ccn1
 [Li]<-n1cc2cccc(Br)c2[nH]1
 [Li]<-P1(F)C2CCC(OC)CC21
@@ -6903,7 +6515,6 @@
 [Be]=[C]=NC1(C)NOCC1(C)C
 [Li]<-P1(C(C)C)N(C)CCN1C
 [Be]=[C]1N(C)C=CN1CCCN
-[Li]<-N1C=NC(N)C1C(F)(F)F
 [Li]<-N(=Cc1ccoc1)C(C)=O
 [Li]<-S=C1SCNC1(N)C(C)C
 [Be]=[C]=NC1C=CC(SC)=CC1
@@ -6914,7 +6525,6 @@
 [Li]<-n1cc(O)cc(C#N)c1C
 [Li]<-n1[nH]c(C)cc1C(C)(C)C
 [Li]<-n1[nH]c(C(C)(C)O)cc1O
-[Li]<-N=C(CC)OB(CC)CC
 [Li]<-n1cccc(C(=O)Nc2ccccc2F)c1
 [Li]<-n1c(C)cc(C(=O)c2ccccc2)cc1N
 [Li]<-P(c1ccccc1)(C(C)C)N1CCCCC1
@@ -6945,7 +6555,6 @@
 [Be]=[C]1N(c2ccc(C(C)C)cc2)C=CN1C(C)C
 [Be]=[C](Nc1ccc(C(C)C)cc1C(C)C)OC
 [Be]=[C]1CNCN(c2c(C)cccc2C)C1(N)CO
-[Li]<-N=C(CC)NN=C(C)c1ccc([N+](=O)[O-])cc1
 [Li]<-n1cc(-c2ccc(OC)cc2)cn1CC(N)=O
 [Be]=[C]1N(c2ccc(C)c(C)c2C)C=CN1C(C)C
 [Li]<-O=C(C)N(Cc1ccccc1)c1ccccc1
@@ -7015,7 +6624,6 @@
 [Be]=[C]1N(Cc2ccc(C)c(C)c2)C=CN1C(C)O
 [Be]=[C]1N(CC=C)C=CN1Cc1ccccc1C=C
 [Li]<-n1cccc2cc(C(=O)OCCCC)ccc21
-[Li]<-[nH]1ncc(C(C)=O)c1C(C)(N)c1ccccc1
 [Li]<-n1cc(-c2ccccc2)n(-c2ccccc2)c1
 [Li]<-n1ccc(-c2nnc(-c3ccccc3)o2)cc1
 [Be]=[C]1NCN(c2cc(C)cc(C(C)(C)C)c2)C1N
@@ -7032,13 +6640,10 @@
 [Be]=[C]1N2C=CC=CC2=C(c2ccccc2)N1CC
 [Li]<-Nc1ccc(C(=O)OCC)cc1C(=O)OCC
 [Li]<-S=C1NCC(=O)N1c1ccc(C(=O)OC)cc1
-[Li]<-P(Cl)(Cc1cccc(OC)c1)c1ccccc1
 [Li]<-n1cn(Cc2ccc(I)cc2)c2ccccc21
 [Li]<-N(=C1C2CC(C)(C)C1CC2C)c1ccccc1
 [Li]<-P1(c2ccccc2)CC1=C(C)c1ccccc1
-[Li]<-N1C=NCC(N)(c2ccc3ccccc3c2)C1
 [Be]=[C]1N(CCCC)c2cccnc2N1CC(N)=O
-[Li]<-[nH]1ncc(-c2ccccc2)c1-c1ccccc1
 [Li]<-O=C(C)CP(c1ccccc1)c1ccccc1
 [Li]<-S=c1[nH]c(C)c(C)n1-c1c(C)cc(C)cc1C
 [Li]<-n1c(C(=O)c2ccccc2)[nH]c2ccccc21
@@ -7052,7 +6657,6 @@
 [Li]<-n1ccc(OC)c(C=Nc2ccccc2C)c1
 [Be]=[C](C)Nc1ccc(C(C)(O)C(F)(F)F)cc1C
 [Li]<-n1ccc(-c2cccc(OC)c2)c(C(O)O)c1
-[Li]<-N=C(Nc1ccc2ccccc2c1)N(C)C
 [Li]<-n1cn(CC=Cc2ccc([N+](=O)[O-])cc2)cn1
 [Li]<-n1cccc(C(=O)Nc2cccc(F)c2F)c1
 [Li]<-n1ccn(-c2cn(-c3ccccc3)nn2)c1
@@ -7061,7 +6665,6 @@
 [Li]<-P(c1ccccc1)(c1ccccc1)C(C)C=C
 [Be]=[C]1NC=C(C(F)(F)F)N1c1cccc(C)c1C
 [Li]<-N(=Cc1cccnc1)c1cccc(N(C)C)c1
-[Li]<-N1C=NC(C)C1(N)CS(=O)(=O)c1ccccc1
 [Be]=[C]1Oc2c(C)cccc2N1c1ccccc1
 [Be]=[C]1N(CC=C(C)C)C=CN1C(C)COC(C)C
 [Li]<-n1ccccc1Oc1ccccc1C(F)(F)F
@@ -7073,7 +6676,6 @@
 [Li]<-n1ccc(CNC(=O)c2ccc(C)cc2)cc1
 [Li]<-n1c(-c2cccc(OC)c2)[nH]c2ccccc21
 [Be]=[C]1N(CC)C=CN1c1ccc(CN(C)C)cc1
-[Li]<-[N-]=[N+](C)c1ccc(C(=C)c2ccccc2)cc1
 [Li]<-n1cc2ccccc2cc1Cc1ccccc1
 [Li]<-N1=CSC(n2cc(-c3ccccc3)cn2)C1
 [Be]=[C]1N(C)c2ccccc2N1Cc1ccccn1
@@ -7094,7 +6696,6 @@
 [Li]<-n1ccc(C=Nc2ccc([N+](=O)[O-])cc2)cc1
 [Li]<-Nc1cccc(C(=O)Nc2ccc(Br)cc2)n1
 [Be]=[C]1CN(c2ccccc2)C2CC3C=CC2(C1)O3
-[Be]=[C]1CN(c2ccccc2)C1(O)c1ccccc1
 [Li]<-n1ccc(C2=NC(=O)C(C)(C)N2C(C)C)cc1
 [Li]<-n1cccc(-c2ccc3ccccc3c2)c1
 [Be]=[C]1N2C=CC=CC2=C(C)N1Cc1ccccc1
@@ -7119,14 +6720,10 @@
 [Be]=[C]1N(CC)C=CN1Cc1ccc(C#N)cc1
 [Be]=[C]1N(Cc2cccc(Br)c2)C=NN1C(C)(C)C
 [Be]=[C]1NC(C(C)(C)C)N(C(C)(C)C)C1(N)C(O)O
-[Li]<-n1c(-c2ccnc(Cl)c2)[nH]c2ccccc21
-[Li]<-n1cc(C)cc(N=Nc2ccccc2Br)c1
 [Li]<-n1nn(-c2cccc(C)n2)c2ccccc21
 [Li]<-n1cccc(C(C)Cl)c1-c1cccc[n+]1[O-]
-[Li]<-[nH]1ncc(-c2cccc3ccccc23)c1N
 [Li]<-n1c2ccccc2nc2cc(C)c(C)cc21
 [Li]<-n1cc(C)n(Cn2nnc3ccccc32)c1
-[Li]<-N=C(Nc1ccccc1I)c1ccccc1
 [Be]=[C]1N(Cc2ccccn2)C=CN1C(C)(C)C
 [Li]<-n1cccc(C(C)=Nc2ccc(F)cc2)c1
 [Be]=[C]1N(CCCC)C=CN1c1cccc(N)c1
@@ -7141,7 +6738,6 @@
 [Li]<-n1cn(CCC)c2ccc(C(F)(F)F)cc21
 [Be]=[C](Nc1ccc(C)c(C)c1C)n1cccn1
 [Li]<-p1cc(Br)cc(-c2cc(C)c(C)c(C)c2)c1
-[Li]<-N(CCN=C(N(C)C)N(C)C)CCN(C)C
 [Li]<-P1(c2ccccc2)CN2CNCN(C2)C1N
 [Li]<-P(c1ccccc1)c1ccc(N(C)C)cc1
 [Be]=[C]1C=C(c2ccccc2)C(C(C)=O)=C(O)O1
@@ -7209,13 +6805,10 @@
 [Li]<-P(Cl)(c1ccccc1)c1ccc(C#N)cc1
 [Be]=[C]1N(CC)C=CN1c1cc(C)cc(C)c1C
 [Li]<-NCc1cccc(-c2ccc(OC)cc2)n1
-[Be]=[C]1N(CCC)C=CN1c1ccc(C)cc1C
 [Be]=[C]1N(CCCC)C=CN1Cc1ccccc1
-[Li]<-[nH]1c(-c2ccccc2Br)nc2ccccc21
 [Li]<-N1CCC(N)(C(=C)c2ccc(N)cc2)CC1
 [Li]<-n1ccc(C)c(-c2c(C)ccc(C)c2C)c1
 [Li]<-n1ccc(C(C)=NNc2ccccc2)cc1
-[Li]<-n1ccccc1-c1cncc2ccccc12
 [Be]=[C]1N(C)C=CN1Cc1cc(C(C)=O)ccn1
 [Li]<-N1CCc2ccccc2C1c1ccccc1
 [Li]<-n1cccc(-c2ccncc2C(C)OC)c1
@@ -7231,7 +6824,6 @@
 [Li]<-n1cncc(C(=O)Nc2cccc(Cl)c2)c1
 [Li]<-NC(C)P(c1ccccc1)c1ccccc1
 [Be]=[C]1NC(C(C)C)=C(c2cccc(OC)c2)S1
-[Li]<-[As](C)(c1ccccc1)c1cccc(OC)c1
 [Li]<-n1cn(C(C)C)c(-c2ccccc2OC)n1
 [Li]<-p1cc(-c2ccccc2)cc2ccccc21
 [Be]=[C]1N(C(C)C)CN(C(C)C)C12CCCCC2
@@ -7244,7 +6836,6 @@
 [Li]<-n1cn(Cc2ccc(Cl)cc2)c2ccccc21
 [Li]<-n1cn(CC(=O)O)c2c1c(=O)n(C)c(=O)n2C
 [Li]<-S=c1n(C(C)C)ccn1C(C)c1ccccc1
-[Li]<-[nH]1cnc(C2(C)NC(=O)CN2C(C)C)c1CC
 [Be]=[C]1N2C(=O)C(=O)C=CC2=NN1c1ccccc1
 [Be]=[C]1N(CC)C=CN1c1c(F)c(F)cc(F)c1F
 [Be]=[C]1OC(c2ccccc2)C2CCCC(OC)C12
@@ -7290,7 +6881,6 @@
 [Be]=[C]1N(CC2OCCO2)C=CN1c1ccccc1
 [Be]=[C]1NC(N)=C(Cl)N1Cc1cccc([N+](=O)[O-])c1
 [Be]=[C]1N(c2cccc(OC)c2)C=CN1C(C)(C)C
-[Li]<-[nH]1c(-c2ccc(SC)cc2)nc2ccccc21
 [Li]<-S=c1[nH]c2ccc(C(C)=O)cc2n1C(C)(C)C
 [Li]<-n1csc(Cc2nc3cc(C)c(C)cc3[nH]2)c1
 [Li]<-n1ccc(C2CC(=O)Nc3ccccc32)cc1
@@ -7324,7 +6914,6 @@
 [Be]=[C]1C=C(c2ccccc2)N(C(C)C)N1C(C)C
 [Li]<-n1cccc(N=Nc2cccc(C(C)=O)c2)c1
 [Li]<-P(=CNC(C)(C)C)C1(C)C(C)=C(C)C(C)=C1C
-[Li]<-[nH]1nnc(-c2ccccc2)c1-c1ccccc1
 [Li]<-P(O)(Sc1ccc(C)cc1C)c1ccccc1
 [Li]<-n1ccn(Cc2ccc(C=NC(C)=O)cc2)c1
 [Li]<-n1ccn(C(C)(C)Oc2ccc(OC)cc2)c1
@@ -7340,7 +6929,6 @@
 [Li]<-S=C1NC(C)NC(c2cc(C)cc(C)c2)=C1C
 [Li]<-P1(Cl)C(C)OC(c2ccccc2)C12C(C)C2C
 [Li]<-p1c(C)cc(C(=O)OC)cc1-c1ccccc1
-[Li]<-P1(C(F)=C(F)C(F)(F)F)Oc2ccccc2O1
 [Be]=[C]1NC(N)=CN1Cc1ccnc2ccccc12
 [Li]<-n1cnn2c1C=C(Cc1ccccc1)N(C)C2
 [Li]<-n1cnc(-c2ccnc(OC)n2)c2[nH]ccc21
@@ -7357,11 +6945,8 @@
 [Li]<-n1cn(-c2cccc(-c3ccccc3)c2)cn1
 [Li]<-S=C(C=C(O)c1ccccc1)c1ccccc1
 [Li]<-N1=CN(C2c3ccccc3OC2C=C)CCC1
-[Li]<-[nH]1c(N)nc2cc(-c3csc(C)c3)c(Br)cc21
-[Li]<-N1C(=O)CC(N)(c2ccccc2)C1CN(C)C
 [Li]<-n1cn(Cc2ccoc2)c(-c2ccncc2)n1
 [Li]<-NC1C2CCC1C(C)(NC1CCCCC1)C2P
-[Li]<-[nH]1ncc(-c2ccccc2OC)c1C(C)(C)C
 [Li]<-n1c(C)n(-c2cncc(F)c2)c2ccccc21
 [Li]<-P(C(n1cccn1)n1cccn1)N1CCCC1
 [Li]<-P(c1ccccc1)(c1ccccc1)C(C)C#N
@@ -7395,7 +6980,6 @@
 [Li]<-O1CCOCCOCCOCCOCC1(C)C
 [Li]<-O=C(NN=CC(=O)OC)Nc1ccccc1C
 [Li]<-P1(c2ccccc2)C(=C(C)C)C12CC(=O)CN2
-[Li]<-P(CCC)(c1ccccc1)c1ccccc1O
 [Li]<-P(C)(N=C(C)N1CCOCC1)c1ccccc1
 [Li]<-N1=CN(CC(=O)NC(C)(C)C)C2C=CC=CC21
 [Li]<-n1cccc2c(N)c3cc(C)c(C)nc3cc21
@@ -7416,7 +7000,6 @@
 [Li]<-S=CC(C)Nc1ccc(C(C)C)c(C(C)C)c1
 [Li]<-n1cccc(-c2ccccc2OC(F)(F)F)c1
 [Li]<-P(NC(=C)C)(c1ccccc1)c1ccccc1
-[Li]<-n1cc2cccnc2cc1Cc1ccccc1
 [Li]<-n1cn(-c2ccccc2)c2c1C(C)NC(=O)N2
 [Be]=[C]1OC(c2ccccc2)=CN1c1ccccc1
 [Be]=[C]1NC=C(N)N1C(C)c1cc(C)c(C)c(C)c1
@@ -7440,8 +7023,6 @@
 [Li]<-n1cn(Cc2cccc(F)n2)c2ccccc21
 [Li]<-P(=Cc1cccc(OC)c1)c1cccc(Cl)c1
 [Li]<-n1ccccc1C(O)(OC)c1ccc(C)cc1
-[Li]<-N1CC(N)(C(=O)O)N=C1c1ccncc1OC
-[Li]<-P(O)(Cc1ccccc1)Oc1cccc(C)c1
 [Be]=[C](Nc1cc(C)c(C)cc1C)c1ccccc1
 [Li]<-NCc1ccncc1C(=O)Nc1ccccc1
 [Be]=[C]1Cc2cc(C(C)C)c(C(C)C)cc2NC1N
@@ -7454,7 +7035,6 @@
 [Li]<-NCc1ccc(S(=O)(=O)c2ccccc2)cc1
 [Li]<-n1cc(C(Cl)OC)n(-c2cccc(OC)c2)c1
 [Li]<-n1cccc(-c2nnc(-c3cccnc3)s2)c1
-[Li]<-[nH]1ncc(-c2cccnc2)c1-c1ccccc1
 [Li]<-S=C(Nc1ccccc1)N(C(C)C)C(C)(C)C
 [Be]=[C]1NC2(CC3C=CC2O3)C(C)(C)CN1CCO
 [Li]<-S=c1[nH]c2c(C(C)=O)cccc2n1CC(C)=O
@@ -7478,7 +7058,6 @@
 [Li]<-P1(c2ccc(C)c(C)c2C)NC(N)C(N)N1S
 [Li]<-Nc1c(-c2ccc(N)cc2)cccc1C(C)C
 [Li]<-N1=CC=C(C)N(Cc2ccccc2)C1(N)CC
-[Li]<-P1(c2ccccc2)CC1c1ccccc1OC
 [Li]<-N1=CN(C(C)C)C(c2ccnc(C(=O)O)c2)C1
 [Be]=[C](C=C(c1ccccc1)n1cccn1)N(C)C
 [Li]<-n1ccccc1-c1nnc(-c2ccccn2)o1
@@ -7486,5 +7065,4 @@
 [Be]=[C]1N(CC)c2ccccc2N1c1ccccc1
 [Li]<-n1c(C)cc(-c2ccccc2)c2ccccc21
 [Be]=[C]1CN(c2c(C)cccc2C)CNCC1(C)N
-[Li]<-N1C(N)=CNC1(N)c1ccccc1C(=O)OC
 [Li]<-N=C(OC)C(C)(c1ccccc1)c1ccco1
