@@ -55,7 +55,7 @@ def main_vae_train(
 
     output_dir = Path(f"train_{time.strftime('%Y%m%d-%H%M%S')}")
     output_dir.mkdir(exist_ok=True)
-    save_iter.mkdir(exist_ok=True)
+    save_dir.mkdir(exist_ok=True)
 
     # Setup logger
     logging.basicConfig(
@@ -82,7 +82,7 @@ def main_vae_train(
             nn.init.xavier_normal_(param)
 
     if load_epoch > 0:
-        model.load_state_dict(torch.load(save_dir / f"model.epoch-{load_epoch}")
+        model.load_state_dict(torch.load(save_dir / f"model.epoch-{load_epoch}"))
 
     print(
         (
@@ -91,8 +91,8 @@ def main_vae_train(
         )
     )
 
-    with open(output_dir / "opts.json", "w") as file:
-        file.write(json.dumps(vars(args)))
+    with open(output_dir / "opts.txt", "w") as file:
+        file.write(f'{vars(args)}')
 
     optimizer = optim.Adam(model.parameters(), lr=lr)
     scheduler = lr_scheduler.ExponentialLR(optimizer, anneal_rate)
