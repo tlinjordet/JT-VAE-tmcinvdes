@@ -30,13 +30,13 @@ class JTpropVAE(nn.Module):
             hidden_size, depthT, nn.Embedding(vocab.size(), hidden_size)
         )
         self.decoder = JTNNDecoder(
-            vocab, hidden_size, latent_size, nn.Embedding(vocab.size(), hidden_size)
+            vocab, hidden_size, latent_size + 2, nn.Embedding(vocab.size(), hidden_size)
         )
 
         self.jtmpn = JTMPN(hidden_size, depthG)
         self.mpn = MPN(hidden_size, depthG)
 
-        self.A_assm = nn.Linear(latent_size, hidden_size, bias=False)
+        self.A_assm = nn.Linear(latent_size + 2, hidden_size, bias=False)
         self.assm_loss = nn.CrossEntropyLoss(size_average=False)
 
         self.T_mean = nn.Linear(hidden_size, latent_size)
@@ -44,12 +44,12 @@ class JTpropVAE(nn.Module):
         self.G_mean = nn.Linear(hidden_size, latent_size)
         self.G_var = nn.Linear(hidden_size, latent_size)
 
-        self.propNN = nn.Sequential(
-            nn.Linear(self.latent_size * 2, self.hidden_size),
-            nn.Tanh(),
-            nn.Linear(self.hidden_size, 2),
-        )
-        self.prop_loss = nn.MSELoss()
+        # self.propNN = nn.Sequential(
+        #     nn.Linear(self.latent_size * 2, self.hidden_size),
+        #     nn.Tanh(),
+        #     nn.Linear(self.hidden_size, 2),
+        # )
+        # self.prop_loss = nn.MSELoss()
 
     def encode(self, jtenc_holder, mpn_holder):
         tree_vecs, tree_mess = self.jtnn(*jtenc_holder)
@@ -99,9 +99,7 @@ class JTpropVAE(nn.Module):
         fp1 = AllChem.GetMorganFingerprint(mol, 2)
 
         z_tree_mean = self.T_mean(x_tree_vecs)
-        -torch.abs(self.T_var(x_tree_vecs))  # Following Mueller et al.
         z_mol_mean = self.G_mean(x_mol_vecs)
-        -torch.abs(self.G_var(x_mol_vecs))  # Following Mueller et al.
 
         mean = torch.cat([z_tree_mean, z_mol_mean], dim=1)
         cur_vec = create_var(mean.data, True)
@@ -183,30 +181,38 @@ class JTpropVAE(nn.Module):
 
     def forward(self, x_batch, beta):
         x_batch, x_prop, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
-        # Extract prop for later
 
         x_tree_vecs, x_tree_mess, x_mol_vecs = self.encode(x_jtenc_holder, x_mpn_holder)
         z_tree_vecs, tree_kl = self.rsample(x_tree_vecs, self.T_mean, self.T_var)
         z_mol_vecs, mol_kl = self.rsample(x_mol_vecs, self.G_mean, self.G_var)
 
+        # cuda0 = torch.device('cuda:0')
+        # x_prop.to(cuda0)
+        # Append the properties to the latent vector to include in loss
+        # cond = torch.unsqueeze(x_prop, 1)
+        # batch_size = src_root_vecs.shape[0]
+
+        z_tree_vecs_cond = torch.cat((z_tree_vecs, x_prop), dim=1)
+        z_mol_vecs_cond = torch.cat((z_mol_vecs, x_prop), dim=1)
+
         kl_div = tree_kl + mol_kl
-        word_loss, topo_loss, word_acc, topo_acc = self.decoder(x_batch, z_tree_vecs)
+        word_loss, topo_loss, word_acc, topo_acc = self.decoder(
+            x_batch, z_tree_vecs_cond
+        )
         assm_loss, assm_acc = self.assm(
-            x_batch, x_jtmpn_holder, z_mol_vecs, x_tree_mess
+            x_batch, x_jtmpn_holder, z_mol_vecs_cond, x_tree_mess
         )
 
-        # Learn properties
-        all_vec = torch.cat([z_tree_vecs, z_mol_vecs], dim=1)
-        prop_label = create_var(x_prop)
-        prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
+        # all_vec = torch.cat([z_tree_vecs, z_mol_vecs], dim=1)
+        # prop_label = create_var(x_prop)
+        # prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
 
         return (
-            word_loss + topo_loss + assm_loss + beta * kl_div + prop_loss,
+            word_loss + topo_loss + assm_loss + beta * kl_div,
             kl_div.item(),
             word_acc,
             topo_acc,
             assm_acc,
-            prop_loss.item(),
         )
 
     def assm(self, mol_batch, jtmpn_holder, x_mol_vecs, x_tree_mess):

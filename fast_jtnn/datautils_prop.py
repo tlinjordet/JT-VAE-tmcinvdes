@@ -153,7 +153,7 @@ def tensorize_prop(tree_batch, prop_batch, vocab, assm=True):
     jtenc_holder = jtenc_holder
     mpn_holder = MPN.tensorize(smiles_batch)
 
-    prop_batch_tensor = torch.FloatTensor(prop_batch)
+    prop_batch_tensor = torch.tensor(prop_batch, dtype=torch.float32, device="cuda")
 
     if assm is False:
         return tree_batch, prop_batch_tensor, jtenc_holder, mpn_holder

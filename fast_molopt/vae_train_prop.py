@@ -115,7 +115,7 @@ def main_vae_train(
         )
 
     total_step = load_epoch
-    meters = np.zeros(5)
+    meters = np.zeros(4)
 
     for epoch in tqdm(list(range(epoch)), position=0, leave=True):
         loader = MolTreeFolder_prop(
@@ -125,7 +125,7 @@ def main_vae_train(
             total_step += 1
             try:
                 model.zero_grad()
-                loss, kl_div, wacc, tacc, sacc, prop_loss = model(batch, beta)
+                loss, kl_div, wacc, tacc, sacc = model(batch, beta)
                 loss.backward()
                 nn.utils.clip_grad_norm_(model.parameters(), clip_norm)
                 optimizer.step()
@@ -133,15 +133,13 @@ def main_vae_train(
                 print(e)
                 continue
 
-            meters = meters + np.array(
-                [kl_div, wacc * 100, tacc * 100, sacc * 100, prop_loss * 100]
-            )
+            meters = meters + np.array([kl_div, wacc * 100, tacc * 100, sacc * 100])
 
             if total_step % print_iter == 0:
                 meters /= print_iter
                 _logger.info(
                     (
-                        "[%d] Loss: %.3f,Beta: %.3f,KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f,Prop_loss %.2f, PNorm: %.2f, GNorm: %.2f"
+                        "[%d] Loss: %.3f,Beta: %.3f,KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f, PNorm: %.2f, GNorm: %.2f"
                         % (
                             total_step,
                             loss.item(),
@@ -150,7 +148,6 @@ def main_vae_train(
                             meters[1],
                             meters[2],
                             meters[3],
-                            meters[4],
                             param_norm(model),
                             grad_norm(model),
                         )
