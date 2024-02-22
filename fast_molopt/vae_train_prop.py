@@ -115,7 +115,7 @@ def main_vae_train(
         )
 
     total_step = load_epoch
-    meters = np.zeros(4)
+    meters = np.zeros(5)
 
     for epoch in tqdm(list(range(epoch)), position=0, leave=True):
         loader = MolTreeFolder_prop(
@@ -160,7 +160,7 @@ def main_vae_train(
             if total_step % save_iter == 0:
                 torch.save(
                     model.state_dict(),
-                    output_dir + "/model.iter-" + str(total_step),
+                    output_dir / f"model.iter-{total_step}"
                 )
 
             if total_step % anneal_iter == 0:
@@ -170,7 +170,7 @@ def main_vae_train(
             if total_step % kl_anneal_iter == 0 and total_step >= warmup:
                 beta = min(max_beta, beta + step_beta)
     #         torch.save(model.state_dict(), save_dir + "/model.epoch-" + str(epoch))
-    torch.save(model.state_dict(), output_dir / "model.epoch-" + str(epoch))
+    torch.save(model.state_dict(), output_dir / f"model.epoch-{epoch}")
     return model
 
 
