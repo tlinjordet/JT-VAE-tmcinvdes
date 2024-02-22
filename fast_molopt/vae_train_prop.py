@@ -1,12 +1,14 @@
-import sys
-
-sys.path.append("../")
 import argparse
+import json
+import logging
 import math
 import os
 import pickle as pickle
 import sys
+import time
 from pathlib import Path
+
+sys.path.append("../")
 
 import numpy as np
 import torch
@@ -17,6 +19,9 @@ from tqdm import tqdm
 
 source = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 sys.path.insert(0, str(source))
+
+# Initialize logger
+_logger: logging.Logger = logging.getLogger(__name__)
 
 from fast_jtnn import *
 
@@ -43,9 +48,23 @@ def main_vae_train(
     kl_anneal_iter=2000,
     print_iter=50,
     save_iter=5000,
+    args=None,
 ):
     vocab = [x.strip("\r\n ") for x in open(vocab)]
     vocab = Vocab(vocab)
+
+    output_dir = Path(f"train_{time.strftime('%Y%m%d-%H%M%S')}")
+    output_dir.mkdir(exist_ok=True)
+
+    # Setup logger
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)-5.5s]  %(message)s",
+        handlers=[
+            logging.FileHandler(os.path.join(output_dir, "printlog.txt"), mode="w"),
+            logging.StreamHandler(),  # For debugging. Can be removed on remote
+        ],
+    )
 
     # model = JTNNVAE(
     #     vocab, int(hidden_size), int(latent_size), int(depthT), int(depthG)
@@ -74,6 +93,9 @@ def main_vae_train(
         )
     )
 
+    with open(output_dir / "opts.json", "w") as file:
+        file.write(json.dumps(vars(args)))
+
     optimizer = optim.Adam(model.parameters(), lr=lr)
     scheduler = lr_scheduler.ExponentialLR(optimizer, anneal_rate)
     scheduler.step()
@@ -93,7 +115,6 @@ def main_vae_train(
         )
 
     total_step = load_epoch
-    beta = beta
     meters = np.zeros(4)
 
     for epoch in tqdm(list(range(epoch)), position=0, leave=True):
@@ -116,7 +137,7 @@ def main_vae_train(
 
             if total_step % print_iter == 0:
                 meters /= print_iter
-                print(
+                _logger.info(
                     (
                         "[%d] Loss: %.3f,Beta: %.3f,KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f,Prop_loss %.2f, PNorm: %.2f, GNorm: %.2f"
                         % (
@@ -138,17 +159,18 @@ def main_vae_train(
 
             if total_step % save_iter == 0:
                 torch.save(
-                    model.state_dict(), save_dir + "/model.iter-" + str(total_step)
+                    model.state_dict(),
+                    output_dir + "/model.iter-" + str(total_step),
                 )
 
             if total_step % anneal_iter == 0:
                 scheduler.step()
-                print(("learning rate: %.6f" % scheduler.get_lr()[0]))
+                _logger.info(("learning rate: %.6f" % scheduler.get_lr()[0]))
 
             if total_step % kl_anneal_iter == 0 and total_step >= warmup:
                 beta = min(max_beta, beta + step_beta)
     #         torch.save(model.state_dict(), save_dir + "/model.epoch-" + str(epoch))
-    torch.save(model.state_dict(), save_dir + "/model.epoch-" + str(epoch))
+    torch.save(model.state_dict(), output_dir / "model.epoch-" + str(epoch))
     return model
 
 
@@ -204,4 +226,5 @@ if __name__ == "__main__":
         args.kl_anneal_iter,
         args.print_iter,
         args.save_iter,
+        args=args,
     )
