@@ -133,7 +133,9 @@ def main_vae_train(
                 print(e)
                 continue
 
-            meters = meters + np.array([kl_div, wacc * 100, tacc * 100, sacc * 100, prop_loss*100])
+            meters = meters + np.array(
+                [kl_div, wacc * 100, tacc * 100, sacc * 100, prop_loss * 100]
+            )
 
             if total_step % print_iter == 0:
                 meters /= print_iter
