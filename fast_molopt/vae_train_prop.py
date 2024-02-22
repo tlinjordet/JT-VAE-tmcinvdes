@@ -115,7 +115,7 @@ def main_vae_train(
         )
 
     total_step = load_epoch
-    meters = np.zeros(4)
+    meters = np.zeros(5)
 
     for epoch in tqdm(list(range(epoch)), position=0, leave=True):
         loader = MolTreeFolder_prop(
@@ -133,7 +133,9 @@ def main_vae_train(
                 print(e)
                 continue
 
-            meters = meters + np.array([kl_div, wacc * 100, tacc * 100, sacc * 100, prop_loss*100])
+            meters = meters + np.array(
+                [kl_div, wacc * 100, tacc * 100, sacc * 100, prop_loss * 100]
+            )
 
             if total_step % print_iter == 0:
                 meters /= print_iter

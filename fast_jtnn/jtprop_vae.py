@@ -133,6 +133,8 @@ class JTpropVAE(nn.Module):
             else:
                 raise ValueError
             # cur_vec = cur_vec.data + lr * grad.data
+            cur_vec.data + lr * dydx3[0].data
+            cur_vec.data + lr * dydx3[1].data
 
             cur_vec = create_var(cur_vec, True)
             visited.append(cur_vec)
@@ -204,6 +206,7 @@ class JTpropVAE(nn.Module):
             word_acc,
             topo_acc,
             assm_acc,
+            prop_loss.item(),
         )
 
     def assm(self, mol_batch, jtmpn_holder, x_mol_vecs, x_tree_mess):
