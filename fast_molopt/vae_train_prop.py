@@ -159,7 +159,7 @@ def main_vae_train(
             if total_step % save_iter == 0:
                 torch.save(
                     model.state_dict(),
-                    output_dir + "/model.iter-" + str(total_step),
+                    output_dir / f"model.iter-{total_step}",
                 )
 
             if total_step % anneal_iter == 0:
@@ -169,7 +169,7 @@ def main_vae_train(
             # if total_step % kl_anneal_iter == 0 and total_step >= warmup:
             #     beta = min(max_beta, beta + step_beta)
     #         torch.save(model.state_dict(), save_dir + "/model.epoch-" + str(epoch))
-    torch.save(model.state_dict(), output_dir / "model.epoch-" + str(epoch))
+    torch.save(model.state_dict(), output_dir / f"model.epoch-{epoch}")
     return model
 
 
@@ -196,7 +196,7 @@ if __name__ == "__main__":
     parser.add_argument("--epoch", type=int, default=100)
     parser.add_argument("--anneal_rate", type=float, default=0.9)
     parser.add_argument("--anneal_iter", type=int, default=1000)
-    parser.add_argument("--kl_anneal_iter", type=int, default=3000)
+    parser.add_argument("--kl_anneal_iter", type=int, default=2000)
     parser.add_argument("--print_iter", type=int, default=50)
     parser.add_argument("--save_iter", type=int, default=1000)
 
