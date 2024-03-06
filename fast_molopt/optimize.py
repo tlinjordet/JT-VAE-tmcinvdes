@@ -38,9 +38,9 @@ parser.add_argument("--batch_size", type=int, default=32)
 parser.add_argument("--latent_size", type=int, default=56)
 parser.add_argument("--depthT", type=int, default=20)
 parser.add_argument("--depthG", type=int, default=3)
-parser.add_argument("--cutoff", type=float, default=0.5)
+parser.add_argument("--cutoff", type=float, default=0.2)
 
-parser.add_argument("--lr", type=float, default=1.5)
+parser.add_argument("--lr", type=float, default=0.1)
 parser.add_argument("--clip_norm", type=float, default=50.0)
 parser.add_argument("--beta", type=float, default=0.0)
 parser.add_argument("--step_beta", type=float, default=0.002)
@@ -91,7 +91,8 @@ loader = MolTreeFolder_prop(
 
 results = defaultdict(list)
 
-output_dir = Path(f"opt_{time.strftime('%Y%m%d-%H%M%S')}")
+# output_dir = Path(f"opt_{time.strftime('%Y%m%d-%H%M%S')}")
+output_dir = Path("opt_after_gradient_rescale")
 output_dir.mkdir(exist_ok=True)
 
 with open(output_dir / "opts.json", "w") as file:
@@ -100,6 +101,7 @@ with open(output_dir / "opts.json", "w") as file:
 for batch in loader:
     # Extract smiles
     smiles = batch[0][0].smiles
+    print(smiles)
 
     props = batch[1].numpy().squeeze()
 
@@ -107,9 +109,15 @@ for batch in loader:
     results["smiles"].append(smiles)
 
     mol = Chem.MolFromSmiles(smiles)
-
+    type = "first_second"
     new_smiles, sim = model.optimize(
-        batch, sim_cutoff=sim_cutoff, lr=opts.lr, num_iter=200, type="first"
+        batch,
+        sim_cutoff=sim_cutoff,
+        lr=opts.lr,
+        num_iter=500,
+        type=type,
+        prob_decode=False,
+        minimize=True,
     )
 
     new_mol = Chem.MolFromSmiles(new_smiles)
@@ -117,4 +125,4 @@ for batch in loader:
     results["sim"].append(sim)
 
 df = pd.DataFrame(data=results)
-df.to_csv(output_dir / "optimize_results.csv", index=False)
+df.to_csv(output_dir / f"optimize_results_{type}_maximize.csv", index=False)

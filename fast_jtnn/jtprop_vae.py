@@ -4,6 +4,7 @@ import rdkit.Chem as Chem
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from matplotlib import pyplot as plt
 from rdkit import DataStructs
 from rdkit.Chem import AllChem
 
@@ -91,7 +92,16 @@ class JTpropVAE(nn.Module):
         z_mol = torch.randn(1, self.latent_size).cuda()
         return self.decode(z_tree, z_mol, prob_decode)
 
-    def optimize(self, x_batch, sim_cutoff, lr=2.0, num_iter=20, type="both"):
+    def optimize(
+        self,
+        x_batch,
+        sim_cutoff,
+        lr=2.0,
+        num_iter=20,
+        type="both",
+        prob_decode=False,
+        minimize=True,
+    ):
         x_batch, x_prop, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
         x_tree_vecs, x_tree_mess, x_mol_vecs = self.encode(x_jtenc_holder, x_mpn_holder)
 
@@ -108,8 +118,13 @@ class JTpropVAE(nn.Module):
 
         visited = []
         cuda0 = torch.device("cuda:0")
+        first_predicted = []
+        second_predicted = []
         for step in range(num_iter):
             prop_val = self.propNN(cur_vec)
+            print(prop_val)
+            first_predicted.append(prop_val.tolist()[0][0])
+            second_predicted.append(prop_val.tolist()[0][1])
             # grad = torch.autograd.grad(prop_val, cur_vec,grad_outputs=torch.ones_like(prop_val))[0]
             dydx3 = torch.tensor([], dtype=torch.float32, device=cuda0)
             for i in range(2):
@@ -124,27 +139,44 @@ class JTpropVAE(nn.Module):
 
             dydx3 = dydx3.squeeze()
 
+            scaler = -1 if minimize else 1
+
+            # Normalize gradient
+            norm0 = torch.nn.functional.normalize(dydx3[0], dim=-1)
+            norm1 = torch.nn.functional.normalize(dydx3[1], dim=-1)
+            # nnorm = torch.linalg.vector_norm(norm)
+
+            # Get the gradient magnitudes
+            # n0 = torch.linalg.vector_norm(dydx3[0])
+            # n1 = torch.linalg.vector_norm(dydx3[1])
+
             if type == "both":
-                cur_vec = cur_vec.data + lr * dydx3[1].data + lr * dydx3[0].data
+                cur_vec = cur_vec.data + scaler * lr * norm1 + scaler * lr * norm0
             elif type == "first":
-                cur_vec = cur_vec.data + lr * dydx3[0].data
+                cur_vec = cur_vec.data + scaler * lr * norm0
             elif type == "second":
-                cur_vec = cur_vec.data + lr * dydx3[1].data
+                cur_vec = cur_vec.data + scaler * lr * norm1
+            elif type == "first_second":
+                cur_vec = cur_vec.data + scaler * lr * norm0 - scaler * lr * norm1
+            elif type == "second_first":
+                cur_vec = cur_vec.data + scaler * lr * norm1 - scaler * lr * norm0
             else:
                 raise ValueError
-            # cur_vec = cur_vec.data + lr * grad.data
-            cur_vec.data + lr * dydx3[0].data
-            cur_vec.data + lr * dydx3[1].data
 
             cur_vec = create_var(cur_vec, True)
             visited.append(cur_vec)
 
+        # Now we want to get the best possible vectors.
+
+        tanimoto = []
         li, r = 0, num_iter - 1
+        counter = 0
+        gradient_idx = []
         while li < r - 1:
             mid = (li + r) // 2
             new_vec = visited[mid]
             tree_vec, mol_vec = torch.chunk(new_vec, 2, dim=1)
-            new_smiles = self.decode(tree_vec, mol_vec, prob_decode=False)
+            new_smiles = self.decode(tree_vec, mol_vec, prob_decode=prob_decode)
             if new_smiles is None:
                 r = mid - 1
                 continue
@@ -152,10 +184,30 @@ class JTpropVAE(nn.Module):
             new_mol = Chem.MolFromSmiles(new_smiles)
             fp2 = AllChem.GetMorganFingerprint(new_mol, 2)
             sim = DataStructs.TanimotoSimilarity(fp1, fp2)
+            # print(f'Tanimoto score {mid}:', sim)
+            tanimoto.append((counter, sim))
+            gradient_idx.append((counter, mid))
             if sim < sim_cutoff:
                 r = mid - 1
             else:
                 li = mid
+            counter += 1
+        # fig,ax = plt.subplots(4,1,figsize=(8,12))
+        # ax = ax.flatten()
+        # plt.rcParams.update({"font.size": 22, 'xtick.labelsize': 20, 'ytick.labelsize': 20, "axes.labelsize": 20,
+        #                      "legend.fontsize": 18})
+        # ax[0].set(ylabel='Tanimoto score', xlabel='Iteration')
+        # ax[0].plot(*zip(*tanimoto), 'go-', linewidth=2)
+        # ax[1].set(ylabel='Gradient idx', xlabel='Iteration')
+        # ax[1].plot(*zip(*gradient_idx), 'bo-', linewidth=2)
+        # ax[2].set(ylabel='Predicted homo-lumo (eV)', xlabel='Iteration')
+        # ax[2].plot([x[0] for x in gradient_idx], [first_predicted[x[1]]*27.21140 for x in gradient_idx], 'ro-', linewidth=2)
+        # ax[3].set(ylabel='Predicted Ir -CM5 charge', xlabel='Iteration')
+        # ax[3].plot([x[0] for x in gradient_idx], [second_predicted[x[1]] for x in gradient_idx],color='darkorange', linestyle='-',marker='o', linewidth=2)
+        # fig.suptitle('Sampling 1000 latent vectors in direction of gradient', fontsize=16)
+        # plt.tight_layout()
+        # fig.savefig('example_sampling.png',dpi=600)
+        # fig.show()
         """
         best_vec = visited[0]
         for new_vec in visited:
@@ -170,7 +222,7 @@ class JTpropVAE(nn.Module):
         """
         tree_vec, mol_vec = torch.chunk(visited[li], 2, dim=1)
         # tree_vec,mol_vec = torch.chunk(best_vec, 2, dim=1)
-        new_smiles = self.decode(tree_vec, mol_vec, prob_decode=False)
+        new_smiles = self.decode(tree_vec, mol_vec, prob_decode=prob_decode)
         if new_smiles is None:
             return x_batch[0].smiles, 1.0
         new_mol = Chem.MolFromSmiles(new_smiles)
