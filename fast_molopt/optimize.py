@@ -26,7 +26,7 @@ lg = rdkit.RDLogger.logger()
 lg.setLevel(rdkit.RDLogger.CRITICAL)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--test_path", required=True)
+parser.add_argument("--training_path", required=True)
 parser.add_argument("--vocab_path", required=True)
 parser.add_argument("--model_path", required=True)
 parser.add_argument("--output_path", default="optimize-processed")
@@ -39,6 +39,10 @@ parser.add_argument("--latent_size", type=int, default=56)
 parser.add_argument("--depthT", type=int, default=20)
 parser.add_argument("--depthG", type=int, default=3)
 parser.add_argument("--cutoff", type=float, default=0.2)
+
+parser.add_argument(
+    "--type", type=str, default="first", help="Which property to optimize on"
+)
 
 parser.add_argument("--lr", type=float, default=0.1)
 parser.add_argument("--clip_norm", type=float, default=50.0)
@@ -82,7 +86,7 @@ res = []
 
 
 # Preprocess data
-main_preprocess(opts.test_path, opts.prop_path, opts.output_path, opts.nsplits)
+main_preprocess(opts.training_path, opts.prop_path, opts.output_path, opts.nsplits)
 
 loader = MolTreeFolder_prop(
     opts.output_path, vocab, batch_size=1, shuffle=False
@@ -91,14 +95,16 @@ loader = MolTreeFolder_prop(
 
 results = defaultdict(list)
 
-# output_dir = Path(f"opt_{time.strftime('%Y%m%d-%H%M%S')}")
-output_dir = Path("opt_after_gradient_rescale")
+output_dir = Path(f"opt_{time.strftime('%Y%m%d-%H%M%S')}")
+# output_dir = Path("opt_after_gradient_rescale")
 output_dir.mkdir(exist_ok=True)
 
 with open(output_dir / "opts.json", "w") as file:
     file.write(json.dumps(vars(opts)))
 
-for batch in loader:
+for i, batch in enumerate(loader):
+    # if i!= 19:
+    #     continue
     # Extract smiles
     smiles = batch[0][0].smiles
     print(smiles)
@@ -109,15 +115,15 @@ for batch in loader:
     results["smiles"].append(smiles)
 
     mol = Chem.MolFromSmiles(smiles)
-    type = "first_second"
+    minimize = True
     new_smiles, sim = model.optimize(
         batch,
         sim_cutoff=sim_cutoff,
         lr=opts.lr,
         num_iter=500,
-        type=type,
-        prob_decode=False,
-        minimize=True,
+        type=opts.type,
+        prob_decode=True,
+        minimize=minimize,
     )
 
     new_mol = Chem.MolFromSmiles(new_smiles)
@@ -125,4 +131,4 @@ for batch in loader:
     results["sim"].append(sim)
 
 df = pd.DataFrame(data=results)
-df.to_csv(output_dir / f"optimize_results_{type}_maximize.csv", index=False)
+df.to_csv(output_dir / f"optimize_results_{type}_{minimize}.csv", index=False)
