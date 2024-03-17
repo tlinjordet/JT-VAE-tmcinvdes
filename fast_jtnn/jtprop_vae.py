@@ -8,7 +8,13 @@ from matplotlib import pyplot as plt
 from rdkit import DataStructs
 from rdkit.Chem import AllChem
 
-from .chemutils import attach_mols, copy_edit_mol, enum_assemble, set_atommap
+from .chemutils import (
+    attach_mols,
+    copy_edit_mol,
+    enum_assemble,
+    is_valid_smiles,
+    set_atommap,
+)
 from .datautils_prop import tensorize_prop
 from .jtmpn import JTMPN
 from .jtnn_dec import JTNNDecoder
@@ -120,9 +126,10 @@ class JTpropVAE(nn.Module):
         cuda0 = torch.device("cuda:0")
         first_predicted = []
         second_predicted = []
+        lr_homo = 3 * lr
         for step in range(num_iter):
             prop_val = self.propNN(cur_vec)
-            print(prop_val)
+            # print(prop_val)
             first_predicted.append(prop_val.tolist()[0][0])
             second_predicted.append(prop_val.tolist()[0][1])
             # grad = torch.autograd.grad(prop_val, cur_vec,grad_outputs=torch.ones_like(prop_val))[0]
@@ -151,15 +158,15 @@ class JTpropVAE(nn.Module):
             # n1 = torch.linalg.vector_norm(dydx3[1])
 
             if type == "both":
-                cur_vec = cur_vec.data + scaler * lr * norm1 + scaler * lr * norm0
+                cur_vec = cur_vec.data + scaler * lr * norm1 + scaler * lr_homo * norm0
             elif type == "first":
-                cur_vec = cur_vec.data + scaler * lr * norm0
+                cur_vec = cur_vec.data + scaler * lr_homo * norm0
             elif type == "second":
                 cur_vec = cur_vec.data + scaler * lr * norm1
             elif type == "first_second":
-                cur_vec = cur_vec.data + scaler * lr * norm0 - scaler * lr * norm1
+                cur_vec = cur_vec.data + scaler * lr_homo * norm0 - scaler * lr * norm1
             elif type == "second_first":
-                cur_vec = cur_vec.data + scaler * lr * norm1 - scaler * lr * norm0
+                cur_vec = cur_vec.data + scaler * lr * norm1 - scaler * lr_homo * norm0
             else:
                 raise ValueError
 
@@ -172,6 +179,7 @@ class JTpropVAE(nn.Module):
         li, r = 0, num_iter - 1
         counter = 0
         gradient_idx = []
+        smiles_list = []
         while li < r - 1:
             mid = (li + r) // 2
             new_vec = visited[mid]
@@ -187,6 +195,7 @@ class JTpropVAE(nn.Module):
             # print(f'Tanimoto score {mid}:', sim)
             tanimoto.append((counter, sim))
             gradient_idx.append((counter, mid))
+            smiles_list.append((counter, new_smiles))
             if sim < sim_cutoff:
                 r = mid - 1
             else:
@@ -208,21 +217,23 @@ class JTpropVAE(nn.Module):
         # plt.tight_layout()
         # fig.savefig('example_sampling.png',dpi=600)
         # fig.show()
-        """
-        best_vec = visited[0]
-        for new_vec in visited:
-            tree_vec,mol_vec = torch.chunk(new_vec, 2, dim=1)
-            new_smiles = self.decode(tree_vec, mol_vec, prob_decode=False)
-            if new_smiles is None: continue
-            new_mol = Chem.MolFromSmiles(new_smiles)
-            fp2 = AllChem.GetMorganFingerprint(new_mol, 2)
-            sim = DataStructs.TanimotoSimilarity(fp1, fp2)
-            if sim >= sim_cutoff:
-                best_vec = new_vec
-        """
         tree_vec, mol_vec = torch.chunk(visited[li], 2, dim=1)
         # tree_vec,mol_vec = torch.chunk(best_vec, 2, dim=1)
         new_smiles = self.decode(tree_vec, mol_vec, prob_decode=prob_decode)
+
+        tanimoto_candidates = [
+            (x[1], s[1]) for x, s in zip(tanimoto, smiles_list) if x[1] > sim_cutoff
+        ]
+        tanimoto_candidates.sort(reverse=True, key=lambda x: x[0])
+        tanimoto_candidates = set(tanimoto_candidates)
+        if not is_valid_smiles(new_smiles):
+            for tan, sm in tanimoto_candidates:
+                if is_valid_smiles(sm):
+                    new_smiles = sm
+                    break
+                else:
+                    new_smiles = None
+
         if new_smiles is None:
             return x_batch[0].smiles, 1.0
         new_mol = Chem.MolFromSmiles(new_smiles)

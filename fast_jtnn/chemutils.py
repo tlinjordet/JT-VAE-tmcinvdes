@@ -450,6 +450,18 @@ def dfs_assemble(cur_mol, global_amap, fa_amap, cur_node, fa_node):
             dfs_assemble(cur_mol, global_amap, label_amap, nei_node, cur_node)
 
 
+def is_valid_smiles(smiles):
+    # Check for more than one Lithium
+    mol = Chem.MolFromSmiles(smiles)
+    smarts = "[Be,Ir,Li]"
+    mol_smarts = Chem.MolFromSmarts(smarts)
+    matches = mol.GetSubstructMatches(mol_smarts)
+    if len(matches) > 1:
+        return False
+    else:
+        return True
+
+
 if __name__ == "__main__":
     import sys
 
