@@ -12,19 +12,21 @@ Therefore, a super dirty hack is to comment out the jtmpn_holder line and replac
 
 ## Train conditional JT-VAE
 
-An example script used to train the property JT-VAE is given in X.
 The difference form the regular training, is now we need to supply a file with the same length as the training file, which contains the properties for each molecule.
 
 To do training run the following scripts in a bash submission:
 
+```
 python -u ../fast_jtnn/mol_tree.py -i $dataset -v $vocab
 python -u preprocess_prop.py --train $dataset --split 10 --jobs 8 --output $output --prop_path $prop_path
 python -u vae_train_prop.py --train $output --vocab $vocab --save_dir $save_dir
-
+```
 
 ## Optimization in latent space
 
 
 An example of running the optimization is:
 
+```
 python -u optimize.py --training_path $dataset --vocab_path $vocab --cutoff 0.2 --lr 2 --model_path $model --prop_path $prop_path
+```
