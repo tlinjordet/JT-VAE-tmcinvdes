@@ -43,7 +43,9 @@ def convert(train_path, prop_path, pool, num_splits, output_path):
     print("Input File read")
 
     with open(prop_path) as f:
-        prop_data = [float(line.strip("\r\n ").split()[0]) for line in f]
+        prop_data = [line.strip("\r\n ").split(",") for line in f]
+    # Convert to float
+    prop_data = [[float(y) for y in x] for x in prop_data]
     print("Prop file read")
 
     # Verify that the number of properties match the number of data points

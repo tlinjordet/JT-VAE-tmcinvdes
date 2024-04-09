@@ -1,12 +1,14 @@
-import sys
-
-sys.path.append("../")
 import argparse
+import json
+import logging
 import math
 import os
 import pickle as pickle
 import sys
+import time
 from pathlib import Path
+
+sys.path.append("../")
 
 import numpy as np
 import torch
@@ -17,6 +19,9 @@ from tqdm import tqdm
 
 source = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 sys.path.insert(0, str(source))
+
+# Initialize logger
+_logger: logging.Logger = logging.getLogger(__name__)
 
 from fast_jtnn import *
 
@@ -43,9 +48,24 @@ def main_vae_train(
     kl_anneal_iter=2000,
     print_iter=50,
     save_iter=5000,
+    args=None,
 ):
     vocab = [x.strip("\r\n ") for x in open(vocab)]
     vocab = Vocab(vocab)
+
+    output_dir = Path(f"train_{time.strftime('%Y%m%d-%H%M%S')}")
+    output_dir.mkdir(exist_ok=True)
+    save_dir.mkdir(exist_ok=True)
+
+    # Setup logger
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)-5.5s]  %(message)s",
+        handlers=[
+            logging.FileHandler(os.path.join(output_dir, "printlog.txt"), mode="w"),
+            logging.StreamHandler(),  # For debugging. Can be removed on remote
+        ],
+    )
 
     # model = JTNNVAE(
     #     vocab, int(hidden_size), int(latent_size), int(depthT), int(depthG)
@@ -61,11 +81,8 @@ def main_vae_train(
         else:
             nn.init.xavier_normal_(param)
 
-    if os.path.isdir(save_dir) is False:
-        os.makedirs(save_dir)
-
     if load_epoch > 0:
-        model.load_state_dict(torch.load(save_dir + "/model.epoch-" + str(load_epoch)))
+        model.load_state_dict(torch.load(save_dir / f"model.epoch-{load_epoch}"))
 
     print(
         (
@@ -73,6 +90,9 @@ def main_vae_train(
             % (sum([x.nelement() for x in model.parameters()]) / 1000,)
         )
     )
+
+    with open(output_dir / "opts.txt", "w") as file:
+        file.write(f'{vars(args)}')
 
     optimizer = optim.Adam(model.parameters(), lr=lr)
     scheduler = lr_scheduler.ExponentialLR(optimizer, anneal_rate)
@@ -93,8 +113,7 @@ def main_vae_train(
         )
 
     total_step = load_epoch
-    beta = beta
-    meters = np.zeros(4)
+    meters = np.zeros(5)
 
     for epoch in tqdm(list(range(epoch)), position=0, leave=True):
         loader = MolTreeFolder_prop(
@@ -104,7 +123,7 @@ def main_vae_train(
             total_step += 1
             try:
                 model.zero_grad()
-                loss, kl_div, wacc, tacc, sacc = model(batch, beta)
+                loss, kl_div, wacc, tacc, sacc, prop_loss = model(batch, beta)
                 loss.backward()
                 nn.utils.clip_grad_norm_(model.parameters(), clip_norm)
                 optimizer.step()
@@ -112,20 +131,24 @@ def main_vae_train(
                 print(e)
                 continue
 
-            meters = meters + np.array([kl_div, wacc * 100, tacc * 100, sacc * 100])
+            meters = meters + np.array(
+                [kl_div, wacc * 100, tacc * 100, sacc * 100, prop_loss * 100]
+            )
 
             if total_step % print_iter == 0:
                 meters /= print_iter
-                print(
+                _logger.info(
                     (
-                        "[%d] Beta: %.3f, KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f, PNorm: %.2f, GNorm: %.2f"
+                        "[%d] Loss: %.3f,Beta: %.3f,KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f,Prop_loss %.2f, PNorm: %.2f, GNorm: %.2f"
                         % (
                             total_step,
+                            loss.item(),
                             beta,
                             meters[0],
                             meters[1],
                             meters[2],
                             meters[3],
+                            meters[4],
                             param_norm(model),
                             grad_norm(model),
                         )
@@ -136,17 +159,18 @@ def main_vae_train(
 
             if total_step % save_iter == 0:
                 torch.save(
-                    model.state_dict(), save_dir + "/model.iter-" + str(total_step)
+                    model.state_dict(),
+                    output_dir / f"model.iter-{total_step}"
                 )
 
             if total_step % anneal_iter == 0:
                 scheduler.step()
-                print(("learning rate: %.6f" % scheduler.get_lr()[0]))
+                _logger.info(("learning rate: %.6f" % scheduler.get_lr()[0]))
 
-            if total_step % kl_anneal_iter == 0 and total_step >= warmup:
-                beta = min(max_beta, beta + step_beta)
+            # if total_step % kl_anneal_iter == 0 and total_step >= warmup:
+            #     beta = min(max_beta, beta + step_beta)
     #         torch.save(model.state_dict(), save_dir + "/model.epoch-" + str(epoch))
-    torch.save(model.state_dict(), save_dir + "/model.epoch-" + str(epoch))
+    torch.save(model.state_dict(), output_dir / f"model.epoch-{epoch}")
     return model
 
 
@@ -154,7 +178,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--train", required=True)
     parser.add_argument("--vocab", required=True)
-    parser.add_argument("--save_dir", required=True)
+    parser.add_argument("--save_dir", required=True, type=Path)
     parser.add_argument("--load_epoch", type=int, default=0)
 
     parser.add_argument("--hidden_size", type=int, default=450)
@@ -165,17 +189,17 @@ if __name__ == "__main__":
 
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--clip_norm", type=float, default=50.0)
-    parser.add_argument("--beta", type=float, default=0.0)
+    parser.add_argument("--beta", type=float, default=1.0)
     parser.add_argument("--step_beta", type=float, default=0.002)
     parser.add_argument("--max_beta", type=float, default=1.0)
-    parser.add_argument("--warmup", type=int, default=40000)
+    parser.add_argument("--warmup", type=int, default=500)
 
-    parser.add_argument("--epoch", type=int, default=50)
+    parser.add_argument("--epoch", type=int, default=150)
     parser.add_argument("--anneal_rate", type=float, default=0.9)
-    parser.add_argument("--anneal_iter", type=int, default=40000)
-    parser.add_argument("--kl_anneal_iter", type=int, default=2000)
+    parser.add_argument("--anneal_iter", type=int, default=1000)
+    parser.add_argument("--kl_anneal_iter", type=int, default=3000)
     parser.add_argument("--print_iter", type=int, default=50)
-    parser.add_argument("--save_iter", type=int, default=2000)
+    parser.add_argument("--save_iter", type=int, default=1000)
 
     args = parser.parse_args()
     print(args)
@@ -202,4 +226,5 @@ if __name__ == "__main__":
         args.kl_anneal_iter,
         args.print_iter,
         args.save_iter,
+        args=args,
     )
