@@ -18,8 +18,8 @@ To do training run the following scripts in a bash submission from the repo root
 
 ```
 python -u fast_jtnn/mol_tree.py -i $dataset -v $vocab
-python -u preprocess_prop.py --train $dataset --split 10 --jobs 8 --output $output --prop_path $prop_path
-python -u vae_train_prop.py --train $output --vocab $vocab --save_dir $save_dir
+python -u fast_molopt/preprocess_prop.py --train $dataset --split 10 --jobs 8 --output $output --prop_path $prop_path
+python -u fast_molopt/vae_train_prop.py --train $output --vocab $vocab --save_dir $save_dir
 ```
 
 ## Optimization in latent space
@@ -28,5 +28,5 @@ python -u vae_train_prop.py --train $output --vocab $vocab --save_dir $save_dir
 An example of running the optimization is:
 
 ```
-python -u optimize.py --training_path $dataset --vocab_path $vocab --cutoff 0.2 --lr 2 --model_path $model --prop_path $prop_path
+python -u fast_molopt/optimize.py --training_path $dataset --vocab_path $vocab --cutoff 0.2 --lr 2 --model_path $model --prop_path $prop_path
 ```
