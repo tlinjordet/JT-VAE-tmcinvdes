@@ -69,6 +69,7 @@ class MolTreeFolder_prop(object):
         shuffle=True,
         assm=True,
         replicate=None,
+        optimize=False,
     ):
         self.data_folder = data_folder
         self.data_files = [fn for fn in os.listdir(data_folder)]
@@ -77,6 +78,7 @@ class MolTreeFolder_prop(object):
         self.num_workers = num_workers
         self.shuffle = shuffle
         self.assm = assm
+        self.optimize = optimize
 
         if replicate is not None:  # expand is int
             self.data_files = self.data_files * replicate
@@ -103,7 +105,9 @@ class MolTreeFolder_prop(object):
                 batches.pop()
                 batches_prop.pop()
 
-            dataset = MolTreeDataset_prop(batches, batches_prop, self.vocab, self.assm)
+            dataset = MolTreeDataset_prop(
+                batches, batches_prop, self.vocab, self.assm, self.optimize
+            )
             dataloader = DataLoader(
                 dataset, batch_size=1, shuffle=False, collate_fn=lambda x: x[0]
             )  # , num_workers=self.num_workers)
@@ -131,22 +135,27 @@ class PairTreeDataset(Dataset):
 
 
 class MolTreeDataset_prop(Dataset):
-    def __init__(self, data, prop_data, vocab, assm=True):
+    def __init__(self, data, prop_data, vocab, assm=True, optimize=False):
         self.data = data
         self.prop_data = prop_data
         self.vocab = vocab
         self.assm = assm
+        self.optimize = optimize
 
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, idx):
         return tensorize_prop(
-            self.data[idx], self.prop_data[idx], self.vocab, assm=self.assm
+            self.data[idx],
+            self.prop_data[idx],
+            self.vocab,
+            assm=self.assm,
+            optimize=self.optimize,
         )
 
 
-def tensorize_prop(tree_batch, prop_batch, vocab, assm=True):
+def tensorize_prop(tree_batch, prop_batch, vocab, assm=True, optimize=False):
     set_batch_nodeID(tree_batch, vocab)
     smiles_batch = [tree.smiles for tree in tree_batch]
     jtenc_holder, mess_dict = JTNNEncoder.tensorize(tree_batch)
@@ -169,8 +178,11 @@ def tensorize_prop(tree_batch, prop_batch, vocab, assm=True):
             batch_idx.extend([i] * len(node.cands))
 
     # WARNING: THIS NEEDS TO BE COMMENTED OUT WHEN DOING LOCAL OPTIMIZATION.
-    # A NONE VALUE SHOULD BE RETURMED AS THIS IS NOT USED IN OPTIMIZATION ANYWAY
-    jtmpn_holder = JTMPN.tensorize(cands, mess_dict)
+    # A NONE VALUE SHOULD BE RETURNED AS THIS IS NOT USED IN OPTIMIZATION ANYWAY
+    if optimize:
+        jtmpn_holder = None
+    else:
+        jtmpn_holder = JTMPN.tensorize(cands, mess_dict)
     batch_idx = torch.LongTensor(batch_idx)
 
     return (

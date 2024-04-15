@@ -128,7 +128,12 @@ def main():
     main_preprocess(opts.training_path, opts.prop_path, opts.output_path, opts.nsplits)
 
     loader = MolTreeFolder_prop(
-        opts.output_path, vocab, batch_size=1, shuffle=False, num_workers=6
+        opts.output_path,
+        vocab,
+        batch_size=1,
+        shuffle=False,
+        num_workers=6,
+        optimize=True,
     )
 
     defaultdict(list)
