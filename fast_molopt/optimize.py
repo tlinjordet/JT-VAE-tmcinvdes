@@ -15,10 +15,9 @@ import torch.nn as nn
 from rdkit.Chem import Descriptors
 from torch.autograd import Variable
 
-from fast_jtnn import *
-
 source = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 sys.path.insert(0, str(source))
+from fast_jtnn import JTpropVAE, MolTreeFolder_prop, Vocab
 from fast_molopt.preprocess_prop import main_preprocess
 
 lg = rdkit.RDLogger.logger()
@@ -75,7 +74,7 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
 
 
 def main():
-    opts = parser.parse_args()
+    opts = parse_args()
 
     vocab = [x.strip("\r\n ") for x in open(opts.vocab_path)]
     vocab = Vocab(vocab)
@@ -99,28 +98,34 @@ def main():
     #     os.remove(filePath)
 
     # Process dataframe
-    df_og = pd.read_csv(
-        "/home/magstr/git/xyz2mol_tm/jt_vae_research/dft_labeled_data/region_production/10_samples_each_region_labeled_set.csv"
+    # df_og = pd.read_csv(
+    #     "/home/magstr/git/xyz2mol_tm/jt_vae_research/dft_labeled_data/region_production/10_samples_each_region_labeled_set.csv"
+    # )
+    # for i, row in df_og.iterrows():
+    #     with open(
+    #         "/home/magstr/git/xyz2mol_tm/jt_vae_research/dft_labeled_data/region_production/region_samples_production.txt",
+    #         "a",
+    #     ) as f:
+    #         f.write(f"{row['sub_smi']}\n")
+    #     with open(
+    #         "/home/magstr/git/xyz2mol_tm/jt_vae_research/dft_labeled_data/region_production/region_samples_prop_production.txt",
+    #         "a",
+    #     ) as f:
+    #         f.write(f"{row['homo-lumo']},{row['Ir-cm5']}\n")
+
+    df_ligands = pd.read_csv(opts.training_path, header=None, names=["Enriched SMILES"])
+    df_props = pd.read_csv(
+        opts.prop_path, header=None, names=["HOMO-LUMO gap (Eh)", "Ir charge"]
     )
-    for i, row in df_og.iterrows():
-        with open(
-            "/home/magstr/git/xyz2mol_tm/jt_vae_research/dft_labeled_data/region_production/region_samples_production.txt",
-            "a",
-        ) as f:
-            f.write(f"{row['sub_smi']}\n")
-        with open(
-            "/home/magstr/git/xyz2mol_tm/jt_vae_research/dft_labeled_data/region_production/region_samples_prop_production.txt",
-            "a",
-        ) as f:
-            f.write(f"{row['homo-lumo']},{row['Ir-cm5']}\n")
+    input_df = pd.concat([df_ligands, df_props], axis=1)
 
     output_dir = Path(f"opt_{time.strftime('%Y%m%d-%H%M%S')}")
     output_dir.mkdir(exist_ok=True)
 
     # Preprocess data
-    train_path = "/home/magstr/git/xyz2mol_tm/jt_vae_research/dft_labeled_data/region_production/region_samples_production.txt"
-    prop_path = "/home/magstr/git/xyz2mol_tm/jt_vae_research/dft_labeled_data/region_production/region_samples_prop_production.txt"
-    main_preprocess(train_path, prop_path, opts.output_path, opts.nsplits)
+    # train_path = "/home/magstr/git/xyz2mol_tm/jt_vae_research/dft_labeled_data/region_production/region_samples_production.txt"
+    # prop_path = "/home/magstr/git/xyz2mol_tm/jt_vae_research/dft_labeled_data/region_production/region_samples_prop_production.txt"
+    main_preprocess(opts.training_path, opts.prop_path, opts.output_path, opts.nsplits)
 
     loader = MolTreeFolder_prop(
         opts.output_path, vocab, batch_size=1, shuffle=False, num_workers=6
@@ -176,7 +181,7 @@ def main():
                     lineterminator="\n",
                 )
                 # Get the row elements of the original data
-                r = df_og.iloc[i].to_list()
+                r = input_df.iloc[i].to_list()
                 # Append the data from optimized row
                 list_of_props = r + [smiles, new_smiles, sim, current_type, minimize]
                 writer.writerow(list_of_props)

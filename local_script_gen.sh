@@ -9,7 +9,7 @@
 #SBATCH --output=gen_outfiles/R-%x.%j.out
 #SBATCH --error=gen_outfiles/R-%x.%j.err
 
-# Source conda env 
+# Source conda env
 # source ~/miniconda3/etc/profile.d/conda.sh # Or path to where your conda is
 conda activate vae_py37
 
@@ -27,7 +27,7 @@ while getopts ":m:v:n:c:" OPTION; do
         nsample=${OPTARG};;
     c)
         custom_label=${OPTARG};;
-    *)  
+    *)
         echo "Incorrect options provided"
         exit 1
         ;;

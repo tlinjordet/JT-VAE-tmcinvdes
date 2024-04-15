@@ -32,7 +32,7 @@ def main_vae_train(
     save_dir,
     load_epoch=0,
     hidden_size=450,
-    batch_size=32,
+    batch_size=256,  # 32,
     latent_size=56,
     depthT=20,
     depthG=3,
@@ -92,7 +92,7 @@ def main_vae_train(
     )
 
     with open(output_dir / "opts.txt", "w") as file:
-        file.write(f'{vars(args)}')
+        file.write(f"{vars(args)}")
 
     optimizer = optim.Adam(model.parameters(), lr=lr)
     scheduler = lr_scheduler.ExponentialLR(optimizer, anneal_rate)
@@ -158,10 +158,7 @@ def main_vae_train(
                 meters *= 0
 
             if total_step % save_iter == 0:
-                torch.save(
-                    model.state_dict(),
-                    output_dir / f"model.iter-{total_step}"
-                )
+                torch.save(model.state_dict(), output_dir / f"model.iter-{total_step}")
 
             if total_step % anneal_iter == 0:
                 scheduler.step()
@@ -182,7 +179,7 @@ if __name__ == "__main__":
     parser.add_argument("--load_epoch", type=int, default=0)
 
     parser.add_argument("--hidden_size", type=int, default=450)
-    parser.add_argument("--batch_size", type=int, default=32)
+    parser.add_argument("--batch_size", type=int, default=256)  # 32)
     parser.add_argument("--latent_size", type=int, default=56)
     parser.add_argument("--depthT", type=int, default=20)
     parser.add_argument("--depthG", type=int, default=3)
