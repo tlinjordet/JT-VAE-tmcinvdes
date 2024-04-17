@@ -256,7 +256,7 @@ class JTNNVAE(nn.Module):
                     F.softmax(scores.view(1, -1), dim=1).squeeze() + 1e-7
                 )  # prevent prob = 0
                 cand_idx = torch.multinomial(probs, probs.numel())
-            except:
+            except Exception:
                 _, cand_idx = torch.sort(scores, descending=True)
         else:
             _, cand_idx = torch.sort(scores, descending=True)

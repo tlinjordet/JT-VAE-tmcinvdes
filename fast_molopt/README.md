@@ -14,12 +14,12 @@ Therefore, a super dirty hack is to comment out the jtmpn_holder line and replac
 
 The difference form the regular training, is now we need to supply a file with the same length as the training file, which contains the properties for each molecule.
 
-To do training run the following scripts in a bash submission:
+To do training run the following scripts in a bash submission from the repo root directory:
 
 ```
-python -u ../fast_jtnn/mol_tree.py -i $dataset -v $vocab
-python -u preprocess_prop.py --train $dataset --split 10 --jobs 8 --output $output --prop_path $prop_path
-python -u vae_train_prop.py --train $output --vocab $vocab --save_dir $save_dir
+python -u fast_jtnn/mol_tree.py -i $dataset -v $vocab
+python -u fast_molopt/preprocess_prop.py --train $dataset --split 10 --jobs 8 --output $output --prop_path $prop_path
+python -u fast_molopt/vae_train_prop.py --train $output --vocab $vocab --save_dir $save_dir
 ```
 
 ## Optimization in latent space
@@ -28,5 +28,20 @@ python -u vae_train_prop.py --train $output --vocab $vocab --save_dir $save_dir
 An example of running the optimization is:
 
 ```
-python -u optimize.py --training_path $dataset --vocab_path $vocab --cutoff 0.2 --lr 2 --model_path $model --prop_path $prop_path
+python -u fast_molopt/optimize.py --training_path $dataset --vocab_path $vocab --cutoff 0.2 --lr 2 --model_path $model --prop_path $prop_path
+```
+
+## Specific Run-Through
+
+```
+python -u fast_jtnn/mol_tree.py -i data/labeled_set/train_full.txt -v vocabs/monodentate_conditional.txt
+python -u fast_molopt/preprocess_prop.py --train data/labeled_set/train_full.txt --split 10 --jobs 8 --output data/labeled_set/preprocessed/ --prop_path data/labeled_set/train_prop_full.txt
+python -u fast_molopt/vae_train_prop.py --train data/labeled_set/preprocessed/ --vocab vocabs/monodentate_conditional.txt --save_dir models/monodentate_conditional/
+```
+
+- (Make sure models are in right directory after training.)
+- Sample 160 ligands with [this notebook](../sample_monodentates_from_regions_before_optimizing.ipynb).
+
+```
+python -u fast_molopt/optimize.py --training_path data/labeled_set/train_TL_sample.txt --vocab_path vocabs/monodentate_conditional.txt --cutoff 0.2 --lr 2 --model_path models/monodentate_conditional/model.epoch-149 --prop_path data/labeled_set/train_prop_TL_sample.txt
 ```

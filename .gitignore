@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+**/model.iter*
+models/
+data/*/preprocessed/tensors-*.pkl
+opt_*/
+optimize-processed/
+train_*/
