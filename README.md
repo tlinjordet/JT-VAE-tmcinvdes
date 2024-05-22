@@ -17,15 +17,10 @@ The requirements.yml file is an export of a working conda environment that can r
 
 # Quick Start
 
-## Code for Accelerated Training
+## Code for model training
 
 This repository contains the Python 3 implementation of the new Fast Junction Tree Variational Autoencoder code.
 
 - `fast_molvae/` contains codes for VAE training. Please refer to `fast_molvae/README.md` for details.
 - `fast_jtnn/` contains codes for model implementation.
-- `fast_molopt/` contains codes for training a conditional JT-VAE with properties.
-
-### Conditional optimization
-
-`fast_molopt/optimize.py` contains code for performing optimization of input molecules in 2D property space.
-Input molecules can be optimized in 8 directions in 2D space and results in an output csv file with results from these optimizations.
+- `fast_molopt/` contains codes for training a conditional JT-VAE.
