@@ -25,7 +25,9 @@ from .nnutils import create_var
 
 
 class JTpropVAE(nn.Module):
-    def __init__(self, vocab, hidden_size, latent_size, depthT, depthG):
+    def __init__(
+        self, vocab, hidden_size, latent_size, depthT, depthG, denticity="monodentate"
+    ):
         super(JTpropVAE, self).__init__()
         self.vocab = vocab
         self.hidden_size = hidden_size
@@ -57,6 +59,7 @@ class JTpropVAE(nn.Module):
             nn.Linear(self.hidden_size, 2),
         )
         self.prop_loss = nn.MSELoss()
+        self.denticity = denticity
 
     def encode(self, jtenc_holder, mpn_holder):
         tree_vecs, tree_mess = self.jtnn(*jtenc_holder)
@@ -272,9 +275,9 @@ class JTpropVAE(nn.Module):
         ]
         tanimoto_candidates.sort(reverse=True, key=lambda x: x[0])
         tanimoto_candidates = set(tanimoto_candidates)
-        if not is_valid_smiles(new_smiles):
+        if not is_valid_smiles(new_smiles, self.denticity):
             for tan, sm in tanimoto_candidates:
-                if is_valid_smiles(sm):
+                if is_valid_smiles(sm, self.denticity):
                     new_smiles = sm
                     break
                 else:
