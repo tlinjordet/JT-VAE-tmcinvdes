@@ -209,47 +209,69 @@ class JTpropVAE(nn.Module):
             else:
                 li = mid
             counter += 1
-        plt.rcParams.update(
-            {
-                "font.size": 24,
-                "axes.labelsize": 18,
-                "legend.fontsize": 22,
-                "xtick.labelsize": 24,
-                "ytick.labelsize": 24,
-                "legend.frameon": False,
-            }
-        )
-        fig, ax = plt.subplots(2, 2, figsize=(12, 8))
-        ax = ax.flatten()
-        ax[0].set(ylabel="Tanimoto score", xlabel="Iteration")
-        ax[0].plot(*zip(*tanimoto), "go-", linewidth=2)
-        ax[1].set(ylabel="Sampled z index", xlabel="Iteration")
-        ax[1].plot(*zip(*gradient_idx), "bo-", linewidth=2)
-        ax[2].set(ylabel="Predicted homo-lumo (eV)", xlabel="Iteration")
-        ax[2].plot(
-            [x[0] for x in gradient_idx],
-            [first_predicted[x[1]] * 27.21140 for x in gradient_idx],
-            "ro-",
-            linewidth=2,
-        )
-        ax[3].set(ylabel="Predicted Ir -CM5 charge", xlabel="Iteration")
-        ax[3].plot(
-            [x[0] for x in gradient_idx],
-            [second_predicted[x[1]] for x in gradient_idx],
-            color="darkorange",
-            linestyle="-",
-            marker="o",
-            linewidth=2,
-        )
-        [
-            ax[i].set_xticks([x[0] for x in gradient_idx]) for i in range(4)
-        ]  # set_xticks([])
-        # fig.suptitle('Sampling 1000 latent vectors in direction of gradient', fontsize=16)
-        plt.tight_layout()
+        # plt.rcParams.update(
+        #     {
+        #         "font.size": 24,
+        #         "axes.labelsize": 18,
+        #         "legend.fontsize": 22,
+        #         "xtick.labelsize": 24,
+        #         "ytick.labelsize": 24,
+        #         "legend.frameon": False,
+        #     }
+        # )
+        # fig, ax = plt.subplots(2, 2, figsize=(12, 8))
+        # ax = ax.flatten()
+        # ax[0].set(ylabel="Tanimoto score", xlabel="Iteration")
+        # ax[0].plot(*zip(*tanimoto), "go-", linewidth=2)
+        # ax[1].set(ylabel="Sampled z index", xlabel="Iteration")
+        # ax[1].plot(*zip(*gradient_idx), "bo-", linewidth=2)
+        # ax[2].set(ylabel=r"Predicted $\epsilon$ (eV)", xlabel="Iteration")
+        # ax[2].plot(
+        #     [x[0] for x in gradient_idx],
+        #     [first_predicted[x[1]] * 27.21140 for x in gradient_idx],
+        #     "ro-",
+        #     linewidth=2,
+        # )
+        # ax[3].set(ylabel=r"Predicted $q_{Ir}$", xlabel="Iteration")
+        # ax[3].plot(
+        #     [x[0] for x in gradient_idx],
+        #     [second_predicted[x[1]] for x in gradient_idx],
+        #     color="darkorange",
+        #     linestyle="-",
+        #     marker="o",
+        #     linewidth=2,
+        # )
+        # [
+        #     ax[i].set_xticks([x[0] for x in gradient_idx]) for i in range(4)
+        # ]  # set_xticks([])
+        # # fig.suptitle('Sampling 1000 latent vectors in direction of gradient', fontsize=16)
+        # plt.tight_layout()
+        # fig.savefig('/home/magstr/Documents/thesis/example_sampling_tmp.png',dpi=600)
+        # fig.show()
 
+        tree_vec, mol_vec = torch.chunk(visited[li], 2, dim=1)
+        # tree_vec,mol_vec = torch.chunk(best_vec, 2, dim=1)
+        new_smiles = self.decode(tree_vec, mol_vec, prob_decode=prob_decode)
+
+        tanimoto_candidates = [
+            (x[1], s[1], grad_idx[1])
+            for x, s, grad_idx in zip(tanimoto, smiles_list, gradient_idx)
+            if x[1] > sim_cutoff
+        ]
+        tanimoto_candidates.sort(reverse=True, key=lambda x: x[0])
+        tanimoto_candidates = set(tanimoto_candidates)
+        selected_idx = li
+        if not is_valid_smiles(new_smiles):
+            for tan, sm, grad_idx in tanimoto_candidates:
+                if is_valid_smiles(sm):
+                    new_smiles = sm
+                    selected_idx = grad_idx
+                    break
+                else:
+                    new_smiles = None
         # Print all the smiles along the gradient.
         to_print = []
-        for v in visited:
+        for v in visited[0:selected_idx]:
             tree_vec, mol_vec = torch.chunk(v, 2, dim=1)
             new_smiles = self.decode(tree_vec, mol_vec, prob_decode=prob_decode)
 
@@ -258,30 +280,13 @@ class JTpropVAE(nn.Module):
             prediction = prop_val.tolist()
 
             new_mol = Chem.MolFromSmiles(new_smiles)
+            # Chem.AssignStereochemistry(new_mol)
             fp2 = AllChem.GetMorganFingerprint(new_mol, 2)
             sim = DataStructs.TanimotoSimilarity(fp1, fp2)
+            # print(sim,x_batch[0].smiles,new_smiles)
 
             to_print.append((new_smiles, prediction, sim))
         print(to_print)
-
-        # fig.savefig('/home/magstr/Documents/thesis/example_sampling_2.png',dpi=600)
-        fig.show()
-        tree_vec, mol_vec = torch.chunk(visited[li], 2, dim=1)
-        # tree_vec,mol_vec = torch.chunk(best_vec, 2, dim=1)
-        new_smiles = self.decode(tree_vec, mol_vec, prob_decode=prob_decode)
-
-        tanimoto_candidates = [
-            (x[1], s[1]) for x, s in zip(tanimoto, smiles_list) if x[1] > sim_cutoff
-        ]
-        tanimoto_candidates.sort(reverse=True, key=lambda x: x[0])
-        tanimoto_candidates = set(tanimoto_candidates)
-        if not is_valid_smiles(new_smiles, self.denticity):
-            for tan, sm in tanimoto_candidates:
-                if is_valid_smiles(sm, self.denticity):
-                    new_smiles = sm
-                    break
-                else:
-                    new_smiles = None
 
         if new_smiles is None:
             return x_batch[0].smiles, 1.0
@@ -291,6 +296,7 @@ class JTpropVAE(nn.Module):
         if sim >= sim_cutoff:
             return new_smiles, sim
         else:
+            print("Noooo cutoooof")
             return x_batch[0].smiles, 1.0
 
     def forward(self, x_batch, beta):

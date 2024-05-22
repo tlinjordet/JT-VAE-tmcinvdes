@@ -1,10 +1,7 @@
 import argparse
-import csv
-import json
 import os
 import sys
 import time
-from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
@@ -94,7 +91,7 @@ def main():
 
     with open("../data/labeled_set/train_full.txt") as f:
         smiles = [x.strip("\r\n ") for x in f.readlines()]
-    with open("../data/labeled_set/train_prop_full.txt") as f:
+    with open("../data/labeled_set/") as f:
         prop_data = [line.strip("\r\n ").split(",") for line in f]
     # Convert to float
     props = [[float(y) for y in x] for x in prop_data]
@@ -104,7 +101,7 @@ def main():
     x /= np.linalg.norm(x)
 
     y = np.random.randn(latent_size)
-    # y -= y.dot(x) * x
+    y -= y.dot(x) * x  # Make it orthogonal to x
     y /= np.linalg.norm(y)
 
     for i, (s, prop) in enumerate(zip(smiles, props)):

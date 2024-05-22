@@ -312,7 +312,7 @@ class SparseGP:
                 sps.norm.logpdf(pred - test_targets, scale=np.sqrt(uncert))
             )
 
-            print("Test error: {} Test ll: {}".format(test_error, test_ll))
+            print(("Test error: {} Test ll: {}".format(test_error, test_ll)))
             sys.stdout.flush()
 
             pred = np.zeros((0, 1))
@@ -335,7 +335,7 @@ class SparseGP:
                 sps.norm.logpdf(pred - training_targets, scale=np.sqrt(uncert))
             )
 
-            print("Train error: {} Train ll: {}".format(training_error, training_ll))
+            print(("Train error: {} Train ll: {}".format(training_error, training_ll)))
             sys.stdout.flush()
 
     def get_incumbent(self, grid, lower, upper):
@@ -379,11 +379,11 @@ class SparseGP:
             lower + np.random.rand(grid_size, self.d_input) * (upper - lower)
         )
 
-        print(grid.shape)
+        print((grid.shape))
 
         incumbent = self.get_incumbent(grid, lower, upper)
         X_numpy = self.optimize_ei(grid, lower, upper, incumbent)
-        print(X_numpy.shape)
+        print((X_numpy.shape))
         randomness_numpy = casting(
             0
             * np.random.randn(X_numpy.shape[0], n_samples).astype(theano.config.floatX)
@@ -406,7 +406,7 @@ class SparseGP:
 
         # We optimize the ei in a greedy manner
 
-        for i in tqdm(range(1, q)):
+        for i in tqdm(list(range(1, q))):
             new_point = global_optimization(
                 grid,
                 lower,
@@ -426,6 +426,6 @@ class SparseGP:
             randomness.set_value(randomness_numpy)
 
         m, v = self.predict(X_numpy, 0 * X_numpy)
-        print("Predictive mean at selected points:\n", m)
+        print(("Predictive mean at selected points:\n", m))
 
         return X_numpy
