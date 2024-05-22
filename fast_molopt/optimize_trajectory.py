@@ -68,12 +68,6 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
     parser.add_argument("--kl_anneal_iter", type=int, default=3000)
     parser.add_argument("--print_iter", type=int, default=50)
     parser.add_argument("--save_iter", type=int, default=1000)
-    parser.add_argument(
-        "--denticity",
-        choices=["monodentate", "bidentate"],
-        type=str,
-        default="monodentate",
-    )
 
     return parser.parse_args(arg_list)
 
@@ -89,26 +83,14 @@ def main():
     sim_cutoff = float(opts.cutoff)
 
     model = JTpropVAE(
-        vocab,
-        int(hidden_size),
-        int(latent_size),
-        int(opts.depthT),
-        int(opts.depthG),
-        denticity=opts.denticity,
+        vocab, int(hidden_size), int(latent_size), int(opts.depthT), int(opts.depthG)
     ).cuda()
     print(model)
     model.load_state_dict(torch.load(opts.model_path))
     model = model.cuda()
 
-    output_dir = Path(f"opt_{time.strftime('%Y%m%d-%H%M%S')}")
+    output_dir = Path(f"traj_{time.strftime('%Y%m%d-%H%M%S')}")
     output_dir.mkdir(exist_ok=True)
-
-    # filePath = "/home/magstr/git/xyz2mol_tm/jt_vae_research/dft_labeled_data/region_production/region_samples_production.txt"
-    # if os.path.exists(filePath):
-    #     os.remove(filePath)
-    # filePath = "/home/magstr/git/xyz2mol_tm/jt_vae_research/dft_labeled_data/region_production/region_samples_prop_production.txt"
-    # if os.path.exists(filePath):
-    #     os.remove(filePath)
 
     input_dir_path = Path(
         "/home/magstr/git/xyz2mol_tm/jt_vae_research/notebooks/conditional_opt_16_samples/smiles_samples.csv"
@@ -135,55 +117,43 @@ def main():
     with open(output_dir / "opts.json", "w") as file:
         json.dump(vars(opts), file)
 
-    directions = [
-        ("first", "maximize"),
-        ("first", "minimize"),
-        ("both", "maximize"),
-        ("both", "minimize"),
-        ("second", "maximize"),
-        ("second", "minimize"),
-        ("first_second", "maximize"),
-        ("first_second", "minimize"),
-    ]
+    for i, (batch, (id_row, row)) in enumerate(zip(loader, input_dir_df.iterrows())):
+        current_type = row["current_type"]
+        smiles = batch[0][0].smiles
+        print(i, smiles)
 
-    for i, batch in enumerate(loader):
-        for dir in directions:
-            current_type = dir[0]
-            smiles = batch[0][0].smiles
-            print(i, smiles)
+        batch[1].numpy().squeeze()
 
-            batch[1].numpy().squeeze()
+        Chem.MolFromSmiles(smiles)
+        minimize = True if row["minimize"] else False
+        new_smiles, sim = model.optimize(
+            batch,
+            sim_cutoff=sim_cutoff,
+            lr=opts.lr,
+            num_iter=250,
+            type=current_type,
+            prob_decode=False,
+            minimize=minimize,
+        )
 
-            Chem.MolFromSmiles(smiles)
-            minimize = True if dir[1] == "minimize" else False
-            new_smiles, sim = model.optimize(
-                batch,
-                sim_cutoff=sim_cutoff,
-                lr=opts.lr,
-                num_iter=100,
-                type=current_type,
-                prob_decode=False,
-                minimize=minimize,
+        Chem.MolFromSmiles(new_smiles)
+        # results["new_smiles"].append(new_smiles)
+        # results["sim"].append(sim)
+        # results["type"].append(current_type)
+        # results["minimize"].append(minimize)
+
+        # Write a row to a csv file.
+        with open(output_dir / "optimize_results.csv", "a") as f1:
+            csv.writer(
+                f1,
+                delimiter=",",
+                lineterminator="\n",
             )
-
-            Chem.MolFromSmiles(new_smiles)
-            # results["new_smiles"].append(new_smiles)
-            # results["sim"].append(sim)
-            # results["type"].append(current_type)
-            # results["minimize"].append(minimize)
-
-            # Write a row to a csv file.
-            with open(output_dir / "optimize_results.csv", "a") as f1:
-                writer = csv.writer(
-                    f1,
-                    delimiter=",",
-                    lineterminator="\n",
-                )
-                # Get the row elements of the original data
-                r = input_dir_df.iloc[i].to_list()
-                # Append the data from optimized row
-                list_of_props = r + [smiles, new_smiles, sim, current_type, minimize]
-                writer.writerow(list_of_props)
+            # Get the row elements of the original data
+            # r = input_df.iloc[i].to_list()
+            # Append the data from optimized row
+            # list_of_props = r + [smiles, new_smiles, sim, current_type, minimize]
+            # writer.writerow(list_of_props)
 
 
 def create_input_files(input_df, output_dir_smiles, output_dir_props):
