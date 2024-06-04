@@ -315,16 +315,16 @@ class JTpropVAE(nn.Module):
 
         # Learn properties
         all_vec = torch.cat([z_tree_vecs, z_mol_vecs], dim=1)
-        prop_label = create_var(x_prop)
-        prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
+        # prop_label = create_var(x_prop)
+        # prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
 
         return (
-            word_loss + topo_loss + assm_loss + beta * kl_div + prop_loss,
+            word_loss + topo_loss + assm_loss + beta * kl_div,
             kl_div.item(),
             word_acc,
             topo_acc,
             assm_acc,
-            prop_loss.item(),
+            1,
         )
 
     def assm(self, mol_batch, jtmpn_holder, x_mol_vecs, x_tree_mess):

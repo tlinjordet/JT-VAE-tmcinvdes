@@ -164,8 +164,8 @@ def main_vae_train(
                 scheduler.step()
                 _logger.info(("learning rate: %.6f" % scheduler.get_lr()[0]))
 
-            # if total_step % kl_anneal_iter == 0 and total_step >= warmup:
-            #     beta = min(max_beta, beta + step_beta)
+            if total_step % kl_anneal_iter == 0 and total_step >= warmup:
+                beta = min(max_beta, beta + step_beta)
     #         torch.save(model.state_dict(), save_dir + "/model.epoch-" + str(epoch))
     torch.save(model.state_dict(), output_dir / f"model.epoch-{epoch}")
     return model
@@ -186,8 +186,8 @@ if __name__ == "__main__":
 
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--clip_norm", type=float, default=50.0)
-    parser.add_argument("--beta", type=float, default=1.0)
-    parser.add_argument("--step_beta", type=float, default=0.002)
+    parser.add_argument("--beta", type=float, default=0.002)
+    parser.add_argument("--step_beta", type=float, default=0.01)
     parser.add_argument("--max_beta", type=float, default=1.0)
     parser.add_argument("--warmup", type=int, default=500)
 
