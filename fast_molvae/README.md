@@ -1,33 +1,18 @@
 # Accelerated Training of Junction Tree VAE
 
-The MOSES dataset can be downloaded from https://github.com/molecularsets/moses.
+The training sets for the model can be found at :
 
-## Deriving Vocabulary
-
-If you are running our code on a new dataset, you need to compute the vocabulary from your dataset.
-To perform tree decomposition over a set of molecules, run
+To train a model run the following scripts sequentially in the conda environment given in environment.yml
 
 ```
-cd fast_jtnn
-python mol_tree.py -i ./../../data/train.txt -v ./../../data/vocab.txt
-```
+# # run tree composition and create vocab
+python -u fast_jtnn/mol_tree.py -i train.txt -v vocab.txt
 
-This gives you the vocabulary of cluster labels over the dataset `train.txt`.
+# # process dataset into tree compositions
+python -u fast_molvae/preprocess.py --train train.txt --split 100 --jobs 8 --output ./train-processed
 
-## Training
-
-Step 1: Preprocess the data:
-
-```
-python preprocess.py --train ../data/train.txt --split 100 --jobs 40 --output ./moses-processed
-```
-
-This script will preprocess the training data (subgraph enumeration & tree decomposition), and save results into a list of files. We suggest you to use small value for `--split` if you are working with smaller datasets.
-
-Step 2: Train VAE model with KL annealing.
-
-```
-python vae_train.py --train moses-processed --vocab ../data/vocab.txt --save_dir vae_model/
+# train on the processed data
+python -u fast_molvae/vae_train.py --train ./train-processed --vocab vocab.txt --save_dir vae_model/
 ```
 
 Default Options:
