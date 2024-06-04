@@ -38,10 +38,9 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
         description="Strip substitute atoms from generated ligands"
     )
 
+    parser.add_argument("--input_dir_path", required=True)
     parser.add_argument("--vocab_path", required=True)
     parser.add_argument("--model_path", required=True)
-    parser.add_argument("--output_path", default="optimize-processed")
-    parser.add_argument("--prop_path", default=True)
     parser.add_argument("--nsplits", type=int, default=2)
 
     parser.add_argument("--hidden_size", type=int, default=450)
@@ -103,16 +102,7 @@ def main():
     output_dir = Path(f"opt_{time.strftime('%Y%m%d-%H%M%S')}")
     output_dir.mkdir(exist_ok=True)
 
-    # filePath = "/home/magstr/git/xyz2mol_tm/jt_vae_research/dft_labeled_data/region_production/region_samples_production.txt"
-    # if os.path.exists(filePath):
-    #     os.remove(filePath)
-    # filePath = "/home/magstr/git/xyz2mol_tm/jt_vae_research/dft_labeled_data/region_production/region_samples_prop_production.txt"
-    # if os.path.exists(filePath):
-    #     os.remove(filePath)
-
-    input_dir_path = Path(
-        "/home/magstr/git/xyz2mol_tm/jt_vae_research/notebooks/conditional_opt_16_samples/smiles_samples.csv"
-    )
+    input_dir_path = Path(opts.input_dir_path)
     input_dir_df = pd.read_csv(input_dir_path)
     output_dir_smiles = input_dir_path.parent / "smiles_samples.txt"
     output_dir_props = input_dir_path.parent / "smiles_samples_props.txt"
