@@ -1,8 +1,9 @@
 # Accelerated Training of Junction Tree VAE
 
-The training sets for the model can be found at :
+The training sets for the model can be found at : [Training sets](https://github.com/uiocompcat/tmcinvdes/tree/main/datasets/01_tmQMg-L-subsets)
 
 To train a model run the following scripts sequentially in the conda environment given in environment.yml
+Replace train.txt with the path to the training set you want to use.
 
 ```
 # # run tree composition and create vocab
