@@ -1,13 +1,10 @@
-# FastJTNNpy3 : Junction Tree Variational Autoencoder for Molecular Graph Generation
+# JT-VAE: Deep Generative Model for the Dual-Objective Inverse Design of Metal Complexes.
 
-This repo is a fork of the repo : "Python 3 Version of Fast Junction Tree Variational Autoencoder for Molecular Graph Generation (ICML 2018)"
+It contains the modified JT-VAE code for the publication ["Deep Generative Model for the Dual-Objective Inverse Design of Metal Complexes."](https://doi.org/10.26434/chemrxiv-2024-mzs7b)
 
-Some functionality has been reworked / fixed compared to the original repo.
-I implemented a working fast_molopt where the property JTpropVAE is changed to work with the fast_jtnn functionality.
+This repo is a fork of the repo : ["Python 3 Version of Fast Junction Tree Variational Autoencoder for Molecular Graph Generation (ICML 2018)"](https://github.com/Bibyutatsu/FastJTNNpy3)
 
-<img src="https://github.com/Bibyutatsu/FastJTNNpy3/blob/master/Old/paradigm.png" width="600">
-
-Publication for the Junction Tree Variational Autoencoder [https://arxiv.org/abs/1802.04364](https://arxiv.org/abs/1802.04364)
+Some functionality has been reworked / fixed compared to the original repo. I implemented a working fast_molopt where the property JTpropVAE is changed to work with the fast_jtnn functionality.
 
 # Requirements
 
@@ -15,12 +12,8 @@ The version of RDKit is very important. For newer versions of RDKit the model do
 The tree decomposition has kekulization errors if this is the case.
 The requirements.yml file is an export of a working conda environment that can run this model.
 
-# Quick Start
-
 ## Code for model training
 
-This repository contains the Python 3 implementation of the new Fast Junction Tree Variational Autoencoder code.
-
-- `fast_molvae/` contains codes for VAE training. Please refer to `fast_molvae/README.md` for details.
+- `fast_molvae/` contains codes for JT-VAE training. Please refer to `fast_molvae/README.md` for details.
 - `fast_jtnn/` contains codes for model implementation.
 - `fast_molopt/` contains codes for training a conditional JT-VAE.
