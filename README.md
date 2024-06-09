@@ -1,4 +1,4 @@
-# JT-VAE: Deep Generative Model for the Dual-Objective Inverse Design of Metal Complexes.
+# JT-VAE: Deep Generative Model for the Dual-Objective Inverse Design of Metal Complexes
 
 It contains the modified JT-VAE code for the publication ["Deep Generative Model for the Dual-Objective Inverse Design of Metal Complexes."](https://doi.org/10.26434/chemrxiv-2024-mzs7b)
 
@@ -6,7 +6,7 @@ This repo is a fork of the repo : ["Python 3 Version of Fast Junction Tree Varia
 
 Some functionality has been reworked / fixed compared to the original repo. I implemented a working fast_molopt where the property JTpropVAE is changed to work with the fast_jtnn functionality.
 
-# Requirements
+## Requirements
 
 The version of RDKit is very important. For newer versions of RDKit the model does not work!
 The tree decomposition has kekulization errors if this is the case.
