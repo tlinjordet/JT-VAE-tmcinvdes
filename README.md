@@ -10,7 +10,7 @@ Some functionality has been reworked / fixed compared to the original repo. I im
 
 The version of RDKit is very important. For newer versions of RDKit the model does not work!
 The tree decomposition has kekulization errors if this is the case.
-The requirements.yml file is an export of a working conda environment that can run this model.
+The [environment.yml](environment.yml) file is an export of a working conda environment that can run this model.
 
 ## Code for model training
 
