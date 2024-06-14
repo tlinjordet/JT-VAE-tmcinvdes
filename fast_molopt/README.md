@@ -1,32 +1,23 @@
 # Constrained Molecule Optimization
 
 ## Important notes
+
 The original property JT-VAE was not compatible with the rest of the code. I rewrote it to follow the datahandling and the updated "fast" code.
 It was not clear to me how the processing of SMILES to moltrees was refactored.
 Instead of rewriting the existing datautils.py i created a separate file datautils_prop.py. In this way i avoided dealing with one script having to handle both the data for the regular JT-VAE without properties as training input and the data for JT_prop_vae where properties were given as input as well.
 
-## Train conditional JT-VAE
+## Training of conditional JT-VAE
 
-```
-python -u fast_jtnn/mol_tree.py -i data/labeled_set/train_full.txt -v vocabs/monodentate_conditional.txt
-python -u fast_molopt/preprocess_prop.py --train data/labeled_set/train_full.txt --split 10 --jobs 8 --output data/labeled_set/preprocessed/ --prop_path data/labeled_set/train_prop_full.txt
-python -u fast_molopt/vae_train_prop.py --train data/labeled_set/preprocessed/ --vocab vocabs/monodentate_conditional.txt --save_dir models/monodentate_conditional/
-```
-
-- (Make sure models are in right directory after training.)
-- Sample 160 ligands with [this notebook](../sample_monodentates_from_regions_before_optimizing.ipynb).
-
-```
-python -u fast_molopt/optimize.py --training_path data/labeled_set/train_TL_sample.txt --vocab_path vocabs/monodentate_conditional.txt --cutoff 0.2 --lr 2 --model_path models/monodentate_conditional/model.epoch-149 --prop_path data/labeled_set/train_prop_TL_sample.txt
-```
-
+Is done in the same way as the unconditional JT-VAE (see file fast_molvae/README.md)
 
 ## Optimization in latent space
 
+To do directional optimization in latent space run optimize.py.
+This script need a input csv file with encoded SMILES and their corresponding DFT labeled properties.
+It also needs a trained model and vocabulary.
 
 An example of running the optimization is:
 
 ```
-python -u fast_molopt/optimize.py --training_path $dataset --vocab_path $vocab --cutoff 0.2 --lr 2 --model_path $model --prop_path $prop_path
+python -u fast_molopt/optimize.py input_dir_path data/example_prompt_ligands.csv --vocab_path vocab.txt --cutoff 0.2 --lr 1.5 --model_path $model
 ```
-
