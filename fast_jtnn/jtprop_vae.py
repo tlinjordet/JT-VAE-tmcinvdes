@@ -4,7 +4,6 @@ import rdkit.Chem as Chem
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from matplotlib import pyplot as plt
 from rdkit import DataStructs
 from rdkit.Chem import AllChem
 
@@ -57,6 +56,7 @@ class JTpropVAE(nn.Module):
             nn.Linear(self.latent_size * 2, self.hidden_size),
             nn.Tanh(),
             nn.Linear(self.hidden_size, 2),
+            nn.Dropout(1)
         )
         self.prop_loss = nn.MSELoss()
         self.denticity = denticity
@@ -209,45 +209,6 @@ class JTpropVAE(nn.Module):
             else:
                 li = mid
             counter += 1
-        # plt.rcParams.update(
-        #     {
-        #         "font.size": 24,
-        #         "axes.labelsize": 18,
-        #         "legend.fontsize": 22,
-        #         "xtick.labelsize": 24,
-        #         "ytick.labelsize": 24,
-        #         "legend.frameon": False,
-        #     }
-        # )
-        # fig, ax = plt.subplots(2, 2, figsize=(12, 8))
-        # ax = ax.flatten()
-        # ax[0].set(ylabel="Tanimoto score", xlabel="Iteration")
-        # ax[0].plot(*zip(*tanimoto), "go-", linewidth=2)
-        # ax[1].set(ylabel="Sampled z index", xlabel="Iteration")
-        # ax[1].plot(*zip(*gradient_idx), "bo-", linewidth=2)
-        # ax[2].set(ylabel=r"Predicted $\epsilon$ (eV)", xlabel="Iteration")
-        # ax[2].plot(
-        #     [x[0] for x in gradient_idx],
-        #     [first_predicted[x[1]] * 27.21140 for x in gradient_idx],
-        #     "ro-",
-        #     linewidth=2,
-        # )
-        # ax[3].set(ylabel=r"Predicted $q_{Ir}$", xlabel="Iteration")
-        # ax[3].plot(
-        #     [x[0] for x in gradient_idx],
-        #     [second_predicted[x[1]] for x in gradient_idx],
-        #     color="darkorange",
-        #     linestyle="-",
-        #     marker="o",
-        #     linewidth=2,
-        # )
-        # [
-        #     ax[i].set_xticks([x[0] for x in gradient_idx]) for i in range(4)
-        # ]  # set_xticks([])
-        # # fig.suptitle('Sampling 1000 latent vectors in direction of gradient', fontsize=16)
-        # plt.tight_layout()
-        # fig.savefig('/home/magstr/Documents/thesis/example_sampling_tmp.png',dpi=600)
-        # fig.show()
 
         tree_vec, mol_vec = torch.chunk(visited[li], 2, dim=1)
         # tree_vec,mol_vec = torch.chunk(best_vec, 2, dim=1)
@@ -315,8 +276,8 @@ class JTpropVAE(nn.Module):
 
         # Learn properties
         all_vec = torch.cat([z_tree_vecs, z_mol_vecs], dim=1)
-        # prop_label = create_var(x_prop)
-        # prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
+        prop_label = create_var(x_prop)
+        prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
 
         return (
             word_loss + topo_loss + assm_loss + beta * kl_div,
@@ -324,7 +285,7 @@ class JTpropVAE(nn.Module):
             word_acc,
             topo_acc,
             assm_acc,
-            1,
+            prop_loss.item(),
         )
 
     def assm(self, mol_batch, jtmpn_holder, x_mol_vecs, x_tree_mess):
