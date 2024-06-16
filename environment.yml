@@ -120,4 +120,4 @@ dependencies:
       - torch==1.13.1
       - tqdm==4.66.1
       - typing-extensions==4.7.1
-prefix: /home/energy/magstr/miniconda3/envs/vae_py37
+prefix: vae_py37
