@@ -145,8 +145,8 @@ def main_vae_train(
                 _logger.info(("learning rate: %.6f" % scheduler.get_lr()[0]))
 
             if total_step % args.kl_anneal_iter == 0 and total_step >= args.warmup:
-                min(args.max_beta, beta + args.step_beta)
-    #         torch.save(model.state_dict(), save_dir + "/model.epoch-" + str(epoch))
+                beta = min(args.max_beta, beta + args.step_beta)
+
     torch.save(model.state_dict(), output_dir / f"model.epoch-{epoch}")
     return model
 
