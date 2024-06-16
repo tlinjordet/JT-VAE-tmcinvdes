@@ -21,39 +21,18 @@ sys.path.insert(0, str(source))
 # Initialize logger
 _logger: logging.Logger = logging.getLogger(__name__)
 
-from fast_jtnn import *
+from fast_jtnn import JTpropVAE, MolTreeFolder_prop, Vocab
 
 
 def main_vae_train(
-    train,
-    vocab,
-    save_dir,
-    load_epoch=0,
-    hidden_size=450,
-    batch_size=256,  # 32,
-    latent_size=56,
-    depthT=20,
-    depthG=3,
-    lr=1e-3,
-    clip_norm=50.0,
-    beta=0.0,
-    step_beta=0.002,
-    max_beta=1.0,
-    warmup=40000,
-    epoch=20,
-    anneal_rate=0.9,
-    anneal_iter=40000,
-    kl_anneal_iter=2000,
-    print_iter=50,
-    save_iter=5000,
-    args=None,
+    args,
 ):
-    vocab = [x.strip("\r\n ") for x in open(vocab)]
+    vocab = [x.strip("\r\n ") for x in open(args.vocab)]
     vocab = Vocab(vocab)
 
     output_dir = Path(f"train_{time.strftime('%Y%m%d-%H%M%S')}")
     output_dir.mkdir(exist_ok=True)
-    save_dir.mkdir(exist_ok=True)
+    args.save_dir.mkdir(exist_ok=True)
 
     # Setup logger
     logging.basicConfig(
@@ -64,17 +43,15 @@ def main_vae_train(
             logging.StreamHandler(),  # For debugging. Can be removed on remote
         ],
     )
+    beta = args.beta
 
-    # model = JTNNVAE(
-    #     vocab, int(hidden_size), int(latent_size), int(depthT), int(depthG)
-    # ).cuda()
     model = JTpropVAE(
         vocab,
-        int(hidden_size),
-        int(latent_size),
-        int(depthT),
-        int(depthG),
-        dropout=int(args.dropout),
+        args.hidden_size,
+        args.latent_size,
+        args.depthT,
+        args.depthG,
+        dropout=args.dropout,
     ).cuda()
     print(model)
 
@@ -97,8 +74,8 @@ def main_vae_train(
     with open(output_dir / "opts.txt", "w") as file:
         file.write(f"{vars(args)}")
 
-    optimizer = optim.Adam(model.parameters(), lr=lr)
-    scheduler = lr_scheduler.ExponentialLR(optimizer, anneal_rate)
+    optimizer = optim.Adam(model.parameters(), lr=args.lr)
+    scheduler = lr_scheduler.ExponentialLR(optimizer, args.anneal_rate)
     scheduler.step()
 
     def param_norm(m):
@@ -115,20 +92,20 @@ def main_vae_train(
             )
         )
 
-    total_step = load_epoch
+    total_step = args.load_epoch
     meters = np.zeros(5)
 
-    for epoch in tqdm(list(range(epoch)), position=0, leave=True):
+    for epoch in tqdm(list(range(args.epoch)), position=0, leave=True):
         loader = MolTreeFolder_prop(
-            train, vocab, batch_size, shuffle=False
+            args.train, vocab, args.batch_size, shuffle=False
         )  # , num_workers=4)
         for batch in loader:
             total_step += 1
             try:
                 model.zero_grad()
-                loss, kl_div, wacc, tacc, sacc, prop_loss = model(batch, beta)
+                loss, kl_div, wacc, tacc, sacc, prop_loss = model(batch, args.beta)
                 loss.backward()
-                nn.utils.clip_grad_norm_(model.parameters(), clip_norm)
+                nn.utils.clip_grad_norm_(model.parameters(), args.clip_norm)
                 optimizer.step()
             except Exception as e:
                 print(e)
@@ -138,8 +115,8 @@ def main_vae_train(
                 [kl_div, wacc * 100, tacc * 100, sacc * 100, prop_loss * 100]
             )
 
-            if total_step % print_iter == 0:
-                meters /= print_iter
+            if total_step % args.print_iter == 0:
+                meters /= args.print_iter
                 _logger.info(
                     (
                         "[%d] Loss: %.3f,Beta: %.3f,KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f,Prop_loss %.2f, PNorm: %.2f, GNorm: %.2f"
@@ -160,15 +137,15 @@ def main_vae_train(
                 sys.stdout.flush()
                 meters *= 0
 
-            if total_step % save_iter == 0:
+            if total_step % args.save_iter == 0:
                 torch.save(model.state_dict(), output_dir / f"model.iter-{total_step}")
 
-            if total_step % anneal_iter == 0:
+            if total_step % args.anneal_iter == 0:
                 scheduler.step()
                 _logger.info(("learning rate: %.6f" % scheduler.get_lr()[0]))
 
-            if total_step % kl_anneal_iter == 0 and total_step >= warmup:
-                beta = min(max_beta, beta + step_beta)
+            if total_step % args.kl_anneal_iter == 0 and total_step >= args.warmup:
+                min(args.max_beta, beta + args.step_beta)
     #         torch.save(model.state_dict(), save_dir + "/model.epoch-" + str(epoch))
     torch.save(model.state_dict(), output_dir / f"model.epoch-{epoch}")
     return model
@@ -208,26 +185,5 @@ if __name__ == "__main__":
     print(args)
 
     main_vae_train(
-        args.train,
-        args.vocab,
-        args.save_dir,
-        args.load_epoch,
-        args.hidden_size,
-        args.batch_size,
-        args.latent_size,
-        args.depthT,
-        args.depthG,
-        args.lr,
-        args.clip_norm,
-        args.beta,
-        args.step_beta,
-        args.max_beta,
-        args.warmup,
-        args.epoch,
-        args.anneal_rate,
-        args.anneal_iter,
-        args.kl_anneal_iter,
-        args.print_iter,
-        args.save_iter,
         args=args,
     )
