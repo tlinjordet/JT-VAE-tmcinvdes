@@ -120,8 +120,6 @@ def main():
         optimize=True,
     )
 
-    defaultdict(list)
-
     with open(output_dir / "opts.json", "w") as file:
         json.dump(vars(opts), file)
 

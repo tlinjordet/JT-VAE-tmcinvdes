@@ -41,9 +41,11 @@ class JTpropVAE(nn.Module):
             latent_size // 2
         )  # Tree and Mol has two vectors
 
-        self.jtnn = JTNNEncoder(hidden_size, depthT, nn.Embedding(600, hidden_size))
+        self.jtnn = JTNNEncoder(
+            hidden_size, depthT, nn.Embedding(vocab.size(), hidden_size)
+        )
         self.decoder = JTNNDecoder(
-            vocab, hidden_size, latent_size, nn.Embedding(600, hidden_size)
+            vocab, hidden_size, latent_size, nn.Embedding(vocab.size(), hidden_size)
         )
 
         self.jtmpn = JTMPN(hidden_size, depthG)
@@ -65,6 +67,7 @@ class JTpropVAE(nn.Module):
         )
         self.prop_loss = nn.MSELoss()
         self.denticity = denticity
+        self.dropout = dropout
 
     def encode(self, jtenc_holder, mpn_holder):
         tree_vecs, tree_mess = self.jtnn(*jtenc_holder)
@@ -278,13 +281,14 @@ class JTpropVAE(nn.Module):
             x_batch, x_jtmpn_holder, z_mol_vecs, x_tree_mess
         )
 
-        # Learn properties
-        all_vec = torch.cat([z_tree_vecs, z_mol_vecs], dim=1)
-        prop_label = create_var(x_prop)
-        prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
+        if self.dropout == 1:
+            # Learn properties
+            all_vec = torch.cat([z_tree_vecs, z_mol_vecs], dim=1)
+            prop_label = create_var(x_prop)
+            prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
 
         return (
-            word_loss + topo_loss + assm_loss + beta * kl_div,
+            word_loss + topo_loss + assm_loss + beta * kl_div + prop_loss,
             kl_div.item(),
             word_acc,
             topo_acc,
