@@ -33,6 +33,7 @@ class JTpropVAE(nn.Module):
         depthG,
         denticity="monodentate",
         dropout=0,
+        n_props=3,
     ):
         super(JTpropVAE, self).__init__()
         self.vocab = vocab
@@ -62,7 +63,7 @@ class JTpropVAE(nn.Module):
         self.propNN = nn.Sequential(
             nn.Linear(self.latent_size * 2, self.hidden_size),
             nn.Tanh(),
-            nn.Linear(self.hidden_size, 2),
+            nn.Linear(self.hidden_size, n_props),
             nn.Dropout(dropout),
         )
         self.prop_loss = nn.MSELoss()
