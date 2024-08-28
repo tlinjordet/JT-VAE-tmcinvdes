@@ -97,7 +97,7 @@ def main_vae_train(
 
     for epoch in tqdm(list(range(args.epoch)), position=0, leave=True):
         loader = MolTreeFolder_prop(
-            args.train, vocab, args.batch_size, shuffle=False
+            args.train, vocab, args.batch_size, shuffle=True
         )  # , num_workers=4)
         for batch in loader:
             total_step += 1
@@ -143,7 +143,6 @@ def main_vae_train(
             if total_step % args.anneal_iter == 0:
                 scheduler.step()
                 _logger.info(("learning rate: %.6f" % scheduler.get_lr()[0]))
-
             if total_step % args.kl_anneal_iter == 0 and total_step >= args.warmup:
                 beta = min(args.max_beta, beta + args.step_beta)
 
@@ -161,7 +160,7 @@ if __name__ == "__main__":
     parser.add_argument("--load_epoch", type=int, default=0)
 
     parser.add_argument("--hidden_size", type=int, default=450)
-    parser.add_argument("--batch_size", type=int, default=256)  # 32)
+    parser.add_argument("--batch_size", type=int, default=32)  # 32)
     parser.add_argument("--latent_size", type=int, default=56)
     parser.add_argument("--depthT", type=int, default=20)
     parser.add_argument("--depthG", type=int, default=3)
@@ -169,12 +168,12 @@ if __name__ == "__main__":
 
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--clip_norm", type=float, default=50.0)
-    parser.add_argument("--beta", type=float, default=0)
+    parser.add_argument("--beta", type=float, default=0.000)
     parser.add_argument("--step_beta", type=float, default=0.002)
     parser.add_argument("--max_beta", type=float, default=1.0)
-    parser.add_argument("--warmup", type=int, default=500)
+    parser.add_argument("--warmup", type=int, default=1000)
 
-    parser.add_argument("--epoch", type=int, default=150)
+    parser.add_argument("--epoch", type=int, default=300)
     parser.add_argument("--anneal_rate", type=float, default=0.9)
     parser.add_argument("--anneal_iter", type=int, default=1000)
     parser.add_argument("--kl_anneal_iter", type=int, default=3000)
