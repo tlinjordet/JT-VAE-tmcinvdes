@@ -282,8 +282,12 @@ class JTpropVAE(nn.Module):
             x_batch, x_jtmpn_holder, z_mol_vecs, x_tree_mess
         )
 
-        if self.dropout == 1:
+        if self.dropout == 0:
             # Learn properties
+            all_vec = torch.cat([z_tree_vecs, z_mol_vecs], dim=1)
+            prop_label = create_var(x_prop)
+            prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
+        else:
             all_vec = torch.cat([z_tree_vecs, z_mol_vecs], dim=1)
             prop_label = create_var(x_prop)
             prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
