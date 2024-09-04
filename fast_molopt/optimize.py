@@ -148,7 +148,7 @@ def main():
                 batch,
                 sim_cutoff=sim_cutoff,
                 lr=opts.lr,
-                num_iter=100,
+                num_iter=500,
                 type=current_type,
                 prob_decode=False,
                 minimize=minimize,
@@ -185,7 +185,7 @@ def create_input_files(input_df, output_dir_smiles, output_dir_props):
             output_dir_smiles,
             "a",
         ) as f:
-            f.write(f"{row['smiles']}\n")
+            f.write(f"{row['sub_smi']}\n")
         with open(
             output_dir_props,
             "a",

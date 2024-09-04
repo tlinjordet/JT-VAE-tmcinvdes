@@ -51,7 +51,6 @@ def main_vae_train(
         args.latent_size,
         args.depthT,
         args.depthG,
-        dropout=args.dropout,
     ).cuda()
     print(model)
 
@@ -97,7 +96,7 @@ def main_vae_train(
 
     for epoch in tqdm(list(range(args.epoch)), position=0, leave=True):
         loader = MolTreeFolder_prop(
-            args.train, vocab, args.batch_size, shuffle=True
+            args.train, vocab, args.batch_size, shuffle=False
         )  # , num_workers=4)
         for batch in loader:
             total_step += 1
@@ -156,7 +155,7 @@ if __name__ == "__main__":
     parser.add_argument("--vocab", required=True)
     parser.add_argument("--save_dir", required=True, type=Path)
     parser.add_argument("--load_previous_model", action="store_true")
-    parser.add_argument("--model_path", required=True, type=Path)
+    parser.add_argument("--model_path", required=False, type=Path)
     parser.add_argument("--load_epoch", type=int, default=0)
 
     parser.add_argument("--hidden_size", type=int, default=450)
@@ -164,7 +163,6 @@ if __name__ == "__main__":
     parser.add_argument("--latent_size", type=int, default=56)
     parser.add_argument("--depthT", type=int, default=20)
     parser.add_argument("--depthG", type=int, default=3)
-    parser.add_argument("--dropout", type=int, default=1, required=True)
 
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--clip_norm", type=float, default=50.0)

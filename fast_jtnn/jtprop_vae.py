@@ -32,7 +32,6 @@ class JTpropVAE(nn.Module):
         depthT,
         depthG,
         denticity="monodentate",
-        dropout=0,
         n_props=3,
     ):
         super(JTpropVAE, self).__init__()
@@ -64,11 +63,19 @@ class JTpropVAE(nn.Module):
             nn.Linear(self.latent_size * 2, self.hidden_size),
             nn.Tanh(),
             nn.Linear(self.hidden_size, n_props),
-            nn.Dropout(dropout),
         )
+
+        self.denticityNN = nn.Sequential(
+            nn.Linear(self.latent_size * 2, self.hidden_size),
+            nn.ReLU(),
+            nn.Linear(self.hidden_size, 1),
+            nn.Sigmoid(),
+        )
+
         self.prop_loss = nn.MSELoss()
+        self.denticityNN_loss = nn.CrossEntropyLoss()
+
         self.denticity = denticity
-        self.dropout = dropout
 
     def encode(self, jtenc_holder, mpn_holder):
         tree_vecs, tree_mess = self.jtnn(*jtenc_holder)
@@ -283,15 +290,14 @@ class JTpropVAE(nn.Module):
             x_batch, x_jtmpn_holder, z_mol_vecs, x_tree_mess
         )
 
-        if self.dropout == 0:
-            # Learn properties
-            all_vec = torch.cat([z_tree_vecs, z_mol_vecs], dim=1)
-            prop_label = create_var(x_prop)
-            prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
-        else:
-            all_vec = torch.cat([z_tree_vecs, z_mol_vecs], dim=1)
-            prop_label = create_var(x_prop)
-            prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
+        # Learn properties
+        all_vec = torch.cat([z_tree_vecs, z_mol_vecs], dim=1)
+        prop_label = create_var(x_prop)
+        prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
+
+        # Learn dendicity
+        # denciticity_label = create_var(x_prop)
+        # dent_loss = self.denticityNN_loss(self.denticityNN(all_vec).squeeze(), denticity_label)
 
         return (
             word_loss + topo_loss + assm_loss + beta * kl_div + prop_loss,
