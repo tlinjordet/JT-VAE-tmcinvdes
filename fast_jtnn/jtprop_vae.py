@@ -32,7 +32,7 @@ class JTpropVAE(nn.Module):
         depthT,
         depthG,
         denticity="monodentate",
-        n_props=3,
+        n_props=2,
     ):
         super(JTpropVAE, self).__init__()
         self.vocab = vocab
@@ -67,9 +67,8 @@ class JTpropVAE(nn.Module):
 
         self.denticityNN = nn.Sequential(
             nn.Linear(self.latent_size * 2, self.hidden_size),
-            nn.ReLU(),
-            nn.Linear(self.hidden_size, 1),
             nn.Sigmoid(),
+            nn.Linear(self.hidden_size, 2),  # Number of output classes
         )
 
         self.prop_loss = nn.MSELoss()
@@ -278,6 +277,8 @@ class JTpropVAE(nn.Module):
 
     def forward(self, x_batch, beta):
         x_batch, x_prop, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
+        x_dent = x_prop[:, -1]
+        x_prop = x_prop[:, 0:2]
         # Extract prop for later
 
         x_tree_vecs, x_tree_mess, x_mol_vecs = self.encode(x_jtenc_holder, x_mpn_holder)
@@ -292,15 +293,22 @@ class JTpropVAE(nn.Module):
 
         # Learn properties
         all_vec = torch.cat([z_tree_vecs, z_mol_vecs], dim=1)
-        prop_label = create_var(x_prop)
+        prop_label = create_var(x_prop[:, 0:2])
         prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
 
         # Learn dendicity
-        # denciticity_label = create_var(x_prop)
-        # dent_loss = self.denticityNN_loss(self.denticityNN(all_vec).squeeze(), denticity_label)
+        x_dent = x_dent.type(
+            torch.LongTensor
+        )  # This is done in order to have it work with the cross entropy loss. Otherwise there is an error.
+        denticity_label = create_var(x_dent)
+        denticity_label.int()
+        dent_loss = self.denticityNN_loss(
+            self.denticityNN(all_vec).squeeze(), denticity_label
+        )
+        print("lol")
 
         return (
-            word_loss + topo_loss + assm_loss + beta * kl_div + prop_loss,
+            word_loss + topo_loss + assm_loss + beta * kl_div + prop_loss + dent_loss,
             kl_div.item(),
             word_acc,
             topo_acc,
