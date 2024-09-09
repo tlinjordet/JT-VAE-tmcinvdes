@@ -314,6 +314,7 @@ class JTpropVAE(nn.Module):
             topo_acc,
             assm_acc,
             prop_loss.item(),
+            dent_loss.item(),
         )
 
     def assm(self, mol_batch, jtmpn_holder, x_mol_vecs, x_tree_mess):

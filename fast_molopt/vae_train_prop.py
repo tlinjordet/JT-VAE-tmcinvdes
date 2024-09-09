@@ -102,7 +102,9 @@ def main_vae_train(
             total_step += 1
             try:
                 model.zero_grad()
-                loss, kl_div, wacc, tacc, sacc, prop_loss = model(batch, args.beta)
+                loss, kl_div, wacc, tacc, sacc, prop_loss, dent_loss = model(
+                    batch, args.beta
+                )
                 loss.backward()
                 nn.utils.clip_grad_norm_(model.parameters(), args.clip_norm)
                 optimizer.step()
@@ -111,14 +113,21 @@ def main_vae_train(
                 continue
 
             meters = meters + np.array(
-                [kl_div, wacc * 100, tacc * 100, sacc * 100, prop_loss * 100]
+                [
+                    kl_div,
+                    wacc * 100,
+                    tacc * 100,
+                    sacc * 100,
+                    prop_loss * 100,
+                    dent_loss * 100,
+                ]
             )
 
             if total_step % args.print_iter == 0:
                 meters /= args.print_iter
                 _logger.info(
                     (
-                        "[%d] Loss: %.3f,Beta: %.3f,KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f,Prop_loss %.2f, PNorm: %.2f, GNorm: %.2f"
+                        "[%d] Loss: %.3f,Beta: %.3f,KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f,Prop_loss %.2f, Dent_loss %.2f,PNorm: %.2f, GNorm: %.2f"
                         % (
                             total_step,
                             loss.item(),
@@ -128,6 +137,7 @@ def main_vae_train(
                             meters[2],
                             meters[3],
                             meters[4],
+                            meters[5],
                             param_norm(model),
                             grad_norm(model),
                         )
