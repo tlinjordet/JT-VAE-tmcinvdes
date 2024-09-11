@@ -188,6 +188,8 @@ class JTpropVAE(nn.Module):
                 cur_vec = cur_vec.data + scaler * lr * norm1
             elif type == "first_second":
                 cur_vec = cur_vec.data + scaler * lr_homo * norm0 - scaler * lr * norm1
+            # elif type == "second_first":
+            #     cur_vec = cur_vec.data + scaler * lr * norm1 - scaler * lr_homo * norm0
             else:
                 raise ValueError
 
@@ -195,6 +197,7 @@ class JTpropVAE(nn.Module):
             visited.append(cur_vec)
 
         # Now we want to get the best possible vectors.
+
         tanimoto = []
         li, r = 0, num_iter - 1
         counter = 1
@@ -234,9 +237,6 @@ class JTpropVAE(nn.Module):
         tanimoto_candidates.sort(reverse=True, key=lambda x: x[0])
         tanimoto_candidates = set(tanimoto_candidates)
         if not is_valid_smiles(new_smiles):
-            # To ensure smiles is none when not tanimoto candidates.
-            if not tanimoto_candidates:
-                new_smiles = None
             for tan, sm, grad_idx in tanimoto_candidates:
                 if is_valid_smiles(sm):
                     new_smiles = sm
@@ -244,7 +244,7 @@ class JTpropVAE(nn.Module):
                 else:
                     print("noo  not valid smiles")
                     new_smiles = None
-        # This snippet prints all the smiles along the gradient. Very inefficient.
+        # Print all the smiles along the gradient.
         # to_print = []
         # for v in visited[0:selected_idx]:
         #     tree_vec, mol_vec = torch.chunk(v, 2, dim=1)
@@ -265,7 +265,6 @@ class JTpropVAE(nn.Module):
 
         if new_smiles is None:
             return x_batch[0].smiles, 1.0
-        # Check tanimoto cutoff
         new_mol = Chem.MolFromSmiles(new_smiles)
         fp2 = AllChem.GetMorganFingerprint(new_mol, 2)
         sim = DataStructs.TanimotoSimilarity(fp1, fp2)

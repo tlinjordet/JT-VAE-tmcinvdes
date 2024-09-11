@@ -92,7 +92,7 @@ def main_vae_train(
         )
 
     total_step = args.load_epoch
-    meters = np.zeros(5)
+    meters = np.zeros(6)
 
     for epoch in tqdm(list(range(args.epoch)), position=0, leave=True):
         loader = MolTreeFolder_prop(
@@ -176,17 +176,17 @@ if __name__ == "__main__":
 
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--clip_norm", type=float, default=50.0)
-    parser.add_argument("--beta", type=float, default=0.000)
+    parser.add_argument("--beta", type=float, default=0.006)
     parser.add_argument("--step_beta", type=float, default=0.002)
     parser.add_argument("--max_beta", type=float, default=1.0)
-    parser.add_argument("--warmup", type=int, default=1000)
+    parser.add_argument("--warmup", type=int, default=500)
 
-    parser.add_argument("--epoch", type=int, default=300)
+    parser.add_argument("--epoch", type=int, default=150)
     parser.add_argument("--anneal_rate", type=float, default=0.9)
     parser.add_argument("--anneal_iter", type=int, default=1000)
     parser.add_argument("--kl_anneal_iter", type=int, default=3000)
     parser.add_argument("--print_iter", type=int, default=50)
-    parser.add_argument("--save_iter", type=int, default=1000)
+    parser.add_argument("--save_iter", type=int, default=10000)
 
     args = parser.parse_args()
     print(args)
