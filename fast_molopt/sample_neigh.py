@@ -49,7 +49,10 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
     parser.add_argument("--cutoff", type=float, default=0.2)
 
     parser.add_argument(
-        "--type", type=str, default="first", help="Which property to optimize on"
+        "--type",
+        type=str,
+        default="homo_lumo_gap",
+        help="Which property to optimize on",
     )
 
     parser.add_argument("--lr", type=float, default=0.5)

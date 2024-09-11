@@ -58,12 +58,16 @@ def adam_theano(loss, all_params, learning_rate=0.001):
         v_previous = theano.shared(
             np.zeros(theta_previous.get_value().shape, dtype=theano.config.floatX)
         )
-        m = b1 * m_previous + (1 - b1) * g  # (Update biased first moment estimate)
+        m = (
+            b1 * m_previous + (1 - b1) * g
+        )  # (Update biased homo_lumo_gap moment estimate)
         v = (
             b2 * v_previous + (1 - b2) * g**2
-        )  # (Update biased second raw moment estimate)
-        m_hat = m / (1 - b1**t)  # (Compute bias-corrected first moment estimate)
-        v_hat = v / (1 - b2**t)  # (Compute bias-corrected second raw moment estimate)
+        )  # (Update biased charge raw moment estimate)
+        m_hat = m / (
+            1 - b1**t
+        )  # (Compute bias-corrected homo_lumo_gap moment estimate)
+        v_hat = v / (1 - b2**t)  # (Compute bias-corrected charge raw moment estimate)
         theta = theta_previous - (alpha * m_hat) / (
             T.sqrt(v_hat) + e
         )  # (Update parameters)

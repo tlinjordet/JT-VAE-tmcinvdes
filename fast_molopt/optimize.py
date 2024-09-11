@@ -4,7 +4,6 @@ import json
 import os
 import sys
 import time
-from collections import defaultdict
 from pathlib import Path
 
 import pandas as pd
@@ -51,7 +50,10 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
     parser.add_argument("--cutoff", type=float, default=0.2)
 
     parser.add_argument(
-        "--type", type=str, default="first", help="Which property to optimize on"
+        "--type",
+        type=str,
+        default="homo_lumo_gap",
+        help="Which property to optimize on",
     )
 
     parser.add_argument("--lr", type=float, default=0.1)
@@ -124,41 +126,36 @@ def main():
         json.dump(vars(opts), file)
 
     directions = [
-        ("first", "maximize"),
-        ("first", "minimize"),
+        ("homo_lumo_gap", "maximize"),
+        ("homo_lumo_gap", "minimize"),
         ("both", "maximize"),
         ("both", "minimize"),
-        ("second", "maximize"),
-        ("second", "minimize"),
-        ("first_second", "maximize"),
-        ("first_second", "minimize"),
+        ("charge", "maximize"),
+        ("charge", "minimize"),
+        ("both_opposite", "maximize"),
+        ("both_opposite", "minimize"),
     ]
 
     for i, batch in enumerate(loader):
         for dir in directions:
             current_type = dir[0]
             smiles = batch[0][0].smiles
-            print(i, smiles)
+            print(i, smiles, "-".join(dir))
 
-            batch[1].numpy().squeeze()
-
-            Chem.MolFromSmiles(smiles)
+            # Set the minimize flag based on the given direction
             minimize = True if dir[1] == "minimize" else False
+
             new_smiles, sim = model.optimize(
                 batch,
                 sim_cutoff=sim_cutoff,
                 lr=opts.lr,
-                num_iter=500,
+                num_iter=250,
                 type=current_type,
                 prob_decode=False,
                 minimize=minimize,
             )
 
             Chem.MolFromSmiles(new_smiles)
-            # results["new_smiles"].append(new_smiles)
-            # results["sim"].append(sim)
-            # results["type"].append(current_type)
-            # results["minimize"].append(minimize)
 
             # Write a row to a csv file.
             with open(output_dir / "optimize_results.csv", "a") as f1:

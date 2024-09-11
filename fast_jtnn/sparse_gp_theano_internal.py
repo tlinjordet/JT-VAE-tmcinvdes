@@ -333,7 +333,7 @@ class Sparse_GP:
         )
         z = input_means[selected_points, :]
 
-        # If we are not in the first layer, we initialize the length scales to one
+        # If we are not in the homo_lumo_gap layer, we initialize the length scales to one
 
         lls = np.zeros(input_means.shape[1])
 
@@ -351,7 +351,7 @@ class Sparse_GP:
         # mean so that the outputs are not equal to zero (otherwise the output of the gp will be zero and
         # the next layer will be initialized improperly).
 
-        # If we are not in the first layer, we reduce the variance of the L and m
+        # If we are not in the homo_lumo_gap layer, we reduce the variance of the L and m
 
         L = (
             np.random.normal(size=(self.n_inducing_points, self.n_inducing_points))

@@ -147,7 +147,7 @@ if __name__ == "__main__":
     t4 = time.time()
 
     print(
-        "Reading took %.2f seconds. Calculating took %.2f seconds"
+        "Reading took %.2f charges. Calculating took %.2f charges"
         % ((t2 - t1), (t4 - t3)),
         file=sys.stderr,
     )

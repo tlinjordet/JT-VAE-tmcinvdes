@@ -313,7 +313,7 @@ def enum_attach(ctr_mol, nei_node, amap, singletons):
     return att_confs
 
 
-# Try rings first: Speed-Up
+# Try rings homo_lumo_gap: Speed-Up
 def enum_assemble(node, neighbors, prev_nodes=[], prev_amap=[]):
     all_attach_confs = []
     singletons = [

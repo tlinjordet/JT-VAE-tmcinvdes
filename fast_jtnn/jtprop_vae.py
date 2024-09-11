@@ -125,7 +125,7 @@ class JTpropVAE(nn.Module):
         self,
         x_batch,
         sim_cutoff,
-        lr=2.0,
+        lr=0.2,
         num_iter=20,
         type="both",
         prob_decode=False,
@@ -147,14 +147,16 @@ class JTpropVAE(nn.Module):
 
         visited = []
         cuda0 = torch.device("cuda:0")
-        first_predicted = []
-        second_predicted = []
+        homo_lumo_gap_predicted = []
+        charge_predicted = []
+
+        # Apply different scaling on the gradient along the homo-lumo gap direction.
         lr_homo = 1.5 * lr
+
         for step in range(num_iter):
             prop_val = self.propNN(cur_vec)
-            # print(prop_val)
-            first_predicted.append(prop_val.tolist()[0][0])
-            second_predicted.append(prop_val.tolist()[0][1])
+            homo_lumo_gap_predicted.append(prop_val.tolist()[0][0])
+            charge_predicted.append(prop_val.tolist()[0][1])
             # grad = torch.autograd.grad(prop_val, cur_vec,grad_outputs=torch.ones_like(prop_val))[0]
             dydx3 = torch.tensor([], dtype=torch.float32, device=cuda0)
             for i in range(2):
@@ -174,22 +176,20 @@ class JTpropVAE(nn.Module):
             # Normalize gradient
             norm0 = torch.nn.functional.normalize(dydx3[0], dim=-1)
             norm1 = torch.nn.functional.normalize(dydx3[1], dim=-1)
-            # nnorm = torch.linalg.vector_norm(norm)
 
             # Get the gradient magnitudes
             # n0 = torch.linalg.vector_norm(dydx3[0])
             # n1 = torch.linalg.vector_norm(dydx3[1])
 
+            # Add a gradient step in a given direction
             if type == "both":
                 cur_vec = cur_vec.data + scaler * lr * norm1 + scaler * lr_homo * norm0
-            elif type == "first":
+            elif type == "homo_lumo_gap":
                 cur_vec = cur_vec.data + scaler * lr_homo * norm0
-            elif type == "second":
+            elif type == "charge":
                 cur_vec = cur_vec.data + scaler * lr * norm1
-            elif type == "first_second":
+            elif type == "homo_lumo_gap_charge":
                 cur_vec = cur_vec.data + scaler * lr_homo * norm0 - scaler * lr * norm1
-            # elif type == "second_first":
-            #     cur_vec = cur_vec.data + scaler * lr * norm1 - scaler * lr_homo * norm0
             else:
                 raise ValueError
 
@@ -197,7 +197,6 @@ class JTpropVAE(nn.Module):
             visited.append(cur_vec)
 
         # Now we want to get the best possible vectors.
-
         tanimoto = []
         li, r = 0, num_iter - 1
         counter = 1
@@ -244,6 +243,7 @@ class JTpropVAE(nn.Module):
                 else:
                     print("noo  not valid smiles")
                     new_smiles = None
+
         # Print all the smiles along the gradient.
         # to_print = []
         # for v in visited[0:selected_idx]:
@@ -271,7 +271,7 @@ class JTpropVAE(nn.Module):
         if sim >= sim_cutoff:
             return new_smiles, sim
         else:
-            print("Noooo cutoooof")
+            print("Molecule could not satisfy tanimoto cutoff")
             return x_batch[0].smiles, 1.0
 
     def forward(self, x_batch, beta):
@@ -304,7 +304,6 @@ class JTpropVAE(nn.Module):
         dent_loss = self.denticityNN_loss(
             self.denticityNN(all_vec).squeeze(), denticity_label
         )
-        print("lol")
 
         return (
             word_loss + topo_loss + assm_loss + beta * kl_div + prop_loss + dent_loss,

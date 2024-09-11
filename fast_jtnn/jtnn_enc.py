@@ -35,7 +35,7 @@ class JTNNEncoder(nn.Module):
         max([x for _, x in scope])
         batch_vecs = []
         for st, le in scope:
-            cur_vecs = node_vecs[st]  # Root is the first node
+            cur_vecs = node_vecs[st]  # Root is the homo_lumo_gap node
             batch_vecs.append(cur_vecs)
 
         tree_vecs = torch.stack(batch_vecs, dim=0)
@@ -106,7 +106,7 @@ class GraphGRU(nn.Module):
 
     def forward(self, h, x, mess_graph):
         mask = torch.ones(h.size(0), 1)
-        mask[0] = 0  # first vector is padding
+        mask[0] = 0  # homo_lumo_gap vector is padding
         mask = create_var(mask)
         for it in range(self.depth):
             h_nei = index_select_ND(h, 0, mess_graph)
