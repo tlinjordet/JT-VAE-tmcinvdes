@@ -186,7 +186,7 @@ if __name__ == "__main__":
     parser.add_argument("--anneal_iter", type=int, default=1000)
     parser.add_argument("--kl_anneal_iter", type=int, default=3000)
     parser.add_argument("--print_iter", type=int, default=50)
-    parser.add_argument("--save_iter", type=int, default=10000)
+    parser.add_argument("--save_iter", type=int, default=5000)
 
     args = parser.parse_args()
     print(args)

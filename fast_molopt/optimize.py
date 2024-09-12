@@ -101,7 +101,7 @@ def main():
     model.load_state_dict(torch.load(opts.model_path))
     model = model.cuda()
 
-    output_dir = Path(f"opt_{time.strftime('%Y%m%d-%H%M%S')}")
+    output_dir = Path(f"dump_{time.strftime('%Y%m%d-%H%M%S')}")
     output_dir.mkdir(exist_ok=True)
 
     input_dir_path = Path(opts.input_dir_path)

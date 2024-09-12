@@ -130,6 +130,7 @@ class JTpropVAE(nn.Module):
         type="both",
         prob_decode=False,
         minimize=True,
+        desired_denticity="bidentate",
     ):
         x_batch, x_prop, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
         x_tree_vecs, x_tree_mess, x_mol_vecs = self.encode(x_jtenc_holder, x_mpn_holder)
@@ -171,11 +172,30 @@ class JTpropVAE(nn.Module):
 
             dydx3 = dydx3.squeeze()
 
+            # Now we get the gradients of the denticity layer.
+            dent_dy = torch.tensor([], dtype=torch.float32, device=cuda0)
+            dent_val = self.denticityNN(cur_vec)
+            for i in range(2):
+                li = torch.zeros_like(dent_val)
+                li[:, i] = 1.0
+                d = torch.autograd.grad(
+                    dent_val, cur_vec, retain_graph=True, grad_outputs=li
+                )[
+                    0
+                ]  # dydx: (batch_size, input_dim)
+                dent_dy = torch.concat((dent_dy, d.unsqueeze(dim=1)), dim=1)
+
+            dent_dy = dent_dy.squeeze()
+
             scaler = -1 if minimize else 1
 
             # Normalize gradient
             norm0 = torch.nn.functional.normalize(dydx3[0], dim=-1)
             norm1 = torch.nn.functional.normalize(dydx3[1], dim=-1)
+
+            # Normalize the denticity gradient
+            mono_norm = torch.nn.functional.normalize(dent_dy[0], dim=-1)
+            bi_norm = torch.nn.functional.normalize(dent_dy[1], dim=-1)
 
             # Get the gradient magnitudes
             # n0 = torch.linalg.vector_norm(dydx3[0])
@@ -188,8 +208,16 @@ class JTpropVAE(nn.Module):
                 cur_vec = cur_vec.data + scaler * lr_homo * norm0
             elif type == "charge":
                 cur_vec = cur_vec.data + scaler * lr * norm1
-            elif type == "homo_lumo_gap_charge":
+            elif type == "both_opposite":
                 cur_vec = cur_vec.data + scaler * lr_homo * norm0 - scaler * lr * norm1
+            else:
+                raise ValueError
+
+            # Add denticity gradient in given direction
+            if desired_denticity == "monodentate":
+                cur_vec = cur_vec + lr * mono_norm * 2
+            elif desired_denticity == "bidentate":
+                cur_vec = cur_vec + lr * bi_norm * 2
             else:
                 raise ValueError
 
