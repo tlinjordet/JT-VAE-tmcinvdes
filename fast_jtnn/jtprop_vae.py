@@ -75,6 +75,7 @@ class JTpropVAE(nn.Module):
         self.denticityNN_loss = nn.CrossEntropyLoss()
 
         self.denticity = denticity
+        self.n_props = n_props
 
     def encode(self, jtenc_holder, mpn_holder):
         tree_vecs, tree_mess = self.jtnn(*jtenc_holder)
@@ -139,9 +140,9 @@ class JTpropVAE(nn.Module):
         fp1 = AllChem.GetMorganFingerprint(mol, 2)
 
         z_tree_mean = self.T_mean(x_tree_vecs)
-        -torch.abs(self.T_var(x_tree_vecs))  # Following Mueller et al.
+        # -torch.abs(self.T_var(x_tree_vecs))  # Following Mueller et al.
         z_mol_mean = self.G_mean(x_mol_vecs)
-        -torch.abs(self.G_var(x_mol_vecs))  # Following Mueller et al.
+        # -torch.abs(self.G_var(x_mol_vecs))  # Following Mueller et al.
 
         mean = torch.cat([z_tree_mean, z_mol_mean], dim=1)
         cur_vec = create_var(mean.data, True)
@@ -224,6 +225,15 @@ class JTpropVAE(nn.Module):
             cur_vec = create_var(cur_vec, True)
             visited.append(cur_vec)
 
+        # all_smiles = []
+        # for elem in visited:
+        #     tree_vec, mol_vec = torch.chunk(elem, 2, dim=1)
+        #     new_smiles = self.decode(tree_vec, mol_vec, prob_decode=prob_decode)
+        #     print(new_smiles)
+        #     all_smiles.append(new_smiles)
+        #
+        # sys.exit()
+
         # Now we want to get the best possible vectors.
         tanimoto = []
         li, r = 0, num_iter - 1
@@ -253,7 +263,6 @@ class JTpropVAE(nn.Module):
             counter += 1
 
         tree_vec, mol_vec = torch.chunk(visited[li], 2, dim=1)
-        # tree_vec,mol_vec = torch.chunk(best_vec, 2, dim=1)
         new_smiles = self.decode(tree_vec, mol_vec, prob_decode=prob_decode)
 
         tanimoto_candidates = [
@@ -269,7 +278,7 @@ class JTpropVAE(nn.Module):
                     new_smiles = sm
                     break
                 else:
-                    print("noo  not valid smiles")
+                    print("None of the tanimoto candidates passed the validity check")
                     new_smiles = None
 
         # Print all the smiles along the gradient.
@@ -304,9 +313,15 @@ class JTpropVAE(nn.Module):
 
     def forward(self, x_batch, beta):
         x_batch, x_prop, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
+
+        if len(x_prop[0, :]) != self.n_props:
+            raise ValueError(
+                "The number of properties passed do not match what the model was trained on"
+            )
+        # The last entry in the x_prop tensor is the denticity value
         x_dent = x_prop[:, -1]
-        x_prop = x_prop[:, 0:2]
-        # Extract prop for later
+
+        x_prop = x_prop[:, 0 : self.n_props]
 
         x_tree_vecs, x_tree_mess, x_mol_vecs = self.encode(x_jtenc_holder, x_mpn_holder)
         z_tree_vecs, tree_kl = self.rsample(x_tree_vecs, self.T_mean, self.T_var)

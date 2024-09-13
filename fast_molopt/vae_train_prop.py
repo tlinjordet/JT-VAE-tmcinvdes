@@ -27,7 +27,10 @@ from fast_jtnn import JTpropVAE, MolTreeFolder_prop, Vocab
 def main_vae_train(
     args,
 ):
-    vocab = [x.strip("\r\n ") for x in open(args.vocab)]
+    #  Load the vocab
+    with open(args.vocab) as f:
+        vocab = f.read().splitlines()
+    # vocab = [x.strip("\r\n ") for x in open(args.vocab)]
     vocab = Vocab(vocab)
 
     output_dir = Path(f"train_{time.strftime('%Y%m%d-%H%M%S')}")
@@ -45,12 +48,14 @@ def main_vae_train(
     )
     beta = args.beta
 
+    n_props = 2
     model = JTpropVAE(
         vocab,
         args.hidden_size,
         args.latent_size,
         args.depthT,
         args.depthG,
+        n_props=n_props,
     ).cuda()
     print(model)
 
@@ -70,6 +75,7 @@ def main_vae_train(
         )
     )
 
+    # Write commandline args to file
     with open(output_dir / "opts.txt", "w") as file:
         file.write(f"{vars(args)}")
 
@@ -92,7 +98,6 @@ def main_vae_train(
         )
 
     total_step = args.load_epoch
-    meters = np.zeros(6)
 
     for epoch in tqdm(list(range(args.epoch)), position=0, leave=True):
         loader = MolTreeFolder_prop(
@@ -112,7 +117,7 @@ def main_vae_train(
                 print(e)
                 continue
 
-            meters = meters + np.array(
+            meters = np.array(
                 [
                     kl_div,
                     wacc * 100,
@@ -144,7 +149,6 @@ def main_vae_train(
                     )
                 )
                 sys.stdout.flush()
-                meters *= 0
 
             if total_step % args.save_iter == 0:
                 torch.save(model.state_dict(), output_dir / f"model.iter-{total_step}")
@@ -152,6 +156,8 @@ def main_vae_train(
             if total_step % args.anneal_iter == 0:
                 scheduler.step()
                 _logger.info(("learning rate: %.6f" % scheduler.get_lr()[0]))
+
+            # Update the beta value
             if total_step % args.kl_anneal_iter == 0 and total_step >= args.warmup:
                 beta = min(args.max_beta, beta + args.step_beta)
 
