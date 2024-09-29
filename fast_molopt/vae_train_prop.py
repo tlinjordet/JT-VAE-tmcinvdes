@@ -107,9 +107,16 @@ def main_vae_train(
             total_step += 1
             try:
                 model.zero_grad()
-                loss, kl_div, wacc, tacc, sacc, prop_loss, dent_loss = model(
-                    batch, args.beta
-                )
+                (
+                    loss,
+                    kl_div,
+                    wacc,
+                    tacc,
+                    sacc,
+                    prop_loss,
+                    dent_loss,
+                    isomer_loss,
+                ) = model(batch, args.beta)
                 loss.backward()
                 nn.utils.clip_grad_norm_(model.parameters(), args.clip_norm)
                 optimizer.step()
@@ -125,6 +132,7 @@ def main_vae_train(
                     sacc * 100,
                     prop_loss * 100,
                     dent_loss * 100,
+                    isomer_loss * 100,
                 ]
             )
 
@@ -132,7 +140,7 @@ def main_vae_train(
                 meters /= args.print_iter
                 _logger.info(
                     (
-                        "[%d] Loss: %.3f,Beta: %.3f,KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f,Prop_loss %.2f, Dent_loss %.2f,PNorm: %.2f, GNorm: %.2f"
+                        "[%d] Loss: %.3f,Beta: %.3f,KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f,Prop_loss %.2f, Dent_loss %.2f, isomer_loss %.2f,PNorm: %.2f, GNorm: %.2f"
                         % (
                             total_step,
                             loss.item(),
@@ -143,6 +151,7 @@ def main_vae_train(
                             meters[3],
                             meters[4],
                             meters[5],
+                            meters[6],
                             param_norm(model),
                             grad_norm(model),
                         )
@@ -175,7 +184,7 @@ if __name__ == "__main__":
     parser.add_argument("--load_epoch", type=int, default=0)
 
     parser.add_argument("--hidden_size", type=int, default=450)
-    parser.add_argument("--batch_size", type=int, default=32)  # 32)
+    parser.add_argument("--batch_size", type=int, default=8)  # 32)
     parser.add_argument("--latent_size", type=int, default=56)
     parser.add_argument("--depthT", type=int, default=20)
     parser.add_argument("--depthG", type=int, default=3)

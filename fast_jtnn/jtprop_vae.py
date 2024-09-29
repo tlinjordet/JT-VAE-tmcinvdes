@@ -65,14 +65,22 @@ class JTpropVAE(nn.Module):
             nn.Linear(self.hidden_size, n_props),
         )
 
+        # Binary classification
         self.denticityNN = nn.Sequential(
             nn.Linear(self.latent_size * 2, self.hidden_size),
             nn.Sigmoid(),
-            nn.Linear(self.hidden_size, 2),  # Number of output classes
+            nn.Linear(self.hidden_size, 1),
+        )
+        # Multiclass classification
+        self.isomerNN = nn.Sequential(
+            nn.Linear(self.latent_size * 2, self.hidden_size),
+            nn.Sigmoid(),
+            nn.Linear(self.hidden_size, 3),  # Number of output classes
         )
 
         self.prop_loss = nn.MSELoss()
-        self.denticityNN_loss = nn.CrossEntropyLoss()
+        self.denticityNN_loss = nn.BCEWithLogitsLoss()
+        self.isomerNN_loss = nn.CrossEntropyLoss()
 
         self.denticity = denticity
         self.n_props = n_props
@@ -225,6 +233,7 @@ class JTpropVAE(nn.Module):
             cur_vec = create_var(cur_vec, True)
             visited.append(cur_vec)
 
+        # This decodes and prints the SMILES along the gradient
         # all_smiles = []
         # for elem in visited:
         #     tree_vec, mol_vec = torch.chunk(elem, 2, dim=1)
@@ -234,7 +243,7 @@ class JTpropVAE(nn.Module):
         #
         # sys.exit()
 
-        # Now we want to get the best possible vectors.
+        # Now we want to get the best possible latent vectors.
         tanimoto = []
         li, r = 0, num_iter - 1
         counter = 1
@@ -314,12 +323,10 @@ class JTpropVAE(nn.Module):
     def forward(self, x_batch, beta):
         x_batch, x_prop, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
 
-        if len(x_prop[0, :]) != self.n_props:
-            raise ValueError(
-                "The number of properties passed do not match what the model was trained on"
-            )
+        # The second to last entry in the x_prop tensor is the denticity value
+        x_dent = x_prop[:, -2]
         # The last entry in the x_prop tensor is the denticity value
-        x_dent = x_prop[:, -1]
+        x_isomer = x_prop[:, -1]
 
         x_prop = x_prop[:, 0 : self.n_props]
 
@@ -340,7 +347,7 @@ class JTpropVAE(nn.Module):
 
         # Learn dendicity
         x_dent = x_dent.type(
-            torch.LongTensor
+            torch.FloatTensor
         )  # This is done in order to have it work with the cross entropy loss. Otherwise there is an error.
         denticity_label = create_var(x_dent)
         denticity_label.int()
@@ -348,14 +355,29 @@ class JTpropVAE(nn.Module):
             self.denticityNN(all_vec).squeeze(), denticity_label
         )
 
+        # Learn isomer
+        x_isomer = x_isomer.type(
+            torch.LongTensor
+        )  # This is done in order to have it work with the cross entropy loss. Otherwise there is an error.
+        isomer_label = create_var(x_isomer)
+        isomer_label.int()
+
+        isomer_loss = self.isomerNN_loss(self.isomerNN(all_vec).squeeze(), isomer_label)
         return (
-            word_loss + topo_loss + assm_loss + beta * kl_div + prop_loss + dent_loss,
+            word_loss
+            + topo_loss
+            + assm_loss
+            + beta * kl_div
+            + prop_loss
+            + dent_loss
+            + isomer_loss,
             kl_div.item(),
             word_acc,
             topo_acc,
             assm_acc,
             prop_loss.item(),
             dent_loss.item(),
+            isomer_loss.item(),
         )
 
     def assm(self, mol_batch, jtmpn_holder, x_mol_vecs, x_tree_mess):
