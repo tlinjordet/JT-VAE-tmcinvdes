@@ -99,6 +99,7 @@ def main_vae_train(
 
     total_step = args.load_epoch
 
+    meters = np.zeros(7)
     for epoch in tqdm(list(range(args.epoch)), position=0, leave=True):
         loader = MolTreeFolder_prop(
             args.train, vocab, args.batch_size, shuffle=False
@@ -124,7 +125,7 @@ def main_vae_train(
                 print(e)
                 continue
 
-            meters = np.array(
+            meters = meters + np.array(
                 [
                     kl_div,
                     wacc * 100,
@@ -158,6 +159,7 @@ def main_vae_train(
                     )
                 )
                 sys.stdout.flush()
+                meters *= 0
 
             if total_step % args.save_iter == 0:
                 torch.save(model.state_dict(), output_dir / f"model.iter-{total_step}")
