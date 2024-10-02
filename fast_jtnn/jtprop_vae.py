@@ -336,7 +336,7 @@ class JTpropVAE(nn.Module):
         # The first two entries are the q,epsilon properties
         x_prop = x_prop_holder[:, 0:2]
 
-        self.analyzer.print_smiles_gradient("test")
+        # self.analyzer.print_smiles_gradient("test")
 
         # If we only have two properties, dont attempt to unpack the others
         if length_p == 2:
