@@ -69,7 +69,7 @@ def main_vae_train(
         args.depthG,
         args.train_mode,
     ).cuda()
-    print(model)
+    _logger.info(model)
 
     for param in model.parameters():
         if param.dim() == 1:
@@ -80,7 +80,7 @@ def main_vae_train(
     if args.load_previous_model:
         model.load_state_dict(torch.load(args.model_path))
 
-    print(
+    _logger.info(
         (
             "Model #Params: %dK"
             % (sum([x.nelement() for x in model.parameters()]) / 1000,)
@@ -90,7 +90,9 @@ def main_vae_train(
     # Write commandline args to file
     with open(output_dir / "opts.txt", "w") as file:
         file.write(f"{vars(args)}\n")
-        file.write(f"Git commit tag: {get_git_revision_short_hash()}\n")
+
+    # Write the current git commit to the log
+    _logger.info(f"Git commit tag: {get_git_revision_short_hash()}\n")
 
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
     scheduler = lr_scheduler.ExponentialLR(optimizer, args.anneal_rate)
@@ -168,28 +170,30 @@ if __name__ == "__main__":
         help="Selects which extra property terms to include in the training, when using the argument each extra term should be separated by a space",
     )
 
+    # These should not be touched
     parser.add_argument("--hidden_size", type=int, default=450)
-    parser.add_argument("--batch_size", type=int, default=2)  # 32)
+    parser.add_argument("--batch_size", type=int, default=32)  # 2 when debugging)
     parser.add_argument("--latent_size", type=int, default=56)
     parser.add_argument("--depthT", type=int, default=20)
     parser.add_argument("--depthG", type=int, default=3)
-
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--clip_norm", type=float, default=50.0)
+
+    # These might need to be adjusted for a new problem
     parser.add_argument("--beta", type=float, default=0.006)
     parser.add_argument("--step_beta", type=float, default=0.002)
     parser.add_argument("--max_beta", type=float, default=1.0)
     parser.add_argument("--warmup", type=int, default=500)
-
-    parser.add_argument("--epoch", type=int, default=150)
     parser.add_argument("--anneal_rate", type=float, default=0.9)
     parser.add_argument("--anneal_iter", type=int, default=1000)
     parser.add_argument("--kl_anneal_iter", type=int, default=3000)
+
+    parser.add_argument("--epoch", type=int, default=150)
     parser.add_argument("--print_iter", type=int, default=50)
     parser.add_argument("--save_iter", type=int, default=5000)
 
     args = parser.parse_args()
-    print(args)
+    _logger.info(args)
 
     main_vae_train(
         args=args,
