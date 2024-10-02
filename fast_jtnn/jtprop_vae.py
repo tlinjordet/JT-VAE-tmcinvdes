@@ -31,8 +31,7 @@ class JTpropVAE(nn.Module):
         latent_size,
         depthT,
         depthG,
-        denticity="monodentate",
-        n_props=2,
+        train_mode,
     ):
         super(JTpropVAE, self).__init__()
         self.vocab = vocab
@@ -62,28 +61,36 @@ class JTpropVAE(nn.Module):
         self.propNN = nn.Sequential(
             nn.Linear(self.latent_size * 2, self.hidden_size),
             nn.Tanh(),
-            nn.Linear(self.hidden_size, n_props),
+            nn.Linear(self.hidden_size, 2),
         )
 
-        # Binary classification
-        self.denticityNN = nn.Sequential(
-            nn.Linear(self.latent_size * 2, self.hidden_size),
-            nn.Sigmoid(),
-            nn.Linear(self.hidden_size, 1),
-        )
-        # Multiclass classification
-        self.isomerNN = nn.Sequential(
-            nn.Linear(self.latent_size * 2, self.hidden_size),
-            nn.Sigmoid(),
-            nn.Linear(self.hidden_size, 3),  # Number of output classes
-        )
+        self.train_mode = train_mode
+
+        for term in self.train_mode:
+            if term == "denticity":
+                # Binary classification (0 for monodentate and 1 for bidentate)
+                self.denticityNN = nn.Sequential(
+                    nn.Linear(self.latent_size * 2, self.hidden_size),
+                    nn.Sigmoid(),
+                    nn.Linear(self.hidden_size, 1),
+                    # The outptut is >0.5 for bidentate and <0.5 for bidentate
+                )
+                self.denticityNN_loss = nn.BCEWithLogitsLoss()
+            elif term == "isomer":
+                # Multiclass classification (0 for monodentate and 1/2 for cis/trans)
+                self.isomerNN = nn.Sequential(
+                    nn.Linear(self.latent_size * 2, self.hidden_size),
+                    nn.Sigmoid(),
+                    nn.Linear(self.hidden_size, 3),  # Number of output classes
+                )
+                self.isomerNN_loss = nn.CrossEntropyLoss()
+            else:
+                raise ValueError("train_mode is not a valid value")
 
         self.prop_loss = nn.MSELoss()
-        self.denticityNN_loss = nn.BCEWithLogitsLoss()
-        self.isomerNN_loss = nn.CrossEntropyLoss()
 
-        self.denticity = denticity
-        self.n_props = n_props
+        # Utility class for analyzing optimizations
+        self.analyzer = Analyzer(self)
 
     def encode(self, jtenc_holder, mpn_holder):
         tree_vecs, tree_mess = self.jtnn(*jtenc_holder)
@@ -163,11 +170,13 @@ class JTpropVAE(nn.Module):
         # Apply different scaling on the gradient along the homo-lumo gap direction.
         lr_homo = 1.5 * lr
 
+        # Step in gradient space
         for step in range(num_iter):
             prop_val = self.propNN(cur_vec)
             homo_lumo_gap_predicted.append(prop_val.tolist()[0][0])
             charge_predicted.append(prop_val.tolist()[0][1])
             # grad = torch.autograd.grad(prop_val, cur_vec,grad_outputs=torch.ones_like(prop_val))[0]
+
             dydx3 = torch.tensor([], dtype=torch.float32, device=cuda0)
             for i in range(2):
                 li = torch.zeros_like(prop_val)
@@ -290,24 +299,7 @@ class JTpropVAE(nn.Module):
                     print("None of the tanimoto candidates passed the validity check")
                     new_smiles = None
 
-        # Print all the smiles along the gradient.
-        # to_print = []
-        # for v in visited[0:selected_idx]:
-        #     tree_vec, mol_vec = torch.chunk(v, 2, dim=1)
-        #     new_smiles = self.decode(tree_vec, mol_vec, prob_decode=prob_decode)
-        #
-        #     prop_val = self.propNN(v)
-        #     # print(prop_val)
-        #     prediction = prop_val.tolist()
-        #
-        #     new_mol = Chem.MolFromSmiles(new_smiles)
-        #     # Chem.AssignStereochemistry(new_mol)
-        #     fp2 = AllChem.GetMorganFingerprint(new_mol, 2)
-        #     sim = DataStructs.TanimotoSimilarity(fp1, fp2)
-        #     # print(sim,x_batch[0].smiles,new_smiles)
-        #
-        #     to_print.append((new_smiles, prediction, sim))
-        # print(to_print)
+        self.analyzer.print_smiles_gradient()
 
         if new_smiles is None:
             return x_batch[0].smiles, 1.0
@@ -321,14 +313,27 @@ class JTpropVAE(nn.Module):
             return x_batch[0].smiles, 1.0
 
     def forward(self, x_batch, beta):
-        x_batch, x_prop, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
+        x_batch, x_prop_holder, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
 
-        # The second to last entry in the x_prop tensor is the denticity value
-        x_dent = x_prop[:, -2]
-        # The last entry in the x_prop tensor is the denticity value
-        x_isomer = x_prop[:, -1]
+        length_p = len(x_prop_holder[0])
+        # The first two entries are the q,epsilon properties
+        x_prop = x_prop_holder[:, 0:2]
 
-        x_prop = x_prop[:, 0 : self.n_props]
+        self.analyzer.print_smiles_gradient("test")
+
+        # If we only have two properties, dont attempt to unpack the others
+        if length_p == 2:
+            pass
+        elif length_p == 3:
+            # The third value should be denticity
+            x_dent = x_prop_holder[:, 2]
+        elif length_p == 4:
+            # The third value should be denticity
+            x_dent = x_prop_holder[:, 2]
+            # The fourth value should be isomer
+            x_isomer = x_prop_holder[:, 3]
+        else:
+            raise ValueError("The correct number of properties could not be unpacked")
 
         x_tree_vecs, x_tree_mess, x_mol_vecs = self.encode(x_jtenc_holder, x_mpn_holder)
         z_tree_vecs, tree_kl = self.rsample(x_tree_vecs, self.T_mean, self.T_var)
@@ -345,40 +350,49 @@ class JTpropVAE(nn.Module):
         prop_label = create_var(x_prop[:, 0:2])
         prop_loss = self.prop_loss(self.propNN(all_vec).squeeze(), prop_label)
 
-        # Learn dendicity
-        x_dent = x_dent.type(
-            torch.FloatTensor
-        )  # This is done in order to have it work with the cross entropy loss. Otherwise there is an error.
-        denticity_label = create_var(x_dent)
-        denticity_label.int()
-        dent_loss = self.denticityNN_loss(
-            self.denticityNN(all_vec).squeeze(), denticity_label
-        )
+        for term in self.train_mode:
+            if term == "denticity":
+                # Learn dendicity
+                x_dent = x_dent.type(
+                    torch.FloatTensor
+                )  # This is done in order to have it work with the cross entropy loss. Otherwise there is an error.
+                denticity_label = create_var(x_dent)
+                denticity_label.int()
+                dent_loss = self.denticityNN_loss(
+                    self.denticityNN(all_vec).squeeze(), denticity_label
+                )
+            elif term == "isomer":
+                # Learn isomer
+                x_isomer = x_isomer.type(
+                    torch.LongTensor
+                )  # This is done in order to have it work with the cross entropy loss. Otherwise there is an error.
+                isomer_label = create_var(x_isomer)
+                isomer_label.int()
+                isomer_loss = self.isomerNN_loss(
+                    self.isomerNN(all_vec).squeeze(), isomer_label
+                )
 
-        # Learn isomer
-        x_isomer = x_isomer.type(
-            torch.LongTensor
-        )  # This is done in order to have it work with the cross entropy loss. Otherwise there is an error.
-        isomer_label = create_var(x_isomer)
-        isomer_label.int()
+        # Standard loss
+        standard_loss = word_loss + topo_loss + assm_loss + beta * kl_div + prop_loss
+        # Standard log
+        log_metrics = {
+            "kl_div": kl_div.item(),
+            "word_acc": word_acc * 100,
+            "topo_acc": topo_acc * 100,
+            "assm_acc": assm_acc * 100,
+            "prop_loss": prop_loss.item() * 100,
+        }
 
-        isomer_loss = self.isomerNN_loss(self.isomerNN(all_vec).squeeze(), isomer_label)
-        return (
-            word_loss
-            + topo_loss
-            + assm_loss
-            + beta * kl_div
-            + prop_loss
-            + dent_loss
-            + isomer_loss,
-            kl_div.item(),
-            word_acc,
-            topo_acc,
-            assm_acc,
-            prop_loss.item(),
-            dent_loss.item(),
-            isomer_loss.item(),
-        )
+        # Add terms to logging and loss
+        for term in self.train_mode:
+            if term == "denticity":
+                standard_loss += dent_loss
+                log_metrics["dent_loss"] = dent_loss.item() * 100
+            elif term == "isomer":
+                standard_loss += isomer_loss
+                log_metrics["isomer_loss"] = isomer_loss.item() * 100
+
+        return standard_loss, log_metrics
 
     def assm(self, mol_batch, jtmpn_holder, x_mol_vecs, x_tree_mess):
         jtmpn_holder, batch_idx = jtmpn_holder
@@ -589,3 +603,32 @@ class JTpropVAE(nn.Module):
                 return cur_mol, cur_mol
 
         return None, pre_mol
+
+
+class Analyzer:
+    def __init__(self, model):
+        self.jt_vae = model
+        return
+
+    def print_smiles_gradient(
+        self, visited_vectors, selected_idx=None, prob_decode=None, fp1=None
+    ):
+        # Print all the smiles along the gradient.
+        to_print = []
+        for v in visited_vectors[0:selected_idx]:
+            tree_vec, mol_vec = torch.chunk(v, 2, dim=1)
+            new_smiles = self.jt_vae.decode(tree_vec, mol_vec, prob_decode=prob_decode)
+
+            prop_val = self.jt_vae.propNN(v)
+            # print(prop_val)
+            prediction = prop_val.tolist()
+
+            new_mol = Chem.MolFromSmiles(new_smiles)
+            # Chem.AssignStereochemistry(new_mol)
+            fp2 = AllChem.GetMorganFingerprint(new_mol, 2)
+            sim = DataStructs.TanimotoSimilarity(fp1, fp2)
+            # print(sim,x_batch[0].smiles,new_smiles)
+
+            to_print.append((new_smiles, prediction, sim))
+        print(to_print)
+        return

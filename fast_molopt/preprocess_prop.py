@@ -1,4 +1,5 @@
 import sys
+from tkinter.scrolledtext import example
 
 sys.path.append("../")
 import os
@@ -8,6 +9,7 @@ from optparse import OptionParser
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 import rdkit
 from tqdm import tqdm
 
@@ -42,8 +44,16 @@ def convert(train_path, prop_path, pool, num_splits, output_path):
         data = [line.strip("\r\n ").split()[0] for line in f]
     print("Input File read")
 
-    with open(prop_path) as f:
-        prop_data = [line.strip("\r\n ").split(",") for line in f]
+    # Read the property file. The file should be a CSV
+    # with open(prop_path) as f:
+    #     prop_data = [line.strip("\r\n ").split(",") for line in f]
+
+    prop_data = pd.read_csv(prop_path, sep=",")
+    print(f"Input property file read with the properties: {prop_data.columns}")
+    print(
+        "NB! This column ordering gives the ordering of properties in the property tensor"
+    )
+
     # Convert to float
     # ## Start debug
     # temp_prop = []
@@ -59,18 +69,18 @@ def convert(train_path, prop_path, pool, num_splits, output_path):
     # prop_data = temp_prop
     # ## End debug
     # prop_data = [[float(y) for y in x] for x in prop_data]
-    print("Prop file read")
 
     # Verify that the number of properties match the number of data points
     if len(data) != len(prop_data):
         raise Exception(
-            "TEMRINATED, number of properties does not match number of data points"
+            "TEMRINATED, number of lines in property file does not match number of data points"
         )
 
-    print("Tensorizing .....")
+    print("Tensorizing the input data.....")
     all_data = pool.map(tensorize, data)
     all_data_split = np.array_split(all_data, num_splits)
-    prop_data_split = np.array_split(prop_data, num_splits)
+    prop_data_split = np.array_split(prop_data.to_numpy(), num_splits)
+
     print("Tensorizing Complete")
 
     print("Adding prop to data")

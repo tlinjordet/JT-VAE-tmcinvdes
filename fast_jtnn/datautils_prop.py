@@ -1,9 +1,11 @@
+import itertools
 import os
 import pickle as pickle
 import random
 
 import numpy as np
 import torch
+from pygments.unistring import combine
 from torch.utils.data import DataLoader, Dataset
 
 from fast_jtnn.jtmpn import JTMPN
@@ -67,7 +69,7 @@ class MolTreeFolder_prop(object):
         vocab,
         batch_size,
         num_workers=4,
-        shuffle=True,
+        shuffle=False,
         assm=True,
         replicate=None,
         optimize=False,

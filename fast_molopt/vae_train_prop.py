@@ -8,6 +8,8 @@ from pathlib import Path
 
 sys.path.append("../")
 
+import subprocess
+
 import numpy as np
 import torch
 import torch.nn as nn
@@ -22,6 +24,15 @@ sys.path.insert(0, str(source))
 _logger: logging.Logger = logging.getLogger(__name__)
 
 from fast_jtnn import JTpropVAE, MolTreeFolder_prop, Vocab
+
+
+def get_git_revision_short_hash() -> str:
+    """get the git hash of current commit if git repo."""
+    return (
+        subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
+        .decode("ascii")
+        .strip()
+    )
 
 
 def main_vae_train(
@@ -46,16 +57,17 @@ def main_vae_train(
             logging.StreamHandler(),  # For debugging. Can be removed on remote
         ],
     )
+
+    # Unpack beta
     beta = args.beta
 
-    n_props = 2
     model = JTpropVAE(
         vocab,
         args.hidden_size,
         args.latent_size,
         args.depthT,
         args.depthG,
-        n_props=n_props,
+        args.train_mode,
     ).cuda()
     print(model)
 
@@ -77,7 +89,8 @@ def main_vae_train(
 
     # Write commandline args to file
     with open(output_dir / "opts.txt", "w") as file:
-        file.write(f"{vars(args)}")
+        file.write(f"{vars(args)}\n")
+        file.write(f"Git commit tag: {get_git_revision_short_hash()}\n")
 
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
     scheduler = lr_scheduler.ExponentialLR(optimizer, args.anneal_rate)
@@ -99,67 +112,30 @@ def main_vae_train(
 
     total_step = args.load_epoch
 
-    meters = np.zeros(7)
     for epoch in tqdm(list(range(args.epoch)), position=0, leave=True):
         loader = MolTreeFolder_prop(
             args.train, vocab, args.batch_size, shuffle=False
         )  # , num_workers=4)
         for batch in loader:
             total_step += 1
-            try:
-                model.zero_grad()
-                (
-                    loss,
-                    kl_div,
-                    wacc,
-                    tacc,
-                    sacc,
-                    prop_loss,
-                    dent_loss,
-                    isomer_loss,
-                ) = model(batch, args.beta)
-                loss.backward()
-                nn.utils.clip_grad_norm_(model.parameters(), args.clip_norm)
-                optimizer.step()
-            except Exception as e:
-                print(e)
-                continue
+            model.zero_grad()
+            loss, log_metrics = model(batch, beta)
+            loss.backward()
+            nn.utils.clip_grad_norm_(model.parameters(), args.clip_norm)
+            optimizer.step()
 
-            meters = meters + np.array(
-                [
-                    kl_div,
-                    wacc * 100,
-                    tacc * 100,
-                    sacc * 100,
-                    prop_loss * 100,
-                    dent_loss * 100,
-                    isomer_loss * 100,
-                ]
-            )
-
+            # Log the current metrics
             if total_step % args.print_iter == 0:
-                meters /= args.print_iter
-                _logger.info(
-                    (
-                        "[%d] Loss: %.3f,Beta: %.3f,KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f,Prop_loss %.2f, Dent_loss %.2f, isomer_loss %.2f,PNorm: %.2f, GNorm: %.2f"
-                        % (
-                            total_step,
-                            loss.item(),
-                            beta,
-                            meters[0],
-                            meters[1],
-                            meters[2],
-                            meters[3],
-                            meters[4],
-                            meters[5],
-                            meters[6],
-                            param_norm(model),
-                            grad_norm(model),
-                        )
-                    )
+                log_list = (
+                    [f"Loss: {loss:.2f}", f" Beta: {beta:.5f}"]
+                    + [f" {k}: {v:.3f}" for k, v in log_metrics.items()]
+                    + [
+                        f"PNorm: {param_norm(model):.3f}",
+                        f"GNorm: {grad_norm(model):.3f}",
+                    ]
                 )
-                sys.stdout.flush()
-                meters *= 0
+                log_string = ",".join(log_list)
+                _logger.info(log_string)
 
             if total_step % args.save_iter == 0:
                 torch.save(model.state_dict(), output_dir / f"model.iter-{total_step}")
@@ -184,9 +160,16 @@ if __name__ == "__main__":
     parser.add_argument("--load_previous_model", action="store_true")
     parser.add_argument("--model_path", required=False, type=Path)
     parser.add_argument("--load_epoch", type=int, default=0)
+    parser.add_argument(
+        "--train_mode",
+        nargs="*",
+        default=[],
+        choices=["denticity", "isomer"],
+        help="Selects which extra property terms to include in the training, when using the argument each extra term should be separated by a space",
+    )
 
     parser.add_argument("--hidden_size", type=int, default=450)
-    parser.add_argument("--batch_size", type=int, default=8)  # 32)
+    parser.add_argument("--batch_size", type=int, default=2)  # 32)
     parser.add_argument("--latent_size", type=int, default=56)
     parser.add_argument("--depthT", type=int, default=20)
     parser.add_argument("--depthG", type=int, default=3)
