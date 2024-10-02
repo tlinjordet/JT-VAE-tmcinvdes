@@ -155,9 +155,7 @@ class JTpropVAE(nn.Module):
         fp1 = AllChem.GetMorganFingerprint(mol, 2)
 
         z_tree_mean = self.T_mean(x_tree_vecs)
-        # -torch.abs(self.T_var(x_tree_vecs))  # Following Mueller et al.
         z_mol_mean = self.G_mean(x_mol_vecs)
-        # -torch.abs(self.G_var(x_mol_vecs))  # Following Mueller et al.
 
         mean = torch.cat([z_tree_mean, z_mol_mean], dim=1)
         cur_vec = create_var(mean.data, True)
@@ -205,6 +203,7 @@ class JTpropVAE(nn.Module):
 
             dent_dy = dent_dy.squeeze()
 
+            # The scaler decides the gradient direction
             scaler = -1 if minimize else 1
 
             # Normalize gradient
@@ -299,7 +298,7 @@ class JTpropVAE(nn.Module):
                     print("None of the tanimoto candidates passed the validity check")
                     new_smiles = None
 
-        self.analyzer.print_smiles_gradient()
+        # self.analyzer.print_smiles_gradient()
 
         if new_smiles is None:
             return x_batch[0].smiles, 1.0

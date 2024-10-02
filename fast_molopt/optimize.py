@@ -81,6 +81,13 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
         type=str,
         default="bidentate",
     )
+    parser.add_argument(
+        "--train_mode",
+        nargs="*",
+        default=[],
+        choices=["denticity", "isomer"],
+        help="Selects which extra property terms that where included in the training, when using the argument each extra term should be separated by a space",
+    )
 
     return parser.parse_args(arg_list)
 
@@ -101,7 +108,7 @@ def main():
         int(latent_size),
         int(opts.depthT),
         int(opts.depthG),
-        denticity=opts.denticity,
+        train_mode=opts.train_mode,
     ).cuda()
     print(model)
     model.load_state_dict(torch.load(opts.model_path))
@@ -116,7 +123,9 @@ def main():
     output_dir_props = input_dir_path.parent / "smiles_samples_props.txt"
 
     # Process dataframe to input files
-    create_input_files(input_dir_df, output_dir_smiles, output_dir_props)
+    create_input_files(
+        input_dir_df, output_dir_smiles, output_dir_props, opts.train_mode
+    )
     main_preprocess(output_dir_smiles, output_dir_props, output_dir, opts.nsplits)
 
     loader = MolTreeFolder_prop(
@@ -176,23 +185,19 @@ def main():
                 writer.writerow(list_of_props)
 
 
-def create_input_files(input_df, output_dir_smiles, output_dir_props):
+def create_input_files(input_df, output_dir_smiles, output_dir_props, train_mode):
     if os.path.exists(output_dir_smiles):
         os.remove(output_dir_smiles)
     if os.path.exists(output_dir_props):
         os.remove(output_dir_props)
 
-    for i, row in input_df.iterrows():
-        with open(
-            output_dir_smiles,
-            "a",
-        ) as f:
-            f.write(f"{row['sub_smi']}\n")
-        with open(
-            output_dir_props,
-            "a",
-        ) as f:
-            f.write(f"{row['homo-lumo']},{row['Ir-cm5']}\n")
+    properties = ["homo-lumo", "Ir-cm5"]
+    for term in train_mode:
+        properties.append(term)
+
+    # property_header = ",".join(properties)
+    input_df[["homo-lumo", "Ir-cm5"]].to_csv(output_dir_props, index=None, sep=",")
+    input_df["sub_smi"].to_csv(output_dir_smiles, index=None, sep=",", header=None)
 
 
 if __name__ == "__main__":
