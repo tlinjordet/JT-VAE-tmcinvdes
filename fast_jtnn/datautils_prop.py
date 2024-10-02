@@ -5,7 +5,6 @@ import random
 
 import numpy as np
 import torch
-from pygments.unistring import combine
 from torch.utils.data import DataLoader, Dataset
 
 from fast_jtnn.jtmpn import JTMPN

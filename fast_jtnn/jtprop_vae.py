@@ -76,6 +76,7 @@ class JTpropVAE(nn.Module):
                     # The outptut is >0.5 for bidentate and <0.5 for bidentate
                 )
                 self.denticityNN_loss = nn.BCEWithLogitsLoss()
+                print("Added denticity layer")
             elif term == "isomer":
                 # Multiclass classification (0 for monodentate and 1/2 for cis/trans)
                 self.isomerNN = nn.Sequential(
@@ -84,6 +85,7 @@ class JTpropVAE(nn.Module):
                     nn.Linear(self.hidden_size, 3),  # Number of output classes
                 )
                 self.isomerNN_loss = nn.CrossEntropyLoss()
+                print("Added isomer layer")
             else:
                 raise ValueError("train_mode is not a valid value")
 
@@ -405,9 +407,11 @@ class JTpropVAE(nn.Module):
             if term == "denticity":
                 standard_loss += dent_loss
                 log_metrics["dent_loss"] = dent_loss.item() * 100
+                print("Added denticity loss")
             elif term == "isomer":
                 standard_loss += isomer_loss
                 log_metrics["isomer_loss"] = isomer_loss.item() * 100
+                print("Added isomer loss")
 
         return standard_loss, log_metrics
 
