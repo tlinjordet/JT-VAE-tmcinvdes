@@ -123,8 +123,9 @@ def main():
     output_dir_props = input_dir_path.parent / "smiles_samples_props.txt"
 
     # Process dataframe to input files
+    extra_properties = []
     create_input_files(
-        input_dir_df, output_dir_smiles, output_dir_props, opts.train_mode
+        input_dir_df, output_dir_smiles, output_dir_props, extra_properties
     )
     main_preprocess(output_dir_smiles, output_dir_props, output_dir, opts.nsplits)
 
@@ -185,18 +186,18 @@ def main():
                 writer.writerow(list_of_props)
 
 
-def create_input_files(input_df, output_dir_smiles, output_dir_props, train_mode):
+def create_input_files(input_df, output_dir_smiles, output_dir_props, extra_properties):
     if os.path.exists(output_dir_smiles):
         os.remove(output_dir_smiles)
     if os.path.exists(output_dir_props):
         os.remove(output_dir_props)
 
     properties = ["homo-lumo", "Ir-cm5"]
-    for term in train_mode:
+    for term in extra_properties:
         properties.append(term)
 
     # property_header = ",".join(properties)
-    input_df[["homo-lumo", "Ir-cm5"]].to_csv(output_dir_props, index=None, sep=",")
+    input_df[properties].to_csv(output_dir_props, index=None, sep=",")
     input_df["sub_smi"].to_csv(output_dir_smiles, index=None, sep=",", header=None)
 
 

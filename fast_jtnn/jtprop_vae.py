@@ -143,11 +143,39 @@ class JTpropVAE(nn.Module):
         sim_cutoff,
         lr=0.2,
         num_iter=20,
-        type="both",
+        type="charge",
         prob_decode=False,
         minimize=True,
-        desired_denticity="bidentate",
+        desired_denticity="monodentate",
     ):
+        """Optimize a given ligand in latent space.
+
+        Parameters
+        ----------
+        x_batch : list
+            List containing the pre-processed data for a ligand
+        sim_cutoff : float
+            Tanimoto similarity cutoff for the optimization.
+        lr : float
+            Learning rate for the optimization.
+        num_iter : int, optional
+            Number of steps along the gradient in latent space.
+        type : str
+            The property to optimize
+        prob_decode : bool
+            Decoding param. Unclear what it does. Keep False
+        minimize : bool
+            Whether to minimize or maximize the property.
+        desired_denticity : str, optional
+            Which denticity to optimize towards
+
+        Returns
+        -------
+        new_smiles : str
+            The SMILES string of the optimized molecule.
+        tanimoto : float
+            The Tanimoto similarity between the optimized molecule and the starting molecule.
+        """
         x_batch, x_prop, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
         x_tree_vecs, x_tree_mess, x_mol_vecs = self.encode(x_jtenc_holder, x_mpn_holder)
 
@@ -170,12 +198,18 @@ class JTpropVAE(nn.Module):
 
         # Step in gradient space
         for step in range(num_iter):
+            # Get property prediction
             prop_val = self.propNN(cur_vec)
             homo_lumo_gap_predicted.append(prop_val.tolist()[0][0])
             charge_predicted.append(prop_val.tolist()[0][1])
-            # grad = torch.autograd.grad(prop_val, cur_vec,grad_outputs=torch.ones_like(prop_val))[0]
 
-            dydx3 = torch.tensor([], dtype=torch.float32, device=cuda0)
+            # NB THE TWO LINES BELOW IS A MORE MODERN WAY OF GETTING GRADIENT. HAVE NOT TESTED BUT IT REMOVES THE NEED FOR A FOR LOOP AND
+            # IS MORE TRANSPARENT. dydx3 is equal to [grad,grad2]
+            # grad = torch.autograd.grad(prop_val, cur_vec,grad_outputs=torch.tensor([[1,0]],device=torch.device('cuda:0')),retain_graph=True) first property gradient
+            # grad2 = torch.autograd.grad(prop_val, cur_vec,grad_outputs=torch.tensor([[0,1]],device=torch.device('cuda:0')),retain_graph=True) second property gradient
+
+            gradient_holder = torch.tensor([], dtype=torch.float32, device=cuda0)
+            # For each property in prop_val prediction, get gradient.
             for i in range(2):
                 li = torch.zeros_like(prop_val)
                 li[:, i] = 1.0
@@ -184,35 +218,29 @@ class JTpropVAE(nn.Module):
                 )[
                     0
                 ]  # dydx: (batch_size, input_dim)
-                dydx3 = torch.concat((dydx3, d.unsqueeze(dim=1)), dim=1)
+                gradient_holder = torch.concat(
+                    (gradient_holder, d.unsqueeze(dim=1)), dim=1
+                )
 
-            dydx3 = dydx3.squeeze()
+            gradient_holder = gradient_holder.squeeze()
 
             # Now we get the gradients of the denticity layer.
-            dent_dy = torch.tensor([], dtype=torch.float32, device=cuda0)
+            denticity_gradient = torch.tensor([], dtype=torch.float32, device=cuda0)
             dent_val = self.denticityNN(cur_vec)
-            for i in range(2):
-                li = torch.zeros_like(dent_val)
-                li[:, i] = 1.0
-                d = torch.autograd.grad(
-                    dent_val, cur_vec, retain_graph=True, grad_outputs=li
-                )[
-                    0
-                ]  # dydx: (batch_size, input_dim)
-                dent_dy = torch.concat((dent_dy, d.unsqueeze(dim=1)), dim=1)
-
-            dent_dy = dent_dy.squeeze()
+            denticity_gradient = torch.autograd.grad(
+                dent_val, cur_vec, retain_graph=True
+            )[0]
+            denticity_gradient = denticity_gradient.squeeze()
 
             # The scaler decides the gradient direction
             scaler = -1 if minimize else 1
 
-            # Normalize gradient
-            norm0 = torch.nn.functional.normalize(dydx3[0], dim=-1)
-            norm1 = torch.nn.functional.normalize(dydx3[1], dim=-1)
+            # Normalize the q,epsilon gradients
+            norm0 = torch.nn.functional.normalize(gradient_holder[0], dim=-1)
+            norm1 = torch.nn.functional.normalize(gradient_holder[1], dim=-1)
 
             # Normalize the denticity gradient
-            mono_norm = torch.nn.functional.normalize(dent_dy[0], dim=-1)
-            bi_norm = torch.nn.functional.normalize(dent_dy[1], dim=-1)
+            denticity_norm = torch.nn.functional.normalize(denticity_gradient, dim=-1)
 
             # Get the gradient magnitudes
             # n0 = torch.linalg.vector_norm(dydx3[0])
@@ -231,25 +259,15 @@ class JTpropVAE(nn.Module):
                 raise ValueError
 
             # Add denticity gradient in given direction
-            if desired_denticity == "monodentate":
-                cur_vec = cur_vec + lr * mono_norm * 2
-            elif desired_denticity == "bidentate":
-                cur_vec = cur_vec + lr * bi_norm * 2
+            if desired_denticity == "monodentate":  # Decrease probability
+                cur_vec = cur_vec - lr * denticity_norm * 2
+            elif desired_denticity == "bidentate":  # Increase probability
+                cur_vec = cur_vec + lr * denticity_norm * 2
             else:
                 raise ValueError
 
             cur_vec = create_var(cur_vec, True)
             visited.append(cur_vec)
-
-        # This decodes and prints the SMILES along the gradient
-        # all_smiles = []
-        # for elem in visited:
-        #     tree_vec, mol_vec = torch.chunk(elem, 2, dim=1)
-        #     new_smiles = self.decode(tree_vec, mol_vec, prob_decode=prob_decode)
-        #     print(new_smiles)
-        #     all_smiles.append(new_smiles)
-        #
-        # sys.exit()
 
         # Now we want to get the best possible latent vectors.
         tanimoto = []
