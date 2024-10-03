@@ -41,7 +41,7 @@ def convert(train_path, prop_path, pool, num_splits, output_path):
         os.makedirs(out_path)
 
     with open(train_path) as f:
-        data = [line.strip("\r\n ").split()[0] for line in f]
+        smiles = [line.strip("\r\n ").split()[0] for line in f]
     print("Input File read")
 
     # Read the property file. The file should be a CSV
@@ -71,20 +71,19 @@ def convert(train_path, prop_path, pool, num_splits, output_path):
     # prop_data = [[float(y) for y in x] for x in prop_data]
 
     # Verify that the number of properties match the number of data points
-    if len(data) != len(prop_data):
+    if len(smiles) != len(prop_data):
         raise Exception(
-            "TEMRINATED, number of lines in property file does not match number of data points"
+            "TEMRINATED, number of lines in property file does not match number of smiles"
         )
 
     print("Tensorizing the input data.....")
-    all_data = pool.map(tensorize, data)
+    all_data = pool.map(tensorize, smiles)
     all_data_split = np.array_split(all_data, num_splits)
     prop_data_split = np.array_split(prop_data.to_numpy(), num_splits)
 
     print("Tensorizing Complete")
 
-    print("Adding prop to data")
-
+    print("Storing tensors")
     for split_id in tqdm(list(range(num_splits)), position=0, leave=True):
         with open(os.path.join(output_path, "tensors-%d.pkl" % split_id), "wb") as f:
             pickle.dump((all_data_split[split_id], prop_data_split[split_id]), f)
