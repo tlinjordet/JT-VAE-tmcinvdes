@@ -147,3 +147,5 @@ optimize-processed/
 train_*/
 nohup*.out
 samples/**/*.pkl
+tmp_notebooks/
+tmp_results/

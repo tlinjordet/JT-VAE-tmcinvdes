@@ -1,0 +1,4 @@
+C[Se]1->[Ir]<-[Se](C)C2CC2C1
+CN(C)C1=N->[Ir]<-n2ccn(Cc3ccccc3)c21
+Cc1cccc(C)c1NC(=[N+]=O)C1=S->[Ir]<-[S-]1
+Cc1ccccc1[S+]1([O-])->[Ir]<-[SH2+]C12CCCCC2
