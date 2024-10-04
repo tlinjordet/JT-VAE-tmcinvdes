@@ -182,7 +182,7 @@ class JTpropVAE(nn.Module):
         x_tree_vecs, x_tree_mess, x_mol_vecs = self.encode(x_jtenc_holder, x_mpn_holder)
 
         mol = Chem.MolFromSmiles(x_batch[0].smiles)
-        fp1 = AllChem.GetMorganFingerprint(mol, 2)
+        start_fingerprint = AllChem.GetMorganFingerprint(mol, 2)
 
         z_tree_mean = self.T_mean(x_tree_vecs)
         z_mol_mean = self.G_mean(x_mol_vecs)
@@ -272,64 +272,75 @@ class JTpropVAE(nn.Module):
             visited.append(cur_vec)
 
         # Now we want to get the best possible latent vectors.
-        tanimoto = []
+        results = []
         li, r = 0, num_iter - 1
         counter = 1
-        gradient_idx = []
-        smiles_list = []
         while li < r - 1:
             mid = (li + r) // 2
             new_vec = visited[mid]
             tree_vec, mol_vec = torch.chunk(new_vec, 2, dim=1)
             new_smiles = self.decode(tree_vec, mol_vec, prob_decode=prob_decode)
+
             if new_smiles is None:
                 r = mid - 1
                 continue
 
             new_mol = Chem.MolFromSmiles(new_smiles)
             fp2 = AllChem.GetMorganFingerprint(new_mol, 2)
-            sim = DataStructs.TanimotoSimilarity(fp1, fp2)
-            # print(f'Tanimoto score {mid}:', sim)
-            tanimoto.append((counter, sim))
-            gradient_idx.append((counter, mid))
-            smiles_list.append((counter, new_smiles))
+            sim = DataStructs.TanimotoSimilarity(start_fingerprint, fp2)
+
+            # Store all the relevant data in one place
+            results.append(
+                {
+                    "gradient_step": counter,
+                    "current_similarity": sim,
+                    "latent_vector_idx": mid,
+                    "latent_vector": visited[mid],
+                    "current_smiles": new_smiles,
+                }
+            )
+
+            # If under cutoff we move backwards
             if sim < sim_cutoff:
                 r = mid - 1
             else:
                 li = mid
             counter += 1
 
-        tree_vec, mol_vec = torch.chunk(visited[li], 2, dim=1)
-        new_smiles = self.decode(tree_vec, mol_vec, prob_decode=prob_decode)
-
-        tanimoto_candidates = [
-            (x[1], s[1], grad_idx[1])
-            for x, s, grad_idx in zip(tanimoto, smiles_list, gradient_idx)
-            if x[1] > sim_cutoff
-        ]
-        tanimoto_candidates.sort(reverse=True, key=lambda x: x[0])
-        tanimoto_candidates = set(tanimoto_candidates)
+        # Check the SMILES for encoding atoms
         if not is_valid_smiles(new_smiles):
-            for tan, sm, grad_idx in tanimoto_candidates:
-                if is_valid_smiles(sm):
-                    new_smiles = sm
-                    break
-                else:
-                    print("None of the tanimoto candidates passed the validity check")
-                    new_smiles = None
+            # Sort the results list in place by latent vector indec in descending order
+            results.sort(key=lambda x: x["latent_vector_idx"], reverse=True)
+
+            # If not we select on of the others that satisfied the tanimoto criteria.
+            for res in results:
+                if res["current_similarity"] > sim_cutoff:
+                    candidate = res["current_smiles"]
+                    # Check if valid
+                    if is_valid_smiles(candidate):
+                        new_smiles = candidate
+                        break
+                    else:
+                        print(
+                            "None of the tanimoto candidates passed the validity check"
+                        )
+                        new_smiles = None
 
         # self.analyzer.print_smiles_gradient()
 
+        # Return the original smiles if we did not find an optimized smiles
         if new_smiles is None:
-            return x_batch[0].smiles, 1.0
+            return results, 1.0
+
+        # Get similarity of chosen smiles
         new_mol = Chem.MolFromSmiles(new_smiles)
         fp2 = AllChem.GetMorganFingerprint(new_mol, 2)
-        sim = DataStructs.TanimotoSimilarity(fp1, fp2)
+        sim = DataStructs.TanimotoSimilarity(start_fingerprint, fp2)
         if sim >= sim_cutoff:
-            return new_smiles, sim
+            return results, sim
         else:
             print("Molecule could not satisfy tanimoto cutoff")
-            return x_batch[0].smiles, 1.0
+            return results, 1.0
 
     def forward(self, x_batch, beta):
         x_batch, x_prop_holder, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
