@@ -11,6 +11,7 @@ import rdkit
 import rdkit.Chem as Chem
 import torch
 import torch.nn as nn
+from plots import *
 from rdkit.Chem import Descriptors
 from torch.autograd import Variable
 
@@ -47,7 +48,7 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
     parser.add_argument("--latent_size", type=int, default=56)
     parser.add_argument("--depthT", type=int, default=20)
     parser.add_argument("--depthG", type=int, default=3)
-    parser.add_argument("--cutoff", type=float, default=0.2)
+    parser.add_argument("--cutoff", type=float, default=0.1)
 
     parser.add_argument(
         "--type",
@@ -161,7 +162,7 @@ def main():
             # Set the minimize flag based on the given direction
             minimize = True if dir[1] == "minimize" else False
 
-            new_smiles, sim = model.optimize(
+            new_smiles, results, sim, predictions = model.optimize(
                 batch,
                 sim_cutoff=sim_cutoff,
                 lr=opts.lr,
@@ -171,6 +172,11 @@ def main():
                 minimize=minimize,
                 desired_denticity=opts.desired_denticity,
             )
+            if sim == 1:
+                print("No valid optimized smiles could be found")
+
+            # If we want we can plot the gradient trajectories.
+            plot_latent_trajectory(results, predictions)
 
             # Write a row to a csv file.
             with open(output_dir / "optimize_results.csv", "a") as f1:
@@ -182,7 +188,13 @@ def main():
                 # Get the row elements of the original data
                 r = input_dir_df.iloc[i].to_list()
                 # Append the data from optimized row
-                list_of_props = r + [smiles, new_smiles, sim, current_type, minimize]
+                list_of_props = r + [
+                    smiles,
+                    new_smiles,
+                    sim,
+                    current_type,
+                    minimize,
+                ]
                 writer.writerow(list_of_props)
 
 

@@ -1,4 +1,5 @@
 import copy
+from collections import defaultdict
 
 import rdkit.Chem as Chem
 import torch
@@ -192,18 +193,19 @@ class JTpropVAE(nn.Module):
 
         visited = []
         cuda0 = torch.device("cuda:0")
-        homo_lumo_gap_predicted = []
-        charge_predicted = []
 
         # Apply different scaling on the gradient along the homo-lumo gap direction.
         lr_homo = 1.5 * lr
+
+        # Predictions holder
+        predictions = defaultdict(list)
 
         # Step in gradient space
         for step in range(num_iter):
             # Get property prediction
             prop_val = self.propNN(cur_vec)
-            homo_lumo_gap_predicted.append(prop_val.tolist()[0][0])
-            charge_predicted.append(prop_val.tolist()[0][1])
+            predictions["homo-lumo-gap"].append(prop_val.tolist()[0][0])
+            predictions["Ir-cm5"].append(prop_val.tolist()[0][1])
 
             # NB THE TWO LINES BELOW IS A MORE MODERN WAY OF GETTING GRADIENT. HAVE NOT TESTED BUT IT REMOVES THE NEED FOR A FOR LOOP AND
             # IS MORE TRANSPARENT. dydx3 is equal to [grad,grad2]
@@ -228,9 +230,11 @@ class JTpropVAE(nn.Module):
 
             # Now we get the gradients of the denticity layer.
             denticity_gradient = torch.tensor([], dtype=torch.float32, device=cuda0)
-            dent_val = self.denticityNN(cur_vec)
+            denticity_prediction = self.denticityNN(cur_vec)
+            predictions["denticity"].append(denticity_prediction)
+
             denticity_gradient = torch.autograd.grad(
-                dent_val, cur_vec, retain_graph=True
+                denticity_prediction, cur_vec, retain_graph=True
             )[0]
             denticity_gradient = denticity_gradient.squeeze()
 
@@ -242,7 +246,7 @@ class JTpropVAE(nn.Module):
             norm1 = torch.nn.functional.normalize(gradient_holder[1], dim=-1)
 
             # Normalize the denticity gradient
-            denticity_norm = torch.nn.functional.normalize(denticity_gradient, dim=-1)
+            torch.nn.functional.normalize(denticity_gradient, dim=-1)
 
             # Get the gradient magnitudes
             # n0 = torch.linalg.vector_norm(dydx3[0])
@@ -261,12 +265,12 @@ class JTpropVAE(nn.Module):
                 raise ValueError
 
             # Add denticity gradient in given direction
-            if desired_denticity == "monodentate":  # Decrease probability
-                cur_vec = cur_vec - lr * denticity_norm * 2
-            elif desired_denticity == "bidentate":  # Increase probability
-                cur_vec = cur_vec + lr * denticity_norm * 2
-            else:
-                raise ValueError
+            # if desired_denticity == "monodentate":  # Decrease probability
+            #     cur_vec = cur_vec - lr * denticity_norm * 2
+            # elif desired_denticity == "bidentate":  # Increase probability
+            #     cur_vec = cur_vec + lr * denticity_norm * 2
+            # else:
+            #     raise ValueError
 
             cur_vec = create_var(cur_vec, True)
             visited.append(cur_vec)
@@ -295,7 +299,7 @@ class JTpropVAE(nn.Module):
                     "gradient_step": counter,
                     "current_similarity": sim,
                     "latent_vector_idx": mid,
-                    "latent_vector": visited[mid],
+                    "visited_latent_vectors": visited,
                     "current_smiles": new_smiles,
                 }
             )
@@ -330,17 +334,17 @@ class JTpropVAE(nn.Module):
 
         # Return the original smiles if we did not find an optimized smiles
         if new_smiles is None:
-            return results, 1.0
+            return new_smiles, results, 1.0, predictions
 
         # Get similarity of chosen smiles
         new_mol = Chem.MolFromSmiles(new_smiles)
         fp2 = AllChem.GetMorganFingerprint(new_mol, 2)
         sim = DataStructs.TanimotoSimilarity(start_fingerprint, fp2)
         if sim >= sim_cutoff:
-            return results, sim
+            return new_smiles, sim, predictions
         else:
             print("Molecule could not satisfy tanimoto cutoff")
-            return results, 1.0
+            return new_smiles, results, 1.0, predictions
 
     def forward(self, x_batch, beta):
         x_batch, x_prop_holder, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch
