@@ -104,6 +104,7 @@ class MolTreeFolder_prop(object):
                 for i in range(0, len(prop_data), self.batch_size)
             ]
             if len(batches[-1]) < self.batch_size:
+                print("WARNING: Batch size does not match the splits well enough.")
                 batches.pop()
                 batches_prop.pop()
 

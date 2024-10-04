@@ -407,11 +407,9 @@ class JTpropVAE(nn.Module):
             if term == "denticity":
                 standard_loss += dent_loss
                 log_metrics["dent_loss"] = dent_loss.item() * 100
-                print("Added denticity loss")
             elif term == "isomer":
                 standard_loss += isomer_loss
                 log_metrics["isomer_loss"] = isomer_loss.item() * 100
-                print("Added isomer loss")
 
         return standard_loss, log_metrics
 
