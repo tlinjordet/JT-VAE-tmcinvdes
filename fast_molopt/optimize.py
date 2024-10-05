@@ -57,7 +57,7 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
         help="Which property to optimize on",
     )
 
-    parser.add_argument("--lr", type=float, default=0.02)
+    parser.add_argument("--lr", type=float, default=0.005)
     parser.add_argument("--clip_norm", type=float, default=50.0)
     parser.add_argument("--beta", type=float, default=0.0)
     parser.add_argument("--step_beta", type=float, default=0.002)
@@ -157,7 +157,7 @@ def main():
         for dir in directions:
             current_type = dir[0]
             smiles = batch[0][0].smiles
-            print(i, smiles, "-".join(dir))
+            print(f"{i} Prompt SMILES: {smiles} - Direction: {'-'.join(dir)}")
 
             # Set the minimize flag based on the given direction
             minimize = True if dir[1] == "minimize" else False
@@ -173,7 +173,8 @@ def main():
                 desired_denticity=opts.desired_denticity,
             )
             if sim == 1:
-                print("No valid optimized smiles could be found")
+                print(f"{i} No valid optimized smiles could be found")
+            print(f"Optimized SMILES: {new_smiles} with similarity: {sim}\n")
 
             # If we want we can plot the gradient trajectories.
             plot_latent_trajectory(results, predictions)

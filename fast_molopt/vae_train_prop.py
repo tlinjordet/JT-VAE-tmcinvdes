@@ -171,7 +171,7 @@ if __name__ == "__main__":
 
     # These should not be touched
     parser.add_argument("--hidden_size", type=int, default=450)
-    parser.add_argument("--batch_size", type=int, default=2)  # 2 when debugging)
+    parser.add_argument("--batch_size", type=int, default=32)  # 2 when debugging)
     parser.add_argument("--latent_size", type=int, default=56)
     parser.add_argument("--depthT", type=int, default=20)
     parser.add_argument("--depthG", type=int, default=3)

@@ -30,7 +30,7 @@ def plot_latent_trajectory(results, predictions):
 
     ax[2].set(ylabel="Predicted homo-lumo (eV)", xlabel="Iteration")
     ax[2].plot(
-        predictions["homo-lumo-gap"],
+        [x * 27.2114 for x in predictions["homo-lumo-gap"]],
         "ro-",
         linewidth=2,
     )
