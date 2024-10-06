@@ -103,10 +103,6 @@ class MolTreeFolder_prop(object):
                 prop_data[i : i + self.batch_size]
                 for i in range(0, len(prop_data), self.batch_size)
             ]
-            # if len(batches[-1]) < self.batch_size:
-            #     print("WARNING: Batch size does not match the splits well enough.")
-            #     batches.pop()
-            #     batches_prop.pop()
 
             dataset = MolTreeDataset_prop(
                 batches, batches_prop, self.vocab, self.assm, self.optimize
@@ -168,7 +164,7 @@ def tensorize_prop(tree_batch, prop_batch, vocab, assm=True, optimize=False):
     # TL debug, with https://stackoverflow.com/a/70323486 {
     # print(prop_batch)
     # print(type(prop_batch))
-    prop_batch = np.vstack(prop_batch).astype(np.float)
+    # prop_batch = np.vstack(prop_batch).astype(np.float)
     # print(prop_batch)
     # print(type(prop_batch))
     # torch.from_numpy(a)
@@ -188,8 +184,8 @@ def tensorize_prop(tree_batch, prop_batch, vocab, assm=True, optimize=False):
             cands.extend([(cand, mol_tree.nodes, node) for cand in node.cands])
             batch_idx.extend([i] * len(node.cands))
 
-    # WARNING: THIS NEEDS TO BE COMMENTED OUT WHEN DOING LOCAL OPTIMIZATION.
-    # A NONE VALUE SHOULD BE RETURNED AS THIS IS NOT USED IN OPTIMIZATION ANYWAY
+    # WARNING: THIS WAS ADDED WHEN DOING LOCAL OPTIMIZATION.
+    # the holder throws an error when doing local optimization.
     if optimize:
         jtmpn_holder = None
     else:
