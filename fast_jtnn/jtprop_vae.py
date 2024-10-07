@@ -229,14 +229,14 @@ class JTpropVAE(nn.Module):
             gradient_holder = gradient_holder.squeeze()
 
             # Now we get the gradients of the denticity layer.
-            denticity_gradient = torch.tensor([], dtype=torch.float32, device=cuda0)
-            denticity_prediction = self.denticityNN(cur_vec)
-            predictions["denticity"].append(denticity_prediction)
-
-            denticity_gradient = torch.autograd.grad(
-                denticity_prediction, cur_vec, retain_graph=True
-            )[0]
-            denticity_gradient = denticity_gradient.squeeze()
+            # denticity_gradient = torch.tensor([], dtype=torch.float32, device=cuda0)
+            # denticity_prediction = self.denticityNN(cur_vec)
+            # predictions["denticity"].append(denticity_prediction)
+            #
+            # denticity_gradient = torch.autograd.grad(
+            #     denticity_prediction, cur_vec, retain_graph=True
+            # )[0]
+            # denticity_gradient = denticity_gradient.squeeze()
 
             # The scaler decides the gradient direction
             scaler = -1 if minimize else 1
@@ -246,7 +246,7 @@ class JTpropVAE(nn.Module):
             norm1 = torch.nn.functional.normalize(gradient_holder[1], dim=-1)
 
             # Normalize the denticity gradient
-            torch.nn.functional.normalize(denticity_gradient, dim=-1)
+            # torch.nn.functional.normalize(denticity_gradient, dim=-1)
 
             # Get the gradient magnitudes
             # n0 = torch.linalg.vector_norm(dydx3[0])
@@ -276,7 +276,7 @@ class JTpropVAE(nn.Module):
             visited.append(cur_vec)
 
         # Now we want to get the best possible latent vectors.
-        results = []
+        steps_along_gradient = []
         li, r = 0, num_iter - 1
         counter = 1
         while li < r - 1:
@@ -294,12 +294,11 @@ class JTpropVAE(nn.Module):
             sim = DataStructs.TanimotoSimilarity(start_fingerprint, fp2)
 
             # Store all the relevant data in one place
-            results.append(
+            steps_along_gradient.append(
                 {
                     "gradient_step": counter,
                     "current_similarity": sim,
                     "latent_vector_idx": mid,
-                    "visited_latent_vectors": visited,
                     "current_smiles": new_smiles,
                 }
             )
@@ -313,11 +312,14 @@ class JTpropVAE(nn.Module):
 
         # Check the SMILES for encoding atoms
         if not is_valid_smiles(new_smiles):
-            # Sort the results list in place by latent vector indec in descending order
-            results.sort(key=lambda x: x["latent_vector_idx"], reverse=True)
+            # Sort the results list in place by latent vector indec in descending order. We start from furthest away
+            # and then move backwards to find candidates satisfying the tanimoto cutoff.
+            steps_along_gradient.sort(
+                key=lambda x: x["latent_vector_idx"], reverse=True
+            )
 
             # If not we select on of the others that satisfied the tanimoto criteria.
-            for res in results:
+            for res in steps_along_gradient:
                 if res["current_similarity"] > sim_cutoff:
                     candidate = res["current_smiles"]
                     # Check if valid
@@ -332,19 +334,29 @@ class JTpropVAE(nn.Module):
 
         # self.analyzer.print_smiles_gradient()
 
+        # Collect run results:
+        run_results = {}
+        run_results["new_smiles"] = new_smiles
+        run_results["steps_along_gradient"] = steps_along_gradient
+        run_results["predictions"] = predictions
+        run_results["latent_vectors"] = [x.tolist() for x in visited]
+        run_results["tanimoto_similarity"] = None
+
         # Return the original smiles if we did not find an optimized smiles
         if new_smiles is None:
-            return new_smiles, results, 1.0, predictions
+            return run_results
 
         # Get similarity of chosen smiles
         new_mol = Chem.MolFromSmiles(new_smiles)
         fp2 = AllChem.GetMorganFingerprint(new_mol, 2)
         sim = DataStructs.TanimotoSimilarity(start_fingerprint, fp2)
+        run_results["tanimoto_similarity"] = sim
         if sim >= sim_cutoff:
-            return new_smiles, sim, predictions
+            return run_results
         else:
+            run_results["new_smiles"] = None
             print("Molecule could not satisfy tanimoto cutoff")
-            return new_smiles, results, 1.0, predictions
+            return run_results
 
     def forward(self, x_batch, beta):
         x_batch, x_prop_holder, x_jtenc_holder, x_mpn_holder, x_jtmpn_holder = x_batch

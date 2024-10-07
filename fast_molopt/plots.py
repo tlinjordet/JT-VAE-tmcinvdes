@@ -14,13 +14,19 @@ plt.rcParams.update(
 )
 
 
-def plot_latent_trajectory(results, predictions):
+def plot_latent_trajectory(results):
     fig, ax = plt.subplots(2, 2, figsize=(12, 8))
     ax = ax.flatten()
 
     # Unpack the 'similarity' variable from each dictionary in the results list
-    similarities = [result["current_similarity"] for result in results]
-    latent_vector_idx = [result["latent_vector_idx"] for result in results]
+    similarities = [
+        result["current_similarity"] for result in results["steps_along_gradient"]
+    ]
+    latent_vector_idx = [
+        result["latent_vector_idx"] for result in results["steps_along_gradient"]
+    ]
+
+    predictions = results["predictions"]
 
     ax[0].set(ylabel="Tanimoto score", xlabel="While step")
     ax[0].plot(similarities, "go-", linewidth=2)

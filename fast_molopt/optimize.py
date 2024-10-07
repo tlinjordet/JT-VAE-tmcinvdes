@@ -14,6 +14,7 @@ import torch.nn as nn
 from plots import *
 from rdkit.Chem import Descriptors
 from torch.autograd import Variable
+from tornado.concurrent import run_on_executor
 
 source = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 sys.path.insert(0, str(source))
@@ -48,7 +49,7 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
     parser.add_argument("--latent_size", type=int, default=56)
     parser.add_argument("--depthT", type=int, default=20)
     parser.add_argument("--depthG", type=int, default=3)
-    parser.add_argument("--cutoff", type=float, default=0.1)
+    parser.add_argument("--cutoff", type=float, default=0.2)
 
     parser.add_argument(
         "--type",
@@ -57,7 +58,7 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
         help="Which property to optimize on",
     )
 
-    parser.add_argument("--lr", type=float, default=0.005)
+    parser.add_argument("--lr", type=float, default=0.05)
     parser.add_argument("--clip_norm", type=float, default=50.0)
     parser.add_argument("--beta", type=float, default=0.0)
     parser.add_argument("--step_beta", type=float, default=0.002)
@@ -152,6 +153,16 @@ def main():
         ("both_opposite", "maximize"),
         ("both_opposite", "minimize"),
     ]
+    # directions = [
+    #     ("first", "maximize"),
+    #     ("first", "minimize"),
+    #     ("both", "maximize"),
+    #     ("both", "minimize"),
+    #     ("second", "maximize"),
+    #     ("second", "minimize"),
+    #     ("first_second", "maximize"),
+    #     ("first_second", "minimize"),
+    # ]
 
     for i, batch in enumerate(loader):
         for dir in directions:
@@ -162,7 +173,7 @@ def main():
             # Set the minimize flag based on the given direction
             minimize = True if dir[1] == "minimize" else False
 
-            new_smiles, results, sim, predictions = model.optimize(
+            run_results = model.optimize(
                 batch,
                 sim_cutoff=sim_cutoff,
                 lr=opts.lr,
@@ -170,14 +181,16 @@ def main():
                 type=current_type,
                 prob_decode=False,
                 minimize=minimize,
-                desired_denticity=opts.desired_denticity,
             )
-            if sim == 1:
+            if not run_results["new_smiles"]:
                 print(f"{i} No valid optimized smiles could be found")
-            print(f"Optimized SMILES: {new_smiles} with similarity: {sim}\n")
+            else:
+                print(
+                    f"Optimized SMILES: {run_results['new_smiles']} with similarity: {run_results['tanimoto_similarity']}\n"
+                )
 
-            # If we want we can plot the gradient trajectories.
-            plot_latent_trajectory(results, predictions)
+            # If we want we can plot the optimization behavior
+            # plot_latent_trajectory(run_results)
 
             # Write a row to a csv file.
             with open(output_dir / "optimize_results.csv", "a") as f1:
@@ -191,8 +204,8 @@ def main():
                 # Append the data from optimized row
                 list_of_props = r + [
                     smiles,
-                    new_smiles,
-                    sim,
+                    run_results["new_smiles"],
+                    run_results["tanimoto_similarity"],
                     current_type,
                     minimize,
                 ]
