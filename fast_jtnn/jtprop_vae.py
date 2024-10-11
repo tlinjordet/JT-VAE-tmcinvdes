@@ -148,7 +148,8 @@ class JTpropVAE(nn.Module):
         type="charge",
         prob_decode=False,
         minimize=True,
-        desired_denticity="monodentate",
+        desired_denticity=None,
+        desired_isomer=None,
     ):
         """Optimize a given ligand in latent space.
 
@@ -192,11 +193,18 @@ class JTpropVAE(nn.Module):
 
         visited = []
         cuda0 = torch.device("cuda:0")
-        homo_lumo_gap_predicted = []
-        charge_predicted = []
+        homo_lumo_gap_predicted = (
+            []
+        )  # Temporarily using this for log P property in the isolated ligands only labeling.
+        charge_predicted = (
+            []
+        )  # Temporarily using this for G parameter property in the isolated ligands only labeling.
 
         # Apply different scaling on the gradient along the homo-lumo gap direction.
-        lr_homo = 1.5 * lr
+        lr_homo = 1.5 * lr  # max-min gap/max-min charge ~= 1.15
+        lr_g_param = 5.0 * lr  # max-min G parameter/max-min log P ~= 4.95
+        # >>> (df["G parameter"].values.max()-df["G parameter"].values.min())/(df["log P"].values.max()-df["log P"].values.min())
+        # >>> 4.9546027051598545
 
         # Step in gradient space
         for step in range(num_iter):
@@ -226,14 +234,6 @@ class JTpropVAE(nn.Module):
 
             gradient_holder = gradient_holder.squeeze()
 
-            # Now we get the gradients of the denticity layer.
-            denticity_gradient = torch.tensor([], dtype=torch.float32, device=cuda0)
-            dent_val = self.denticityNN(cur_vec)
-            denticity_gradient = torch.autograd.grad(
-                dent_val, cur_vec, retain_graph=True
-            )[0]
-            denticity_gradient = denticity_gradient.squeeze()
-
             # The scaler decides the gradient direction
             scaler = -1 if minimize else 1
 
@@ -241,12 +241,44 @@ class JTpropVAE(nn.Module):
             norm0 = torch.nn.functional.normalize(gradient_holder[0], dim=-1)
             norm1 = torch.nn.functional.normalize(gradient_holder[1], dim=-1)
 
-            # Normalize the denticity gradient
-            denticity_norm = torch.nn.functional.normalize(denticity_gradient, dim=-1)
-
             # Get the gradient magnitudes
             # n0 = torch.linalg.vector_norm(dydx3[0])
             # n1 = torch.linalg.vector_norm(dydx3[1])
+
+            for term in self.train_mode:
+                if term == "denticity":
+                    # Now we get the gradients of the denticity layer.
+                    denticity_gradient = torch.tensor(
+                        [], dtype=torch.float32, device=cuda0
+                    )
+                    dent_val = self.denticityNN(cur_vec)
+                    print(dent_val)
+                    print("something")
+                    denticity_gradient = torch.autograd.grad(
+                        dent_val, cur_vec, retain_graph=True
+                    )[0]
+                    denticity_gradient = denticity_gradient.squeeze()
+                    # Normalize the denticity gradient
+                    denticity_norm = torch.nn.functional.normalize(
+                        denticity_gradient, dim=-1
+                    )
+                elif term == "isomer":
+                    # Now we get the gradients of the isomer layer.
+                    isomer_gradient = torch.tensor(
+                        [], dtype=torch.float32, device=cuda0
+                    )
+                    isomer_val = self.isomerNN(cur_vec)
+                    isomer_val = torch.max(isomer_val)
+                    print(isomer_val)
+                    print("something")
+                    isomer_gradient = torch.autograd.grad(
+                        isomer_val, cur_vec, retain_graph=True
+                    )[0]
+                    isomer_gradient = isomer_gradient.squeeze()
+                    # Normalize the isomer gradient
+                    isomer_norm = torch.nn.functional.normalize(isomer_gradient, dim=-1)
+                else:
+                    raise ValueError("train_mode is not a valid value")
 
             # Add a gradient step in a given direction
             if type == "both":
@@ -256,17 +288,43 @@ class JTpropVAE(nn.Module):
             elif type == "charge":
                 cur_vec = cur_vec.data + scaler * lr * norm1
             elif type == "both_opposite":
-                cur_vec = cur_vec.data + scaler * lr_homo * norm0 - scaler * lr * norm1
+                cur_vec = (
+                    cur_vec.data + scaler * lr_g_param * norm0 - scaler * lr * norm1
+                )
+            elif type == "log P":
+                cur_vec = cur_vec.data + scaler * (lr * norm0)
+            elif type == "log P + G parameter":
+                cur_vec = cur_vec.data + scaler * (lr * norm0 + lr_g_param * norm1)
+            elif type == "G parameter":
+                cur_vec = cur_vec.data + scaler * (lr_g_param * norm1)
+            elif type == "log P - G parameter":
+                cur_vec = cur_vec.data + scaler * (lr * norm0 - lr_g_param * norm1)
             else:
                 raise ValueError
 
-            # Add denticity gradient in given direction
-            if desired_denticity == "monodentate":  # Decrease probability
-                cur_vec = cur_vec - lr * denticity_norm * 2
-            elif desired_denticity == "bidentate":  # Increase probability
-                cur_vec = cur_vec + lr * denticity_norm * 2
-            else:
-                raise ValueError
+            for term in self.train_mode:
+                if term == "denticity":
+                    # Add denticity gradient in given direction
+                    if desired_denticity == "monodentate":  # Decrease probability
+                        cur_vec = cur_vec - lr * denticity_norm * 2
+                    elif desired_denticity == "bidentate":  # Increase probability
+                        cur_vec = cur_vec + lr * denticity_norm * 2
+                    elif desired_denticity is None:
+                        pass
+                    else:
+                        raise ValueError
+                elif term == "isomer":
+                    # Add isomer gradient in given direction
+                    if desired_isomer == "monodentate":  # Decrease probability
+                        cur_vec = cur_vec - lr * isomer_norm * 2
+                    elif desired_isomer == "bidentate":  # Increase probability
+                        cur_vec = cur_vec + lr * isomer_norm * 2
+                    elif desired_isomer is None:
+                        pass
+                    else:
+                        raise ValueError
+                else:
+                    raise ValueError("train_mode is not a valid value")
 
             cur_vec = create_var(cur_vec, True)
             visited.append(cur_vec)

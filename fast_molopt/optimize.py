@@ -70,7 +70,7 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
     parser.add_argument("--print_iter", type=int, default=50)
     parser.add_argument("--save_iter", type=int, default=1000)
     parser.add_argument(
-        "--denticity",
+        "--denticity",  # initial. TODO support mixed?
         choices=["monodentate", "bidentate"],
         type=str,
         default="monodentate",
@@ -79,7 +79,7 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
         "--desired_denticity",
         choices=["monodentate", "bidentate"],
         type=str,
-        default="bidentate",
+        default=None,
     )
     parser.add_argument(
         "--train_mode",
@@ -87,6 +87,24 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
         default=[],
         choices=["denticity", "isomer"],
         help="Selects which extra property terms that where included in the training, when using the argument each extra term should be separated by a space",
+    )
+    parser.add_argument(
+        "--initial_isomer",
+        choices=["cis", "trans"],
+        type=str,
+        default=None,  # "cis", # TODO later modify the configurations to be fully optional and modular.
+    )
+    parser.add_argument(
+        "--desired_isomer",
+        choices=["cis", "trans"],
+        type=str,
+        default=None,  # "cis", # TODO later modify the configurations to be fully optional and modular.
+    )
+    parser.add_argument(
+        "--labeling",
+        choices=["DFT", "isolated_ligands"],  # TODO support mixed?
+        type=str,
+        default="DFT",
     )
 
     return parser.parse_args(arg_list)
@@ -125,7 +143,11 @@ def main():
     # Process dataframe to input files
     extra_properties = []
     create_input_files(
-        input_dir_df, output_dir_smiles, output_dir_props, extra_properties
+        input_dir_df,
+        output_dir_smiles,
+        output_dir_props,
+        extra_properties,
+        opts.labeling,
     )
     main_preprocess(output_dir_smiles, output_dir_props, output_dir, opts.nsplits)
 
@@ -141,16 +163,48 @@ def main():
     with open(output_dir / "opts.json", "w") as file:
         json.dump(vars(opts), file)
 
-    directions = [
-        ("homo_lumo_gap", "maximize"),
-        ("homo_lumo_gap", "minimize"),
-        ("both", "maximize"),
-        ("both", "minimize"),
-        ("charge", "maximize"),
-        ("charge", "minimize"),
-        ("both_opposite", "maximize"),
-        ("both_opposite", "minimize"),
-    ]
+    if opts.labeling == "DFT":
+        directions = [
+            ("homo_lumo_gap", "maximize"),
+            ("homo_lumo_gap", "minimize"),
+            ("both", "maximize"),
+            ("both", "minimize"),
+            ("charge", "maximize"),
+            ("charge", "minimize"),
+            ("both_opposite", "maximize"),
+            ("both_opposite", "minimize"),
+        ]
+    elif opts.labeling == "isolated_ligands":
+        directions = [
+            ("log P", "maximize"),
+            ("log P", "minimize"),
+            ("log P + G parameter", "maximize"),
+            ("log P + G parameter", "minimize"),
+            ("G parameter", "maximize"),
+            ("G parameter", "minimize"),
+            ("log P - G parameter", "maximize"),
+            ("log P - G parameter", "minimize"),
+        ]
+    elif opts.labeling == "DFT_and_isolated_ligands":
+        pass
+    #     directions = [
+    #     # ("homo_lumo_gap", "maximize"),
+    #     # ("homo_lumo_gap", "minimize"),
+    #     # ("both", "maximize"),
+    #     # ("both", "minimize"),
+    #     # ("charge", "maximize"),
+    #     # ("charge", "minimize"),
+    #     # ("both_opposite", "maximize"),
+    #     # ("both_opposite", "minimize"),
+    #     ("log P", "maximize"),
+    #     ("log P", "minimize"),
+    #     ("log P + G parameter", "maximize"),
+    #     ("log P + G parameter", "minimize"),
+    #     ("G parameter", "maximize"),
+    #     ("G parameter", "minimize"),
+    #     ("log P - G parameter", "maximize"),
+    #     ("log P - G parameter", "minimize"),
+    # ]
 
     for i, batch in enumerate(loader):
         for dir in directions:
@@ -170,6 +224,7 @@ def main():
                 prob_decode=False,
                 minimize=minimize,
                 desired_denticity=opts.desired_denticity,
+                desired_isomer=opts.desired_isomer,
             )
 
             # Write a row to a csv file.
@@ -186,19 +241,27 @@ def main():
                 writer.writerow(list_of_props)
 
 
-def create_input_files(input_df, output_dir_smiles, output_dir_props, extra_properties):
+def create_input_files(
+    input_df, output_dir_smiles, output_dir_props, extra_properties, labeling
+):
     if os.path.exists(output_dir_smiles):
         os.remove(output_dir_smiles)
     if os.path.exists(output_dir_props):
         os.remove(output_dir_props)
-
-    properties = ["homo-lumo", "Ir-cm5"]
+    if labeling == "DFT":
+        properties = ["homo-lumo", "Ir-cm5"]
+        encoded_smiles_col = "sub_smi"
+    elif labeling == "isolated_ligands":
+        properties = ["log P", "G parameter"]
+        encoded_smiles_col = "Encoded SMILES"
     for term in extra_properties:
         properties.append(term)
 
     # property_header = ",".join(properties)
     input_df[properties].to_csv(output_dir_props, index=None, sep=",")
-    input_df["sub_smi"].to_csv(output_dir_smiles, index=None, sep=",", header=None)
+    input_df[encoded_smiles_col].to_csv(
+        output_dir_smiles, index=None, sep=",", header=None
+    )
 
 
 if __name__ == "__main__":
