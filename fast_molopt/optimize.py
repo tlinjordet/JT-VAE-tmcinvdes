@@ -85,7 +85,7 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
         "--train_mode",
         nargs="*",
         default=[],
-        choices=["denticity", "isomer"],
+        choices=["denticity", "isomer", "None"],
         help="Selects which extra property terms that where included in the training, when using the argument each extra term should be separated by a space",
     )
     parser.add_argument(
@@ -102,7 +102,7 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--labeling",
-        choices=["DFT", "isolated_ligands"],  # TODO support mixed?
+        choices=["DFT", "isolated_ligands", "None"],  # TODO support mixed?
         type=str,
         default="DFT",
     )

@@ -166,7 +166,7 @@ if __name__ == "__main__":
         "--train_mode",
         nargs="*",
         default=[],
-        choices=["denticity", "isomer"],
+        choices=["denticity", "isomer", "None"],
         help="Selects which extra property terms to include in the training, when using the argument each extra term should be separated by a space",
     )
 

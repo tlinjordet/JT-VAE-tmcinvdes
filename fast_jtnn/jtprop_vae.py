@@ -86,6 +86,8 @@ class JTpropVAE(nn.Module):
                 )
                 self.isomerNN_loss = nn.CrossEntropyLoss()
                 print("Added isomer layer")
+            elif term == "None":
+                pass
             else:
                 raise ValueError("train_mode is not a valid value")
 
@@ -252,8 +254,7 @@ class JTpropVAE(nn.Module):
                         [], dtype=torch.float32, device=cuda0
                     )
                     dent_val = self.denticityNN(cur_vec)
-                    print(dent_val)
-                    print("something")
+                    # print(dent_val)
                     denticity_gradient = torch.autograd.grad(
                         dent_val, cur_vec, retain_graph=True
                     )[0]
@@ -269,14 +270,15 @@ class JTpropVAE(nn.Module):
                     )
                     isomer_val = self.isomerNN(cur_vec)
                     isomer_val = torch.max(isomer_val)
-                    print(isomer_val)
-                    print("something")
+                    # print(isomer_val)
                     isomer_gradient = torch.autograd.grad(
                         isomer_val, cur_vec, retain_graph=True
                     )[0]
                     isomer_gradient = isomer_gradient.squeeze()
                     # Normalize the isomer gradient
                     isomer_norm = torch.nn.functional.normalize(isomer_gradient, dim=-1)
+                elif term == "None":
+                    pass
                 else:
                     raise ValueError("train_mode is not a valid value")
 
@@ -323,6 +325,8 @@ class JTpropVAE(nn.Module):
                         pass
                     else:
                         raise ValueError
+                elif term == "None":
+                    pass
                 else:
                     raise ValueError("train_mode is not a valid value")
 
