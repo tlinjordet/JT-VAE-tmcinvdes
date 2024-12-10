@@ -72,6 +72,8 @@ def convert(train_path, prop_path, pool, num_splits, output_path):
 
     # Verify that the number of properties match the number of data points
     if len(data) != len(prop_data):
+        print(len(data))
+        print(len(prop_data))
         raise Exception(
             "TEMRINATED, number of lines in property file does not match number of data points"
         )

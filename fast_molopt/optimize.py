@@ -102,7 +102,7 @@ def parse_args(arg_list: list = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--labeling",
-        choices=["DFT", "isolated_ligands", "None"],  # TODO support mixed?
+        choices=["DFT", "isolated_ligands", "logP", "None"],  # TODO support mixed?
         type=str,
         default="DFT",
     )
@@ -185,6 +185,8 @@ def main():
             ("log P - G parameter", "maximize"),
             ("log P - G parameter", "minimize"),
         ]
+    elif opts.labeling == "logP":
+        directions = [("log P", "maximize"), ("log P", "minimize")]
     elif opts.labeling == "DFT_and_isolated_ligands":
         pass
     #     directions = [
@@ -253,6 +255,9 @@ def create_input_files(
         encoded_smiles_col = "sub_smi"
     elif labeling == "isolated_ligands":
         properties = ["log P", "G parameter"]
+        encoded_smiles_col = "Encoded SMILES"
+    elif labeling == "logP":
+        properties = ["log P"]
         encoded_smiles_col = "Encoded SMILES"
     for term in extra_properties:
         properties.append(term)
