@@ -197,15 +197,16 @@ class JTpropVAE(nn.Module):
         cuda0 = torch.device("cuda:0")
         homo_lumo_gap_predicted = (
             []
-        )  # Temporarily using this for log P property in the isolated ligands only labeling.
+        )  # Temporarily using this for log P property in the isolated ligands-only labeling.
         charge_predicted = (
             []
-        )  # Temporarily using this for G parameter property in the isolated ligands only labeling.
+        )  # Temporarily using this for Cone angle property in the isolated ligands-only labeling.
 
         # Apply different scaling on the gradient along the homo-lumo gap direction.
         lr_homo = 1.5 * lr  # max-min gap/max-min charge ~= 1.15
-        lr_g_param = 5.0 * lr  # max-min G parameter/max-min log P ~= 4.95
+        5.0 * lr  # max-min G parameter/max-min log P ~= 4.95
         lr_logP = 2.5 * lr
+        lr_cone_angle = 2.5 * lr
         # >>> (df["G parameter"].values.max()-df["G parameter"].values.min())/(df["log P"].values.max()-df["log P"].values.min())
         # >>> 4.9546027051598545
 
@@ -291,18 +292,21 @@ class JTpropVAE(nn.Module):
             elif type == "charge":
                 cur_vec = cur_vec.data + scaler * lr * norm1
             elif type == "both_opposite":
-                cur_vec = (
-                    cur_vec.data + scaler * lr_g_param * norm0 - scaler * lr * norm1
-                )
+                cur_vec = cur_vec.data + scaler * lr_homo * norm0 - scaler * lr * norm1
             elif type == "log P":
                 cur_vec = cur_vec.data + scaler * (lr_logP * norm0)
-            elif type == "log P + G parameter":
-                cur_vec = cur_vec.data + scaler * (lr_logP * norm0 + lr_g_param * norm1)
-            elif type == "G parameter":
-                cur_vec = cur_vec.data + scaler * (lr_g_param * norm1)
-            elif type == "log P - G parameter":
-                cur_vec = cur_vec.data + scaler * (lr_logP * norm0 - lr_g_param * norm1)
+            elif type == "log P + Exact cone angle":
+                cur_vec = cur_vec.data + scaler * (
+                    lr_logP * norm0 + lr_cone_angle * norm1
+                )
+            elif type == "Exact cone angle":
+                cur_vec = cur_vec.data + scaler * (lr_cone_angle * norm1)
+            elif type == "log P - Exact cone angle":
+                cur_vec = cur_vec.data + scaler * (
+                    lr_logP * norm0 - lr_cone_angle * norm1
+                )
             else:
+                print(type)
                 raise ValueError
 
             for term in self.train_mode:

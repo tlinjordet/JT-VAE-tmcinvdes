@@ -44,7 +44,8 @@ def main_vae_train(
     # vocab = [x.strip("\r\n ") for x in open(args.vocab)]
     vocab = Vocab(vocab)
 
-    output_dir = Path(f"train_{time.strftime('%Y%m%d-%H%M%S')}")
+    # output_dir = Path(f"train_{time.strftime('%Y%m%d-%H%M%S')}")
+    output_dir = Path(args.save_dir)  # TL
     output_dir.mkdir(exist_ok=True)
     args.save_dir.mkdir(exist_ok=True)
 

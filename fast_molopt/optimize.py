@@ -178,12 +178,12 @@ def main():
         directions = [
             ("log P", "maximize"),
             ("log P", "minimize"),
-            ("log P + G parameter", "maximize"),
-            ("log P + G parameter", "minimize"),
-            ("G parameter", "maximize"),
-            ("G parameter", "minimize"),
-            ("log P - G parameter", "maximize"),
-            ("log P - G parameter", "minimize"),
+            ("log P + Ligand coordination bulkiness", "maximize"),
+            ("log P + Ligand coordination bulkiness", "minimize"),
+            ("Ligand coordination bulkiness", "maximize"),
+            ("Ligand coordination bulkiness", "minimize"),
+            ("log P - Ligand coordination bulkiness", "maximize"),
+            ("log P - Ligand coordination bulkiness", "minimize"),
         ]
     elif opts.labeling == "logP":
         directions = [("log P", "maximize"), ("log P", "minimize")]
@@ -200,12 +200,12 @@ def main():
     #     # ("both_opposite", "minimize"),
     #     ("log P", "maximize"),
     #     ("log P", "minimize"),
-    #     ("log P + G parameter", "maximize"),
-    #     ("log P + G parameter", "minimize"),
-    #     ("G parameter", "maximize"),
-    #     ("G parameter", "minimize"),
-    #     ("log P - G parameter", "maximize"),
-    #     ("log P - G parameter", "minimize"),
+    #     ("log P + Exact cone angle", "maximize"),
+    #     ("log P + Exact cone angle", "minimize"),
+    #     ("Exact cone angle", "maximize"),
+    #     ("Exact cone angle", "minimize"),
+    #     ("log P - Exact cone angle", "maximize"),
+    #     ("log P - Exact cone angle", "minimize"),
     # ]
 
     for i, batch in enumerate(loader):
@@ -254,7 +254,7 @@ def create_input_files(
         properties = ["homo-lumo", "Ir-cm5"]
         encoded_smiles_col = "sub_smi"
     elif labeling == "isolated_ligands":
-        properties = ["log P", "G parameter"]
+        properties = ["log P", "Ligand coordination bulkiness"]  # "Exact cone angle"]
         encoded_smiles_col = "Encoded SMILES"
     elif labeling == "logP":
         properties = ["log P"]
