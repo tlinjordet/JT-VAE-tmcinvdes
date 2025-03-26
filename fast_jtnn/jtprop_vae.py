@@ -295,13 +295,13 @@ class JTpropVAE(nn.Module):
                 cur_vec = cur_vec.data + scaler * lr_homo * norm0 - scaler * lr * norm1
             elif type == "log P":
                 cur_vec = cur_vec.data + scaler * (lr_logP * norm0)
-            elif type == "log P + Exact cone angle":
+            elif type == "log P + Ligand coordination bulkiness":
                 cur_vec = cur_vec.data + scaler * (
                     lr_logP * norm0 + lr_cone_angle * norm1
                 )
-            elif type == "Exact cone angle":
+            elif type == "Ligand coordination bulkiness":
                 cur_vec = cur_vec.data + scaler * (lr_cone_angle * norm1)
-            elif type == "log P - Exact cone angle":
+            elif type == "log P - Ligand coordination bulkiness":
                 cur_vec = cur_vec.data + scaler * (
                     lr_logP * norm0 - lr_cone_angle * norm1
                 )

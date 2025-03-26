@@ -254,7 +254,10 @@ def create_input_files(
         properties = ["homo-lumo", "Ir-cm5"]
         encoded_smiles_col = "sub_smi"
     elif labeling == "isolated_ligands":
-        properties = ["log P", "Ligand coordination bulkiness"]  # "Exact cone angle"]
+        properties = [
+            "log P",
+            "Ligand coordination bulkiness (Å$^3$)",
+        ]  # "Exact cone angle"]
         encoded_smiles_col = "Encoded SMILES"
     elif labeling == "logP":
         properties = ["log P"]
